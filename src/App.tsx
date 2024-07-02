@@ -5,10 +5,14 @@ import Contact from "./components/Contact";  // Assuming you have Contact compon
 
 export const App = () => {
   return (
+    <div>
+      <h1>Geekmart</h1>
+      <p>Welcome to Geekmart!</p>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="login" element={<Login />} />
       <Route path="contact" element={<Contact />} />
-    </Routes>
+      </Routes>
+      </div>
   );
 }

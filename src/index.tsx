@@ -2,6 +2,8 @@ import { createRoot } from 'react-dom/client';
 import React from 'react';
 import { App } from './App';
 import { BrowserRouter } from 'react-router-dom';
+import "./styles/main.scss";
+import "./styles/secondary.css";
 
 const container = document.getElementById('root');
 const root = createRoot(container!); // The exclamation mark is a non-null assertion
