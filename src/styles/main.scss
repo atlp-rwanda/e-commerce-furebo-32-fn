@@ -1,0 +1,16 @@
+$white-primary-color:#EFF2FE;
+$blue-primary-color:#5A7BFA;
+$secondary-color:#231F20;
+$font-family:Arial, sans-serif;
+
+body {
+    font-family: $font-family;
+    background-color:$white-primary-color;
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    color:$blue-primary-color;
+    text-align: center;
+}
