@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Contact from "./components/Contact";
@@ -8,14 +8,21 @@ import { ThemeProvider } from "@mui/material";
 import { MuiTheme } from "./utils/config/muiTheme";
 import Dashboard from "./components/Dashboard"; // Assuming you have Dashboard component
 import ProtectedRoute from "./components/ProtectedRoute"; // Assuming you have ProtectedRoute component
+import Product from "./components/Product";
+import About from "./components/About";
+import Signup from "./components/Signup";
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={MuiTheme}>
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="product" element={<Product />} />
+          <Route path="about" element={<About />} />
+          <Route path="signup" element={<Signup />} />
         </Route>
         <Route
           path="dashboard"

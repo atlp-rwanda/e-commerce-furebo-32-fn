@@ -152,19 +152,18 @@
   width: 100%;
   max-width: 665px;
   height: 571px;
-  margin-bottom: 20px;
   border-radius: 5px;
+    padding-top: 30px;
 }
 
 .login-rightPart p {
-  padding-left: 20px;
   font-size: 20px;
   font-weight: bold;
   color: #ffffff;
 }
 
 .login-rightPart .p-text {
-  padding-top: 5px;
+  padding-bottom: 40px;
   font-size: 16px;
   color: #ffffff;
 }
