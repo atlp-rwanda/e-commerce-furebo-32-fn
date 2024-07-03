@@ -1,0 +1,9 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+h2{
+    color: #0e1739;
+    text-align: center;
+    font-size: large;
+}
