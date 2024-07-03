@@ -6,11 +6,11 @@ import Contact from "./components/Contact";  // Assuming you have Contact compon
 export const App = () => {
   return (
     <div>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="login" element={<Login />} />
-      <Route path="contact" element={<Contact />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="contact" element={<Contact />} />
       </Routes>
-      </div>
+    </div>
   );
 }
