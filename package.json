@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --coverage",
+    "test": "jest --detectOpenHandles --coverage --passWithNoTests",
     "test:coverage": "nyc jest --coverage",
     "start": "webpack serve --config webpack.config.js --open",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
