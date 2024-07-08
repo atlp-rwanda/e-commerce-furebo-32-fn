@@ -1,86 +1,103 @@
-// src/styles/header.scss
-
 .header {
-    background-color: #E5F3FD;
-    color: hsl(0, 0%, 10%);
-    padding: 20px 20px 20px 20px;
+  background-color: #EFF2FE;
+  color: hsl(0, 0%, 10%);
+  padding: 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  height: 120px;
+
+  .logo {
+    width: 122px;
+    height: 97px;
+    margin-left: -90px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+
+    a {
+      color: #444444;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+      font-size: 18px;
+
+      &:hover,
+      &:focus {
+        color: #5A7BFA;
+        text-decoration: underline;
+      }
+      &.active {
+        color: #5A7BFA;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .search-box {
+    position: relative;
+
+    input[type='text'] {
+      padding: 0.1rem;
+      border-radius: 0.25rem;
+      border: 1px solid #5A7BFA;
+      background-color: #EFF2FE;
+      height: 35px;
+      width: 221px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #5A7BFA;
+      color: #ffffff;
+      margin-top: 2px;
+      margin-right: 2px;
+      border: none;
+      cursor: pointer;
+      height: 30px;
+      width: 31px;
+      border-radius: 4px;
+    }
+  }
+
+  .icons {
+    display: flex;
+    gap: 2rem;
+    margin-right: -90px;
+
+    svg {
+      fill: #EFF2FE;
+      stroke: #444444;
+      stroke-width: 2.5;
+      width: 1.5rem;
+      height: 1.5rem;
+      cursor: pointer;
+    }
+
+    svg:hover {
+      fill: #5A7BFA;
+      stroke: #5A7BFA;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: #444444;
+    opacity: 0.2;
+  }
+
+  .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative; 
-  
-    .logo {
-      width: 100px;
-    }
-  
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      margin-left: 6rem;
-  
-      a {
-        color: #444444;
-        text-decoration: none;
-        position: relative;
-        transition: color 0.2s ease; 
-        
-        &:hover,
-        &:focus {
-          color: #5A7BFA; 
-          text-decoration: underline; 
-        }
-      }
-    }
-  
-    .search-box {
-      position: relative;
-  
-      input[type='text'] {
-        padding: 0.1rem;
-        border-radius: 0.25rem;
-        border: 1px solid #5A7BFA;
-        margin-right: 0.5rem;
-        background-color: #E5F3FD;
-      }
-  
-      button {
-        background-color: #5A7BFA;
-        color: #ffffff;
-        padding: rem;
-        border: none;
-        border-radius: 0.25rem;
-        cursor: pointer;
-      }
-    }
-    .icons {
-        display: flex;
-        gap: 2.5rem;
-    
-        svg {
-          fill: #E5F3FD; 
-          stroke: #444444;
-          stroke-width: 2.5; 
-          width: 1.5rem;
-          height: 1.5rem;
-          cursor: pointer;
-        }
-    
-        svg:hover {
-          fill: #5A7BFA; 
-          stroke: #5A7BFA; 
-        }
-      }
-  
-    /* Transparent line with shadow pseudo-element */
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
-      background-color:#444444; /* Transparent white color */
-      box-shadow: 0 1px px rgba(0, 0, 0, 2); /* Shadow effect */
-    }
+    width: 100%;
   }
-  
+}

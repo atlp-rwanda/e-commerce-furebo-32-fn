@@ -1,3 +1,4 @@
+import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";  // Assuming you have Login component
@@ -6,7 +7,9 @@ import Product from "./components/Product";
 import About from "./components/About";
 import Signup from "./components/Signup";
 
-export const App = () => {
+
+
+const App: React.FC = () => {
   return (
     <div>
     <Routes>
@@ -17,6 +20,9 @@ export const App = () => {
       <Route path="about" element={<About />} />
       <Route path="signup" element={<Signup />} />
       </Routes>
-      </div>
+     
+    </div>
   );
-}
+};
+
+export { App };

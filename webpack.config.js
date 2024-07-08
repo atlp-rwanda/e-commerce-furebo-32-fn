@@ -35,8 +35,18 @@ module.exports = {
           'style-loader',
           'css-loader',
           'postcss-loader', // Add postcss-loader here
+         
+
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ],
+      },
     ],
   },
   mode: 'development',
@@ -47,7 +57,7 @@ module.exports = {
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, 'public'),
     },
     compress: true,
     port: 3000,
@@ -63,4 +73,5 @@ module.exports = {
     hash: false,
     version: false,
   },
+ 
 };

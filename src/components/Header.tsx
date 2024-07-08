@@ -1,23 +1,42 @@
-
-import '../styles/header.scss'; 
-import { Link } from 'react-router-dom';
+import '../styles/header.scss';
+import { NavLink } from 'react-router-dom';
 import { FiSearch, FiShoppingCart, FiBell, FiHeart, FiUser } from 'react-icons/fi';
-/* import logo from '../../public/images/logo.png'; */ 
+
 
 const Header = () => {
   return (
     <header className="header">
-      <div className="container mx-auto flex justify-between items-center">
-      
-        {/* <img src={logo} alt="Logo" className="logo" /> */}
-
+      <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+      <img src="/images/logo.png" alt="Logo" className="logo" />
+        
         <nav className="nav-links">
-          <Link to="/" className="text-white underline">Home</Link>
-          <Link to="/Product" className="text-white">Products</Link>
-          <Link to="/about" className="text-white">About</Link>
-          <Link to="/Contact" className="text-white">Contact</Link>
+          <NavLink 
+            to="/" 
+            className={({ isActive }) => (isActive ? 'active text-white underline' : 'text-white underline')}
+          >
+            Home
+          </NavLink>
+          <NavLink 
+            to="/Product" 
+            className={({ isActive }) => (isActive ? 'active text-white' : 'text-white')}
+          >
+            Products
+          </NavLink>
+          <NavLink 
+            to="/about" 
+            className={({ isActive }) => (isActive ? 'active text-white' : 'text-white')}
+          >
+            About
+          </NavLink>
+          <NavLink 
+            to="/Contact" 
+            className={({ isActive }) => (isActive ? 'active text-white' : 'text-white')}
+          >
+            Contact
+          </NavLink>
         </nav>
 
+      
         <div className="search-box relative">
   <input
     type="text"
@@ -29,20 +48,31 @@ const Header = () => {
   </button>
 </div>
 
-
         <div className="icons">
-          <Link to="/cart" className="text-white">
+          <NavLink 
+            to="/cart" 
+            className={({ isActive }) => (isActive ? 'active text-white' : 'text-white')}
+          >
             <FiShoppingCart />
-          </Link>
-          <Link to="/notifications" className="text-white">
+          </NavLink>
+          <NavLink 
+            to="/notifications" 
+            className={({ isActive }) => (isActive ? 'active text-white' : 'text-white')}
+          >
             <FiBell />
-          </Link>
-          <Link to="/likes" className="text-white">
+          </NavLink>
+          <NavLink 
+            to="/likes" 
+            className={({ isActive }) => (isActive ? 'active text-white' : 'text-white')}
+          >
             <FiHeart />
-          </Link>
-          <Link to="/Signup" className="text-white">
+          </NavLink>
+          <NavLink 
+            to="/Signup" 
+            className={({ isActive }) => (isActive ? 'active text-white' : 'text-white')}
+          >
             <FiUser />
-          </Link>
+          </NavLink>
         </div>
       </div>
     </header>
