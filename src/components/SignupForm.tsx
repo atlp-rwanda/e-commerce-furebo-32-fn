@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import '../styles/SignupForm.scss';
+
 const SignupForm: React.FC = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -30,14 +31,11 @@ const SignupForm: React.FC = () => {
          return;
        }
     try {
-      const response = await axios.post(
-        'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/signup',
-        formData,
-      );
+      const response = await axios.post('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/signup', formData);
       console.log(response.data);
       setSignupSuccess(true);
-      await sendVerificationEmail(formData.email);
-      setSubmittedEmail(formData.email);
+      await sendVerificationEmail(formData.email); 
+      setSubmittedEmail(formData.email); 
       setFormData({
         firstName: '',
         lastName: '',

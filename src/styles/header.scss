@@ -7,32 +7,36 @@
   align-items: center;
   position: relative;
   height: 120px;
+ 
 
   .logo {
     width: 122px;
     height: 97px;
-    margin-left: -80px;
-    margin-bottom: 0px;
-
-    @media (max-width: 541px) {
-      position: absolute;
-      right: 0px;
+    margin-left: auto;
+    margin-bottom: 50px;
+    @media (max-width:541px){
+    
       width: 80px;
       height: 50px;
-      margin-bottom: 40px;
-    }
-
-    @media (min-width: 542px) and (max-width: 912px) {
-      margin-left: -10px;
+      margin-bottom:80px;
+    
     }
   }
 
   .nav-links {
-    background-color: #eff2fe;
+   
+
+    @media (min-width: 913px) {
+      background-color: #eff2fe;
     box-shadow: none;
     @media (min-width: 913px) {
       display: flex;
-      gap: 2rem;
+        gap: 2rem;
+    }
+    @media (max-width: 913px) {
+      display: flex;
+      gap: 1rem;
+    }
     }
 
     @media (max-width: 913px) {
@@ -70,6 +74,13 @@
   .search-box {
     position: relative;
     margin: 0 1rem;
+ 
+    @media (max-width:541px){
+    position: absolute;
+    margin-top: 110px;
+    
+    }
+    margin: 0 1rem;
 
     @media (max-width: 541px) {
       position: absolute;
@@ -80,11 +91,19 @@
     input[type='text'] {
       padding: 0.1rem;
       border-radius: 0.25rem;
-      border: 1.5px solid #5a7bfa;
+      border: 1.5.5px solid #5a7bfa;
       background-color: #eff2fe;
       height: 35px;
       width: 221px;
       font-size: 14px;
+      padding-left: 10px;
+      @media (max-width:541px){
+        height: 25px;
+        width: 300px;
+        padding: 0.8rem;
+      
+        }
+    
       padding-left: 10px;
 
       @media (max-width: 541px) {
@@ -98,13 +117,20 @@
     button {
       background-color: #5a7bfa;
       color: #ffffff;
-      margin-top: 2.3px;
-      margin-right: 2.3px;
+      margin-top: 2.3.3px;
+      margin-right: 2.3.3px;
       border: none;
       cursor: pointer;
       height: 30px;
       width: 31px;
       border-radius: 4px;
+      @media (max-width:541px){
+        height: 24px;
+        width: 30px;
+     
+        }
+    
+    
 
       @media (max-width: 541px) {
         height: 24px;
@@ -112,22 +138,21 @@
       }
     }
   }
+ 
 
   .icons {
     display: flex;
     gap: 2rem;
-    margin-right: -30px;
-
-    @media (max-width: 541px) {
+    margin-right: 0px;
+    @media (max-width:541px){
+    
       position: absolute;
-      margin-top: 5px;
-      gap: 3rem;
-      margin-right: 30px;
+      margin-top:55px;
+      
     }
-
-    @media (min-width: 542px) and (max-width: 912px) {
-      gap: 2rem;
-      margin-right: 0px;
+    @media (max-width: 913px) {
+      
+      gap: 1rem;
     }
 
     svg {
@@ -137,6 +162,15 @@
       width: 1.5rem;
       height: 1.5rem;
       cursor: pointer;
+      @media (max-width:541px){
+        width: 1rem;
+        height: 1rem;
+       
+      }
+      @media (max-width: 913px) {
+        width: 1rem;
+        height: 1rem;
+      }
 
       @media (max-width: 541px) {
         width: 1rem;
@@ -171,6 +205,44 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    gap: 1rem;
+  }
+
+  .mobile-menu {
+    &.open {
+      max-height: 100%;
+    }
+
+    &.closed {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    transition: all 0.3s ease-in-out;
+
+    a {
+      color: #444444;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+      font-size: 18px;
+
+      &:hover,
+      &:focus {
+        color: #5A7BFA;
+        text-decoration: underline;
+      }
+
+      &.active {
+        color: #5A7BFA;
+        text-decoration: underline;
+      }
+    }
+  }
+  .block{
+    margin-bottom:60px;
+    margin-left: 10px;
     gap: 1rem;
   }
 
