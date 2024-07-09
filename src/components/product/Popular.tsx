@@ -32,28 +32,28 @@ function Popular() {
         <ReactPaginate
           previousLabel={<ChevronLeft />}
           nextLabel={<ChevronRight />}
-          breakClassName={"break-me"}
+          breakClassName={'break-me'}
           pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
           marginPagesDisplayed={2}
           pageRangeDisplayed={2}
           onPageChange={handlePageChange}
           containerClassName={
-            "flex justify-center sm:justify-start gap-1 items-center font-poppins text-xs"
+            'flex justify-center sm:justify-start gap-1 items-center font-poppins text-xs'
           }
           pageLinkClassName={
-            "bg-transparent text-gray-800 hidden border border-gray-800 rounded-lg font-medium px-3 py-2"
+            'bg-transparent text-gray-800 hidden border border-gray-800 rounded-lg font-medium px-3 py-2'
           }
           previousLinkClassName={
-            "bg-gray-800 border bg-primary-300 text-white flex items-center justify-center lg:px-2 px-1 text-xs lg:text-base py-2 rounded-lg font-medium"
+            'bg-gray-800 border bg-primary-300 text-white flex items-center justify-center lg:px-2 px-1 text-xs lg:text-base py-2 rounded-lg font-medium'
           }
           nextLinkClassName={
-            "bg-gray-800 border bg-primary-300 text-white flex items-center justify-center lg:px-2 px-1 text-xs lg:text-base py-2 rounded-lg font-medium"
+            'bg-gray-800 border bg-primary-300 text-white flex items-center justify-center lg:px-2 px-1 text-xs lg:text-base py-2 rounded-lg font-medium'
           }
-          disabledClassName={"pointer-events-none opacity-50"}
-          activeClassName={"bg-primary-300 text-white"}
+          disabledClassName={'pointer-events-none opacity-50'}
+          activeClassName={'bg-primary-300 text-white'}
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-32 max-sm:gap-4 max-md:gap-6 bg-primary-200 p-4">
+      <div className="flex gap-5">
         {paginatedItems.map((product: any, index: number) => (
           <ProductCard key={index} popularProducts={product} />
         ))}

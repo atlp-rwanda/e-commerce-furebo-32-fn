@@ -12,9 +12,9 @@ function ProductCard({ popularProducts }: { popularProducts: any }) {
       <div
         style={{
           backgroundImage: `url(${productImage})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
         }}
         className="p-2 h-[75%] flex flex-col items-end rounded-xl"
       >
@@ -32,7 +32,7 @@ function ProductCard({ popularProducts }: { popularProducts: any }) {
           <div className="flex items-center gap-1">
             <Star width={20} className="text-primary-300" />
             <span className="text-sm text-gray-500">
-              ({popularProducts.totalReviewRating})
+              ({`${popularProducts.totalReviewRating} Reviews`})
             </span>
           </div>
           <p className="text-black font-semibold text-sm sm:text-base">
