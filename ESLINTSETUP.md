@@ -21,6 +21,8 @@ touch .husky/pre-commit
 
 ``` npx lint-staged && npm test ```
 
+lint-staged is optional, it is recommended that npm test goes alone
+
 ### 4. You can also give permissions to the pre-commit file using chmod
 
 ```bash 
