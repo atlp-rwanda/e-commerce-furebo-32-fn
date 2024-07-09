@@ -169,7 +169,7 @@
   color: #ffffff;
 }
 
-@media (max-width: 1180px) and (min-width: 768px) {
+@media (max-width: 1180px) and (min-width: 769px) {
   .login-container {
     flex-direction: column;
     margin: 5px 40px;
@@ -192,7 +192,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .login-container {
     flex-direction: column;
     margin: 5px 20px;
@@ -208,7 +208,7 @@
     padding: 40px;
   }
 
-  .login-rightPart img {
+  .login-rightPart {
 display: none;
   }
 }
