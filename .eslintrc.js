@@ -8,7 +8,7 @@ module.exports = {
     'airbnb',
     'airbnb/hooks',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
+    'plugin:prettier/recommended',
     'plugin:react/jsx-runtime',
   ],
   parser: '@typescript-eslint/parser',
@@ -19,10 +19,8 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
+    'prettier/prettier': 'error',
   },
 };
