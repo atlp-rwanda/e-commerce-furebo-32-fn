@@ -1,5 +1,6 @@
-p {
-  font-size: 16px;
-  color: #231F20;
-  text-align: center;
+.shoes{
+    position: relative;
+    top: -65px;
+    padding: 10px;
 }
+

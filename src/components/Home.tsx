@@ -1,12 +1,15 @@
-import Button from '@mui/material/Button';
+import ChooseUs from "./product/ChooseUs";
+import Popular from "./product/Popular";
+import Product from "./product/product";
+import CardSlider from "./showcase/slider/showcase";
 
 function Home() {
   return (
-    <div className="bg-blue-500 p-4">
-      Home GeekLords
-      <Button className="bg-red-500 text-black hover:bg-red-700" variant="contained">
-        Contained
-      </Button>
+    <div className="w-full h-full flex flex-col justify-center">
+      <CardSlider />
+      <Popular />
+      <ChooseUs />
+      <Product />
     </div>
   );
 }
