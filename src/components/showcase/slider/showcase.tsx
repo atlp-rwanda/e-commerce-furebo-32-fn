@@ -8,7 +8,7 @@ const customTheme = {
       dotActiveWidth: 24,
       dotHeight: 10,
       dotWidth: 10,
-      dotColor: "#d9d9d9", 
+      dotColor: "#d9d9d9",
       dotActiveColor: "#1890ff",
     },
   },

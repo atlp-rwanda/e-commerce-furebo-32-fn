@@ -1,11 +1,17 @@
 import { Heart, ScanEye, ShoppingCart, Star } from "lucide-react";
 
 function ProductCard({ popularProducts }: { popularProducts: any }) {
+  const productImage =
+    popularProducts.images && popularProducts.images.length > 0
+      ? popularProducts.images[0]
+      : "https://via.placeholder.com/200";
+
+
   return (
-    <div className="w-72 min-md:w-60 h-[21rem] bg-white p-2 rounded-2xl shadow-md">
+    <div className="min-w-64 sm:w-72 w-full h-[21rem] bg-white p-2 rounded-2xl shadow-md">
       <div
         style={{
-          backgroundImage: `url(${popularProducts.cover})`,
+          backgroundImage: `url(${productImage})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -26,11 +32,15 @@ function ProductCard({ popularProducts }: { popularProducts: any }) {
           <div className="flex items-center gap-1">
             <Star width={20} className="text-primary-300" />
             <span className="text-sm text-gray-500">
-              ({popularProducts.reviews})
+              ({popularProducts.totalReviewRating})
             </span>
           </div>
-          <p className="text-black font-semibold">{popularProducts.name}</p>
-          <p className="text-black font-bold">${popularProducts.price}</p>
+          <p className="text-black font-semibold text-sm sm:text-base">
+            {popularProducts.productName}
+          </p>
+          <p className="text-black font-bold text-sm sm:text-base">
+            ${popularProducts.price}
+          </p>
         </div>
         <div className="bg-primary-300 p-1 rounded-lg text-white">
           <ShoppingCart />

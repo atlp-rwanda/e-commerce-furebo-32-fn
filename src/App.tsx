@@ -1,12 +1,13 @@
+import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import Login from "./components/Login";  // Assuming you have Login component
-import Contact from "./components/Contact";  // Assuming you have Contact component
+import Login from "./components/Login";
+import Contact from "./components/Contact";
 import AppLayout from "./layout/appLayout";
 import { ThemeProvider } from "@mui/material";
-import { MuiTheme } from "./config/muiTheme";
+import { MuiTheme } from "./utils/config/muiTheme";
 
-export const App = () => {
+const App: React.FC = () => {
   return (
     <ThemeProvider theme={MuiTheme}>
       <Routes>
@@ -18,4 +19,6 @@ export const App = () => {
       </Routes>
     </ThemeProvider>
   );
-}
+};
+
+export { App };

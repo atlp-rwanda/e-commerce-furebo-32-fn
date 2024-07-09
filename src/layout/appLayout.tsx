@@ -6,7 +6,7 @@ function AppLayout() {
       <nav className="h-[80px] bg-slate-500 w-full">
         navBar
       </nav>
-      <main className="flex justify-center w-[84.722%]">
+      <main className="flex justify-center w-[84.722%] max-sm:w-[95%]">
           <Outlet />
       </main>
     </div>
