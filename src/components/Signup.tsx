@@ -1,16 +1,18 @@
-import Header from './Header'; 
+// Signup.tsx
 
-function Signup() {
+import React from 'react';
+import Header from './Header';
+import SignupForm from './SignupForm'; 
+
+const Signup: React.FC = () => {
   return (
-    
-    <div >
+    <div>
       <Header />
       <div className="container mx-auto py-8">
-        <h1 className="text-3xl font-bold text-center">Signup</h1>
-      
+        <SignupForm />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

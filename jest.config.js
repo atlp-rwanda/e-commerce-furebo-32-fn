@@ -11,6 +11,7 @@ module.exports = {
     testTimeout: 60000,
     coverageReporters: ['html', 'text', 'lcov'],
     coverageDirectory: 'coverage',
-    testPathIgnorePatterns: ['/node_modules/']
+    testPathIgnorePatterns: ['/node_modules/'],
+    setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
   };
   
