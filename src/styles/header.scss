@@ -7,25 +7,27 @@
   align-items: center;
   position: relative;
   height: 120px;
- 
 
   .logo {
     width: 122px;
     height: 97px;
-    margin-left: auto;
-    margin-bottom: 50px;
-    @media (max-width:541px){
-    
+    margin-left: -30px;
+    margin-bottom: 0px;
+
+    @media (max-width: 541px) {
+      position: absolute;
+      right: 0px;
       width: 80px;
       height: 50px;
-      margin-bottom:80px;
-    
+      margin-bottom: 40px;
+    }
+
+    @media (min-width: 542px) and (max-width: 912px) {
+      margin-left: -10px;
     }
   }
 
   .nav-links {
-   
-
     @media (min-width: 913px) {
       background-color: #eff2fe;
     box-shadow: none;
@@ -33,8 +35,8 @@
       display: flex;
         gap: 2rem;
     }
+
     @media (max-width: 913px) {
-      display: flex;
       gap: 1rem;
     }
     }
@@ -74,11 +76,11 @@
   .search-box {
     position: relative;
     margin: 0 1rem;
- 
-    @media (max-width:541px){
-    position: absolute;
-    margin-top: 110px;
-    
+
+    @media (max-width: 541px) {
+      position: absolute;
+      margin-top: 50px;
+      margin-right: 50px;
     }
     margin: 0 1rem;
 
@@ -97,7 +99,8 @@
       width: 221px;
       font-size: 14px;
       padding-left: 10px;
-      @media (max-width:541px){
+
+      @media (max-width: 541px) {
         height: 25px;
         width: 300px;
         padding: 0.8rem;
@@ -124,7 +127,8 @@
       height: 30px;
       width: 31px;
       border-radius: 4px;
-      @media (max-width:541px){
+
+      @media (max-width: 541px) {
         height: 24px;
         width: 30px;
      
@@ -138,21 +142,22 @@
       }
     }
   }
- 
 
   .icons {
     display: flex;
     gap: 2rem;
-    margin-right: 0px;
-    @media (max-width:541px){
-    
+    margin-right: -30px;
+
+    @media (max-width: 541px) {
       position: absolute;
-      margin-top:55px;
-      
+      margin-top: 5px;
+      gap: 3rem;
+      margin-right: 30px;
     }
-    @media (max-width: 913px) {
-      
-      gap: 1rem;
+
+    @media (min-width: 542px) and (max-width: 912px) {
+      gap: 2rem;
+      margin-right: 0px;
     }
 
     svg {
@@ -162,11 +167,12 @@
       width: 1.5rem;
       height: 1.5rem;
       cursor: pointer;
-      @media (max-width:541px){
+
+      @media (max-width: 541px) {
         width: 1rem;
         height: 1rem;
-       
       }
+
       @media (max-width: 913px) {
         width: 1rem;
         height: 1rem;
@@ -240,8 +246,9 @@
       }
     }
   }
-  .block{
-    margin-bottom:60px;
+
+  .block {
+    margin-bottom: 40px;
     margin-left: 10px;
     gap: 1rem;
   }
