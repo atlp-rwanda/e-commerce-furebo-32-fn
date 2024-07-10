@@ -4,7 +4,8 @@
   justify-content: space-between;
   align-items: center;
   height: 100vh;
-  margin: 5px 50px 50px 50px;
+  margin-top: 5px;
+  margin-bottom: 50px;
 }
 
 .login-leftPart,
@@ -172,7 +173,7 @@
 @media (max-width: 1180px) and (min-width: 769px) {
   .login-container {
     flex-direction: column;
-    margin: 5px 40px;
+    margin: 5px 0px;
   }
 
   .login-leftPart,
@@ -181,21 +182,17 @@
     height: auto;
   }
 
-  .login-leftPart {
-    padding: 60px;
-  }
 
-  .login-rightPart img {
-    max-width: 90%;
-    height: auto;
-    margin-bottom: 20px;
+
+  .login-rightPart {
+display: none;
   }
 }
 
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;
-    margin: 5px 20px;
+    margin: 5px 0px;
   }
 
   .login-leftPart,
