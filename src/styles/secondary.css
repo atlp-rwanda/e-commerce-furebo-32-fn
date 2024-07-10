@@ -60,7 +60,7 @@
 }
 
 .input-field #email,
-#password {
+#password,#email, #passwordd, #firstName,#lastName,#rePassword ,#phone {
   border: 1px solid #444444;
   border-radius: 8px;
   padding: 0 10px;

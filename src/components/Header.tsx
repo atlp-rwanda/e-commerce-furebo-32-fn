@@ -30,7 +30,7 @@ const Header = () => {
             placeholder="Search"
             className="bg-blue-100 text-blue-900 rounded-l-full py-2 px-4 outline-none pr-10"
           />
-          <button className="absolute inset-y-0 right-0 bg-blue-500 text-white rounded-r-full p-2">
+          <button className="absolute inset-y-0 right-0 top-2 bg-blue-500 text-white rounded-r-full p-2">
             <FiSearch />
           </button>
         </div>
