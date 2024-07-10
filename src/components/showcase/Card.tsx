@@ -26,7 +26,7 @@ function Card() {
             className="w-full lg:w-auto mt-4 lg:mt-0"
           />
         </div>
-        <div className="flex flex-col md:flex-row gap-4 md:gap-16 ">
+        <div className="flex flex-col max-md:flex-row gap-4 md:gap-16">
           <CartButton rounded="rounded-full max-sm:w-full gap:4" />
           <div className="border border-primary-300 max-sm:hidden flex items-center rounded-full px-2">
             <AvatarGroup
@@ -40,7 +40,7 @@ function Card() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-4 mt-4 lg:mt-0 max-sm:hidden">
+      <div className="flex flex-col gap-4 mt-4 lg:mt-0 max-sm:hidden max-md:flex-row max-md:justify-between">
         <Shoes />
         <Shoes />
         <Shoes />
