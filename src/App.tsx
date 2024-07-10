@@ -1,27 +1,29 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import Login from "./components/Login";  // Assuming you have Login component
-import Contact from "./components/Contact";  // Assuming you have Contact component
-import Product from "./components/Product";
-import About from "./components/About";
-import Signup from "./components/Signup";
-
-
+import Login from "./components/Login";
+import Contact from "./components/Contact";
+import AppLayout from "./layout/appLayout";
+import { ThemeProvider } from "@mui/material";
+import { MuiTheme } from "./utils/config/muiTheme";
+import About from './components/About';
+import Product from './components/Product';
+import Signup from './components/Signup';
 
 const App: React.FC = () => {
   return (
-    <div>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="login" element={<Login />} />
-      <Route path="contact" element={<Contact />} />
-      <Route path="product" element={<Product />} />
-      <Route path="about" element={<About />} />
-      <Route path="signup" element={<Signup />} />
+    <ThemeProvider theme={MuiTheme}>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="product" element={<Product />} />
+          <Route path="about" element={<About />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
       </Routes>
-     
-    </div>
+    </ThemeProvider>
   );
 };
 
