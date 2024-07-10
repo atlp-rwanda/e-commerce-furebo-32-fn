@@ -45,6 +45,19 @@ module.exports = {
           "postcss-loader", // Add postcss-loader here
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ],
+      },
+      {
+        test: /\.test\.tsx$/,
+        exclude: /node_modules/,
+        use: "babel-loader",
+      },
     ],
   },
   mode: "development",
@@ -58,7 +71,7 @@ module.exports = {
       directory: path.join(__dirname, "public"),
     },
     compress: true,
-    port: 3000,
+    port: 3001,
     open: true,
     historyApiFallback: true,
   },

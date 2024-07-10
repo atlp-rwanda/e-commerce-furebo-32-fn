@@ -6,7 +6,8 @@ import Contact from "./components/Contact";
 import AppLayout from "./layout/appLayout";
 import { ThemeProvider } from "@mui/material";
 import { MuiTheme } from "./utils/config/muiTheme";
-
+import Dashboard from "./components/Dashboard"; // Assuming you have Dashboard component
+import ProtectedRoute from "./components/ProtectedRoute"; // Assuming you have ProtectedRoute component
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={MuiTheme}>
@@ -16,6 +17,14 @@ const App: React.FC = () => {
           <Route path="login" element={<Login />} />
           <Route path="contact" element={<Contact />} />
         </Route>
+        <Route
+          path="dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </ThemeProvider>
   );

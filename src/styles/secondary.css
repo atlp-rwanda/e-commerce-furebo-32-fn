@@ -1,3 +1,240 @@
+.login-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  margin: 5px 50px 50px 50px;
+}
+
+.login-leftPart,
+.login-rightPart {
+  width: 50%;
+  height: 100%;
+}
+
+.login-leftPart {
+  padding: 80px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.login-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-leftPart img {
+  width: 122px;
+  height: 97px;
+}
+
+.login-leftPart h1 {
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.login-leftPart p {
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #444444;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-field input {
+  width: 100%;
+  border: 1px solid #444444;
+  border-radius: 8px;
+  padding: 0 20px;
+}
+
+.input-field #email,
+#password {
+  border: 1px solid #444444;
+  border-radius: 8px;
+  padding: 0 10px;
+}
+
+.input-field .MuiInputAdornment-root {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.rememberPart {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.rememberPart label {
+  flex: 1;
+  margin-top: -20px;
+}
+
+.rememberPart p {
+  flex: 1;
+  text-align: right;
+  margin-top: -20px;
+}
+
+.btn,
+.btn:after {
+  background-color: #5a7bfa;
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.btn:hover {
+  background-color: #5a7bfa;
+}
+
+.error-message {
+  color: red;
+}
+
+.login-links {
+  margin-top: 60px;
+  text-align: center;
+  color: #5a7bfa;
+}
+
+.login-links a {
+  color: #5a7bfa;
+  text-decoration: none;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+}
+
+.login-rightPart {
+  text-align: center;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #8878f3, #8878f3, #312e49);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.login-rightPart img {
+  width: 100%;
+  max-width: 665px;
+  height: 571px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.login-rightPart p {
+  padding-left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.login-rightPart .p-text {
+  padding-top: 5px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+@media (max-width: 1180px) and (min-width: 769px) {
+  .login-container {
+    flex-direction: column;
+    margin: 5px 40px;
+  }
+
+  .login-leftPart,
+  .login-rightPart {
+    width: 100%;
+    height: auto;
+  }
+
+  .login-leftPart {
+    padding: 60px;
+  }
+
+  .login-rightPart img {
+    max-width: 90%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    margin: 5px 20px;
+  }
+
+  .login-leftPart,
+  .login-rightPart {
+    width: 100%;
+    height: auto;
+  }
+
+  .login-leftPart {
+    padding: 40px;
+  }
+
+  .login-rightPart {
+display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-leftPart {
+    padding: 20px;
+  }
+
+  .login-leftPart h1 {
+    font-size: 24px;
+  }
+
+  .login-leftPart p {
+    font-size: 12px;
+  }
+
+  .login-rightPart p {
+    font-size: 18px;
+  }
+
+  .login-rightPart .p-text {
+    font-size: 14px;
+  }
+}
+
 .shoes{
     position: relative;
     top: -65px;
