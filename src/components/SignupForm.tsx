@@ -9,6 +9,7 @@ const SignupForm: React.FC = () => {
     lastName: '',
     email: '',
     password: '',
+    rePassword: '',
     phone: '',
     role: 'buyer',
   });
@@ -25,43 +26,59 @@ const SignupForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (formData.password !== formData.rePassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    // Create a new object without rePassword
+    const { rePassword, ...formDataToSend } = formData;
+
     try {
-      const response = await axios.post('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/signup', formData);
+      const response = await axios.post('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/signup', formDataToSend);
       console.log(response.data);
       setSignupSuccess(true);
-      await sendVerificationEmail(formData.email); 
-      setSubmittedEmail(formData.email); 
+      await sendVerificationEmail(formData.email);
+      setSubmittedEmail(formData.email);
       setFormData({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
+        rePassword: '',
         phone: '',
         role: 'buyer',
       });
-      setError(null); 
-    } catch (error:any) {
+      setError(null);
+       
+    } catch (error: any) {
       setError(error.response.data.message);
     }
   };
 
   const sendVerificationEmail = async (email: string) => {
     try {
-      await axios.post('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/verify-email?token', { email });
+      await axios.post(
+        'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/verify-email?token',
+        { email },
+      );
       console.log(`Verification email sent to ${email}.`);
     } catch (error) {
       console.error('Error sending verification email:', error);
-     
     }
   };
 
   return (
-    
     <div className="container mx-auto py-8 signup-form">
-      <h1 className="text-3xl font-bold text-center">Create Your Account Here!</h1>
-     
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto signup-form__form">
-        
+      <h1 className="text-3xl font-bold text-center mb-8">
+        Create Your Account Here!
+      </h1>
+
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-md mx-auto signup-form__form"
+      >
         <div className="mb-4">
           <input
             type="text"
@@ -74,7 +91,6 @@ const SignupForm: React.FC = () => {
             className="input-field"
           />
         </div>
-
         <div className="mb-4">
           <input
             type="text"
@@ -87,7 +103,6 @@ const SignupForm: React.FC = () => {
             className="input-field"
           />
         </div>
-
         <div className="mb-4">
           <input
             type="email"
@@ -100,11 +115,10 @@ const SignupForm: React.FC = () => {
             className="input-field"
           />
         </div>
-
         <div className="mb-4">
           <input
             type="password"
-            id="password"
+            id="passwordd"
             name="password"
             value={formData.password}
             onChange={handleChange}
@@ -113,7 +127,18 @@ const SignupForm: React.FC = () => {
             className="input-field"
           />
         </div>
-
+        <div className="mb-4">
+          <input
+            type="password"
+            id="rePassword"
+            name="rePassword"
+            value={formData.rePassword}
+            onChange={handleChange}
+            placeholder="Re-enter Password"
+            required
+            className="input-field"
+          />
+        </div>
         <div className="mb-4">
           <input
             type="tel"
@@ -128,30 +153,25 @@ const SignupForm: React.FC = () => {
         </div>
 
         <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="button"
-          >
+          <button type="submit" className="button">
             Sign Up
           </button>
         </div>
       </form>
-     <p>Already have an account?  <NavLink 
-            to="/Login" 
-            className="login"
-          >
-           Login
-          </NavLink></p>
+      <p>
+        Already have an account?{' '}
+        <NavLink to="/Login" className="login">
+          Login
+        </NavLink>
+      </p>
 
+      {error && <p className="text-red-500">{error}</p>}
 
-          {error && <p className="text-red-500">{error}</p>}
-
-        
-          {signupSuccess && (
+      {signupSuccess && (
         <div className="mb-4 text-green-500 text-center success-message">
-          Signup successful! Please check your email ({submittedEmail}) for verification instructions.
+          Signup successful! Please check your email ({submittedEmail}) for
+          verification instructions.
         </div>
-          
       )}
     </div>
   );

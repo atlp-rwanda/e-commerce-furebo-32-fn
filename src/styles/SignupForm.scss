@@ -1,7 +1,7 @@
 .mb-4 {
     .input-field {
       border-radius: 8px;
-      width: 452px;
+      width: 432px;
       height: 42px;
       padding-left: 10px;
       border: 1.5px solid #808080; 
@@ -13,7 +13,7 @@
    
   }
   .button {
-    width: 452px;
+    width: 500px;
     height: 42px; 
     background-color: #5A7BFA;
     color: white;
@@ -23,13 +23,15 @@
     border-radius: 5px;
     margin-top: 30px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
   }
   .button:hover{
     background-color: #231F20;
   }
   p{
+
     margin-top: 30px;
+    margin-left: 100px;
     .login{
         color: #5A7BFA;
     }
@@ -37,13 +39,26 @@
       color:#231F20;
     }
 
+
+  }
+  .success-message {
+    margin-top: 30px;
+    text-align: center;
+    color: green;
   }
   /* Adjustments for responsiveness */
   @media (max-width: 768px) {
-    .mb-4 .input-field,
+    .mb-4 ,
+    .input-field,
     .button {
-      width: 90%; 
-      margin-left: 20px;
+      width: 94%; 
+      margin-left: 0px;
+      margin-right: 20px;
+    }
+    p{
+
+      margin-top: 30px;
+      margin-left: 60px;
     }
   
   }
