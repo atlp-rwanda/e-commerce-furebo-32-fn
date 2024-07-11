@@ -11,13 +11,13 @@ const SignupForm: React.FC = () => {
     password: '',
     rePassword: '',
     phone: '',
-    role: 'buyer',
+    role: 'buyer', // Default role
   });
   const [error, setError] = useState<string | null>(null);
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -48,7 +48,7 @@ const SignupForm: React.FC = () => {
         password: '',
         rePassword: '',
         phone: '',
-        role: 'buyer',
+        role: 'buyer', // Reset role to default after submission
       });
       setError(null);
        
@@ -118,7 +118,7 @@ const SignupForm: React.FC = () => {
         <div className="mb-4">
           <input
             type="password"
-            id="passwordd"
+            id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
@@ -150,6 +150,19 @@ const SignupForm: React.FC = () => {
             required
             className="input-field"
           />
+        </div>
+        <div className="mb-4">
+          <select
+            id="role"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            required
+            className="input-field"
+          >
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </select>
         </div>
 
         <div className="flex items-center justify-between">
