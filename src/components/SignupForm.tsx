@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { RootState, AppDispatch } from '../store/store';
+import { signupUser } from '../redux/slices/userSlice';
 import '../styles/SignupForm.scss';
 
 const SignupForm: React.FC = () => {
@@ -11,11 +13,11 @@ const SignupForm: React.FC = () => {
     password: '',
     rePassword: '',
     phone: '',
-    role: 'buyer', // Default role
+    role: 'buyer', 
   });
-  const [error, setError] = useState<string | null>(null);
-  const [signupSuccess, setSignupSuccess] = useState(false);
-  const [submittedEmail, setSubmittedEmail] = useState('');
+
+  const { error, signupSuccess, submittedEmail, loading } = useSelector((state: RootState) => state.user);
+  const dispatch: AppDispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -24,23 +26,19 @@ const SignupForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (formData.password !== formData.rePassword) {
-      setError('Passwords do not match.');
+      alert('Passwords do not match.');
       return;
     }
 
-    // Create a new object without rePassword
-    const { rePassword, ...formDataToSend } = formData;
+    dispatch(signupUser(formData));
+  };
 
-    try {
-      const response = await axios.post('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/signup', formDataToSend);
-      console.log(response.data);
-      setSignupSuccess(true);
-      await sendVerificationEmail(formData.email);
-      setSubmittedEmail(formData.email);
+  useEffect(() => {
+    if (signupSuccess) {
       setFormData({
         firstName: '',
         lastName: '',
@@ -48,37 +46,16 @@ const SignupForm: React.FC = () => {
         password: '',
         rePassword: '',
         phone: '',
-        role: 'buyer', // Reset role to default after submission
+        role: 'buyer',
       });
-      setError(null);
-       
-    } catch (error: any) {
-      setError(error.response.data.message);
     }
-  };
-
-  const sendVerificationEmail = async (email: string) => {
-    try {
-      await axios.post(
-        'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/verify-email?token',
-        { email },
-      );
-      console.log(`Verification email sent to ${email}.`);
-    } catch (error) {
-      console.error('Error sending verification email:', error);
-    }
-  };
+  }, [signupSuccess]);
 
   return (
     <div className="container mx-auto py-8 signup-form">
-      <h1 className="text-3xl font-bold text-center mb-8">
-        Create Your Account Here!
-      </h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Create Your Account Here!</h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-md mx-auto signup-form__form"
-      >
+      <form onSubmit={handleSubmit} className="max-w-md mx-auto signup-form__form">
         <div className="mb-4">
           <input
             type="text"
@@ -166,8 +143,8 @@ const SignupForm: React.FC = () => {
         </div>
 
         <div className="flex items-center justify-between">
-          <button type="submit" className="button">
-            Sign Up
+          <button type="submit" className="button" disabled={loading}>
+            {loading ? 'Signing Up...' : 'Sign Up'}
           </button>
         </div>
       </form>
@@ -182,8 +159,7 @@ const SignupForm: React.FC = () => {
 
       {signupSuccess && (
         <div className="mb-4 text-green-500 text-center success-message">
-          Signup successful! Please check your email ({submittedEmail}) for
-          verification instructions.
+          Signup successful! Please check your email ({submittedEmail}) for verification instructions.
         </div>
       )}
     </div>
