@@ -1,0 +1,65 @@
+.mb-4 {
+    .input-field {
+      border-radius: 8px;
+      width: 432px;
+      height: 42px;
+      padding-left: 10px;
+      border: 1.5px solid #808080; 
+      color: #808080;
+      margin-top: 30px;
+      background-color:#EFF2FE;
+    }
+  
+   
+  }
+  .button {
+    width: 500px;
+    height: 42px; 
+    background-color: #5A7BFA;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+  }
+  .button:hover{
+    background-color: #231F20;
+  }
+  p{
+
+    margin-top: 30px;
+    margin-left: 100px;
+    .login{
+        color: #5A7BFA;
+    }
+    .login:hover{
+      color:#231F20;
+    }
+
+
+  }
+  .success-message {
+    margin-top: 30px;
+    text-align: center;
+    color: green;
+  }
+  /* Adjustments for responsiveness */
+  @media (max-width: 768px) {
+    .mb-4 ,
+    .input-field,
+    .button {
+      width: 94%; 
+      margin-left: 0px;
+      margin-right: 20px;
+    }
+    p{
+
+      margin-top: 30px;
+      margin-left: 60px;
+    }
+  
+  }
+  

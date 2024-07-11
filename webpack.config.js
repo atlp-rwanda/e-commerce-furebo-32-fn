@@ -84,4 +84,5 @@ module.exports = {
     hash: false,
     version: false,
   },
+ 
 };
