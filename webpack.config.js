@@ -2,14 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: './src/index.tsx',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-    publicPath: "/",
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/',
   },
   resolve: {
-    extensions: [".js", ".ts", ".tsx"],
+    extensions: ['.js', '.ts', '.tsx'],
   },
   module: {
     rules: [
@@ -17,7 +17,7 @@ module.exports = {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
@@ -31,44 +31,44 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          "style-loader",
-          "css-loader",
-          "postcss-loader", // Add postcss-loader here
-          "sass-loader",
+          'style-loader',
+          'css-loader',
+          'postcss-loader', // Add postcss-loader here
+          'sass-loader',
         ],
       },
       {
         test: /\.css$/,
         use: [
-          "style-loader",
-          "css-loader",
-          "postcss-loader", // Add postcss-loader here
+          'style-loader',
+          'css-loader',
+          'postcss-loader', // Add postcss-loader here
         ],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
           },
         ],
       },
       {
         test: /\.test\.tsx$/,
         exclude: /node_modules/,
-        use: "babel-loader",
+        use: 'babel-loader',
       },
     ],
   },
-  mode: "development",
+  mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
+      template: './index.html',
     }),
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, "public"),
+      directory: path.join(__dirname, 'public'),
     },
     compress: true,
     port: 3001,
@@ -84,4 +84,5 @@ module.exports = {
     hash: false,
     version: false,
   },
+ 
 };
