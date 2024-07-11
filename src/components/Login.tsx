@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
+import { GoogleLogin } from '@react-oauth/google';
+import InputAdornment from '@mui/material/InputAdornment';
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [accessToken, setAccessToken] = useState(null);
 
   useEffect(() => {
-    const rememberedEmail = localStorage.getItem("rememberedEmail");
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
     if (rememberedEmail) {
       setEmail(rememberedEmail);
       setRememberMe(true);
@@ -24,46 +26,46 @@ function Login() {
     e.preventDefault();
 
     if (!email || !password) {
-      setError("Please fill in both fields.");
+      setError('Please fill in both fields.');
       return;
     }
 
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
-      setError("Please enter a valid email address.");
+      setError('Please enter a valid email address.');
       return;
     }
 
     try {
       const response = await fetch(
-        "https://e-commerce-furebo-32-bn-1.onrender.com/api/users/login",
+        'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/login',
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ email, password }),
-        }
+        },
       );
 
       if (!response.ok) {
         const errorResponse = await response.json();
         throw new Error(
           errorResponse.message ||
-            "Invalid email or password, Please check your credentials."
+            'Invalid email or password, Please check your credentials.',
         );
       }
 
       const data = await response.json();
-      localStorage.setItem("token", data.token);
+      localStorage.setItem('token', data.token);
 
       if (rememberMe) {
-        localStorage.setItem("rememberedEmail", email);
+        localStorage.setItem('rememberedEmail', email);
       } else {
-        localStorage.removeItem("rememberedEmail");
+        localStorage.removeItem('rememberedEmail');
       }
 
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch (error: any) {
       setError(error.message);
     }
@@ -74,7 +76,7 @@ function Login() {
   };
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
   };
@@ -82,6 +84,25 @@ function Login() {
   const handleRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRememberMe(e.target.checked);
   };
+
+  const onLoginSuccess = (response: any) => {
+    setAccessToken(response.access_token);
+
+    // Send the access token to your backend for validation and user creation (if necessary)
+    fetch('/api/google/token', {
+      body: JSON.stringify({ accessToken }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // Store the received token (e.g., JWT) in local storage (if applicable)
+        localStorage.setItem('authToken', data.token);
+        // Handle successful authentication (e.g., redirect to protected routes)
+      })
+      .catch((error) => {
+        console.error('Error sending token to backend:', error);
+      });
+  };
+
   return (
     <div className="login-container">
       <div className="login-leftPart">
@@ -103,7 +124,7 @@ function Login() {
           <div className="input-field">
             <input
               id="password"
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -138,6 +159,8 @@ function Login() {
             Login
           </button>
         </form>
+        <p className="text-center my-3 font-thin">Or Continue with Google</p>
+        <GoogleLogin onSuccess={onLoginSuccess} />
         <p className="login-links">
           Don’t have an account? <a href="/sign-up">Sign Up</a>
         </p>
