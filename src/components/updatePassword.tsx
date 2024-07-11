@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { FiEyeOff, FiEye } from 'react-icons/fi';
+import { useUpdatePasswordMutation } from '../store/actions/user'; // Assuming you've exported useUpdatePasswordMutation correctly
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/updatePasswordForm.scss';
-
+import { getIdFromToken } from "../utils/decodeToken";
+import CircularProgress from '@mui/material/CircularProgress';
+import "../styles/updatePasswordForm.scss"
 const UpdatePasswordForm = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -9,8 +14,9 @@ const UpdatePasswordForm = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const [updatePassword, { isLoading, isError, error }] = useUpdatePasswordMutation(); // Using the mutation hook
 
   const toggleOldPasswordVisibility = () => {
     setShowOldPassword(!showOldPassword);
@@ -44,20 +50,34 @@ const UpdatePasswordForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Handle form submission logic here
-      console.log('Form submitted', { oldPassword, newPassword, confirmPassword });
+      const id = getIdFromToken();
+      try {
+        const response = await updatePassword({ id: `${id}`, oldPassword, newPassword}).unwrap(); // Call mutation
+        toast.success(response.message);
+        // Clear the input fields
+        setOldPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+      } catch (err: any) {
+        console.error(err.data.message);
+        toast.error(err.data?.message || 'An error occurred. Please try again.');
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          serverError: err.data?.message || 'An error occurred. Please try again.',
+        }));
+      }
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center box-container">
-      <div className="flex flex-col items-center justify-center w-full max-w-md mx-auto mt-10 bg-white p-6 rounded-lg shadow-md lg:max-w-lg box">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full">
+      <div className="w-full max-w-md mx-auto mt-10 bg-white p-6 rounded-lg shadow-md lg:max-w-lg">
         <div className="flex items-center justify-center mb-6">
-          <img src="/images/logo.png" alt="GeekMart Logo" className="h-14 mr-4" />
+          <img src="/images/logo.png" alt="GeekMart Logo" className="h-20 mr-4" />
           <h2 className="text-2xl font-semibold text-gray-700">Update Password</h2>
         </div>
         <form onSubmit={handleSubmit} className="w-full">
@@ -73,9 +93,9 @@ const UpdatePasswordForm = () => {
               <button
                 type="button"
                 onClick={toggleOldPasswordVisibility}
-                className="absolute right-3 top-3 text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 h-full w-10 flex items-center justify-center"
               >
-                {showOldPassword ? <FiEyeOff /> : <FiEye />}
+                {showOldPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
               </button>
             </div>
             {errors.oldPassword && <p className="text-red-500 text-sm mt-1">{errors.oldPassword}</p>}
@@ -92,9 +112,9 @@ const UpdatePasswordForm = () => {
               <button
                 type="button"
                 onClick={toggleNewPasswordVisibility}
-                className="absolute right-3 top-3 text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 h-full w-10 flex items-center justify-center"
               >
-                {showNewPassword ? <FiEyeOff /> : <FiEye />}
+                {showNewPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
               </button>
             </div>
             {errors.newPassword && <p className="text-red-500 text-sm mt-1">{errors.newPassword}</p>}
@@ -111,20 +131,23 @@ const UpdatePasswordForm = () => {
               <button
                 type="button"
                 onClick={toggleConfirmPasswordVisibility}
-                className="absolute right-3 top-3 text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 h-full w-10 flex items-center justify-center"
               >
-                {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                {showConfirmPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
               </button>
             </div>
             {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
           </div>
+          {errors.serverError && <p className="text-red-500 text-sm mt-1 p-2">{errors.serverError}</p>}
           <button
             type="submit"
-            className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 btn"
+            className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 rst-btn"
           >
+            {isLoading ? <CircularProgress size={24} className="mr-2" style={{ color: '#fff' }}/> : null}
             Reset Password
           </button>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );
