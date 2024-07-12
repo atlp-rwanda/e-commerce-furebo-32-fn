@@ -13,6 +13,7 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const rememberedEmail = localStorage.getItem('rememberedEmail');
@@ -36,6 +37,9 @@ function Login() {
       return;
     }
 
+     setLoading(true);
+    setError('');
+    
     try {
       const response = await fetch(
         'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/login',
@@ -109,7 +113,7 @@ function Login() {
         <div className="login-intro">
           <img src="/images/logo.png" alt="Login illustration" />
           <h1>Welcome Back!</h1>
-          <p>Please enter your credential</p>
+          <p className="p-cred">Please enter your credential</p>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="input-field">
@@ -155,14 +159,19 @@ function Login() {
             </p>
           </div>
           {error && <div className="error-message">{error}</div>}
-          <button type="submit" className="btn">
-            Login
+          <button type="submit" className="btn" disabled={loading}>
+            {loading ? 'LOGIN...' : 'LOGIN'}
           </button>
         </form>
-        <p className="text-center my-3 font-thin">Or Continue with Google</p>
+        <p className="text-center m-9 font-semi-bold">
+          Or Continue with Google
+        </p>
         <GoogleLogin onSuccess={onLoginSuccess} />
-        <p className="login-links">
-          Don’t have an account? <a href="/signup">Sign Up</a>
+        <p className="text-center m-9 font-semi-bold">
+          Don’t have an account?{' '}
+          <a href="/signup" className="login-links">
+            Sign Up
+          </a>
         </p>
       </div>
       <div className="login-rightPart">
