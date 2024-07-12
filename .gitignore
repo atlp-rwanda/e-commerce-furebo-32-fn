@@ -2,4 +2,5 @@
 /dist
 package-lock.json
 /coverage
+*storybook.log
 .eslintignore
