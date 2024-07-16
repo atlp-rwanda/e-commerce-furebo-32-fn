@@ -53,7 +53,7 @@ function Popular() {
           activeClassName={'bg-primary-300 text-white'}
         />
       </div>
-      <div className="flex gap-5">
+      <div className="flex gap-5 flex-wrap">
         {paginatedItems.map((product: any, index: number) => (
           <ProductCard key={index} popularProducts={product} />
         ))}

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BASE_API_URL } from '../../utils/constants/config';
 
 interface UserState {
   error: string | null;
@@ -20,10 +21,15 @@ export const signupUser = createAsyncThunk(
   async (formData: any, { rejectWithValue }) => {
     try {
       const { rePassword, ...formDataToSend } = formData;
-      const response = await axios.post('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/signup', formDataToSend);
+      const response = await axios.post(
+      `${BASE_API_URL}/api/users/signup`,
+        formDataToSend,
+      );
       
       
-      await axios.get(`https://e-commerce-furebo-32-bn-1.onrender.com/api/users/verify-email?token=${response.data.token}`);
+      await axios.get(
+        `${BASE_API_URL}/api/users/verify-email?token=${response.data.token}`,
+      );
       
       return { email: formDataToSend.email, data: response.data };
     } catch (error: any) {

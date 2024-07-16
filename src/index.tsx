@@ -13,6 +13,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { ConfigProvider } from 'antd';
+import antdTheme from './utils/config/antdConfig';
 
 const clientId =
   '702830308593-fnn05bka4scjq5gpria8qv33elohft62.apps.googleusercontent.com';
@@ -22,13 +24,15 @@ const root = createRoot(container!);
 
 root.render(
   <GoogleOAuthProvider clientId={clientId}>
-    <React.StrictMode>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
-    </React.StrictMode>
+    <ConfigProvider theme={antdTheme}>
+      <React.StrictMode>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </React.StrictMode>
+    </ConfigProvider>
     ,
   </GoogleOAuthProvider>,
 );
