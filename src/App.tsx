@@ -15,6 +15,7 @@ import Products from './components/seller/Products';
 import Collection from './components/seller/Collection';
 import Wishlist from './components/seller/Wishlist';
 import SellerLayout from './layout/sellerLayout';
+import UpdatePasswordForm from "./components/updatePassword"
 const App: React.FC = () => {
   const [role, setRole] = useState(window.localStorage.getItem('role'));
   return (
@@ -29,6 +30,7 @@ const App: React.FC = () => {
               <Route path="product" element={<Product />} />
               <Route path="about" element={<About />} />
               <Route path="signup" element={<Signup />} />
+              <Route path="updatepassword" element={<UpdatePasswordForm />} />
             </>
           ) : (
             <>

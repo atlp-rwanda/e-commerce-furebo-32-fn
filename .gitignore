@@ -3,4 +3,5 @@
 package-lock.json
 yarn-lock.json
 /coverage
+*storybook.log
 .eslintignore
