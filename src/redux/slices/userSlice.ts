@@ -22,13 +22,13 @@ export const signupUser = createAsyncThunk(
     try {
       const { rePassword, ...formDataToSend } = formData;
       const response = await axios.post(
-      `${BASE_API_URL}/api/users/signup`,
+      `${BASE_API_URL}api/users/signup`,
         formDataToSend,
       );
       
       
       await axios.get(
-        `${BASE_API_URL}/api/users/verify-email?token=${response.data.token}`,
+        `${BASE_API_URL}api/users/verify-email?token=${response.data.token}`,
       );
       
       return { email: formDataToSend.email, data: response.data };
