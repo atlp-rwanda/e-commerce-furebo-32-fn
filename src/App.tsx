@@ -11,7 +11,11 @@ import ProtectedRoute from "./components/ProtectedRoute"; // Assuming you have P
 import Product from "./components/Product";
 import About from "./components/About";
 import Signup from "./components/Signup";
-import UpdatePasswordForm from "./components/updatePassword"
+import UpdatePasswordForm from "./components/updatePassword";
+import ItemView from './components/ItemView'; // New addition
+import SellerCollection from './components/SellerCollection'; // New addition
+import './index.css';
+
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={MuiTheme}>
@@ -25,6 +29,8 @@ const App: React.FC = () => {
           <Route path="about" element={<About />} />
           <Route path="signup" element={<Signup />} />
           <Route path="updatepassword" element={<UpdatePasswordForm />} />
+          <Route path="item/:itemId" element={<ItemView />} /> {/* New addition */}
+          <Route path="seller/collection" element={<SellerCollection />} /> {/* New addition */}
         </Route>
         <Route
           path="dashboard"

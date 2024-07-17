@@ -13,9 +13,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import './tailwind.css'; // Import Tailwind CSS
 
-const clientId =
-  '702830308593-fnn05bka4scjq5gpria8qv33elohft62.apps.googleusercontent.com';
+const clientId = '702830308593-fnn05bka4scjq5gpria8qv33elohft62.apps.googleusercontent.com';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -29,6 +29,5 @@ root.render(
         </BrowserRouter>
       </Provider>
     </React.StrictMode>
-    ,
-  </GoogleOAuthProvider>,
+  </GoogleOAuthProvider>
 );
