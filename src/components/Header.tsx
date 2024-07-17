@@ -4,59 +4,79 @@ import { FiSearch, FiShoppingCart, FiBell, FiHeart, FiUser, FiMenu } from 'react
 import '../styles/header.scss';
 
 const Header: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   return (
     <header className="header bg-eff2fe text-hsl(0,0%,10%) py-4 px-4 flex justify-between items-center relative">
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-20 w-full">
-
-       
         <div className="flex items-center w-full">
           <img src="/images/logo.png" alt="Logo" className="logo ml-auto" />
-
-          {/* Hamburger Menu - visible on small screens */}
-          <button onClick={toggleMenu} className=" humb text-gray-600 focus:outline-none sm:hidden">
-            <FiMenu className=" h-8 w-8" />
-          </button>
         </div>
 
-        {/* Mobile Menu */}
-        <div className={`mobile-menu sm:hidden fixed top-20 left-0 bg-black w-auto h-full text-white transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-          <nav className="flex flex-col items-start space-y-1 p-4">
-            <NavLink to="/" className="text-white underline" onClick={toggleMenu}>
-              Home
-            </NavLink>
-            <NavLink to="/product" className="text-white" onClick={toggleMenu}>
-              Products
-            </NavLink>
-            <NavLink to="/about" className="text-white" onClick={toggleMenu}>
-              About
-            </NavLink>
-            <NavLink to="/contact" className="text-white" onClick={toggleMenu}>
-              Contact
-            </NavLink>
-          </nav>
+        {/* Hamburger Menu Icon for Mobile */}
+        <div className="sm:hidden" onClick={() => setIsNavOpen(!isNavOpen)}>
+          <FiMenu className="menu text-black text-2xl" />
         </div>
 
         {/* Desktop Navigation Links */}
         <nav className="nav-links hidden sm:flex flex-col sm:flex-row gap-4">
-          <NavLink to="/" className="text-white underline">
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? 'active text-blue-500 underline' : 'text-white underline')}
+          >
             Home
           </NavLink>
-          <NavLink to="/product" className="text-white">
+          <NavLink
+            to="/product"
+            className={({ isActive }) => (isActive ? 'active text-blue-500' : 'text-white')}
+          >
             Products
           </NavLink>
-          <NavLink to="/about" className="text-white">
+          <NavLink
+            to="/about"
+            className={({ isActive }) => (isActive ? 'active text-blue-500' : 'text-white')}
+          >
             About
           </NavLink>
-          <NavLink to="/contact" className="text-white">
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => (isActive ? 'active text-blue-500' : 'text-white')}
+          >
             Contact
           </NavLink>
         </nav>
+
+        {/* Mobile Navigation Links */}
+        <div className={`mobile-nav-links ${isNavOpen ? 'block' : 'hidden'} sm:hidden absolute top-0 left-0 w-full bg-black  text-white flex flex-col items-center pt-5`}>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4')}
+            onClick={() => setIsNavOpen(false)}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/product"
+            className={({ isActive }) => (isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4')}
+            onClick={() => setIsNavOpen(false)}
+          >
+            Products
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => (isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4')}
+            onClick={() => setIsNavOpen(false)}
+          >
+            About
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => (isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4')}
+            onClick={() => setIsNavOpen(false)}
+          >
+            Contact
+          </NavLink>
+        </div>
 
         {/* Search Box */}
         <div className="search-box relative ml-auto">
@@ -86,6 +106,9 @@ const Header: React.FC = () => {
           </NavLink>
         </div>
       </div>
+
+     
+    
     </header>
   );
 };
