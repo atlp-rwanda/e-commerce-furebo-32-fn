@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { PenLine, Trash2 } from 'lucide-react';
 import AddCollection from './addCollection';
+import EditCollection from './EditCollection';
 import { Space, Spin, Table } from 'antd';
 import { useGetCollectionsQuery } from '../../store/actions/collection';
 
@@ -7,6 +9,7 @@ const { Column } = Table;
 
 function Collection() {
   const { data, isLoading, isFetching } = useGetCollectionsQuery({});
+  const [editingCollection, setEditingCollection] = useState(null);
 
   return (
     <div className="flex flex-col">
@@ -35,10 +38,13 @@ function Collection() {
             <Column
               title="Action"
               key="action"
-              render={(_: any) => (
+              render={(_: any, record: any) => (
                 <Space size="middle">
                   <div className="flex gap-1 justify-end">
-                    <div className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white">
+                    <div
+                      className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white"
+                      onClick={() => setEditingCollection(record)}
+                    >
                       <PenLine width={15} height={15} />
                     </div>
                     <div className="flex justify-center items-center cursor-pointer hover:bg-red-100 hover:text-red-600 hover:border hover:border-red-600 border border-red-600 w-fit p-1 rounded-md bg-red-600 text-white">
@@ -51,6 +57,12 @@ function Collection() {
           </Table>
         )}
       </div>
+      {editingCollection && (
+        <EditCollection
+          collection={editingCollection}
+          onClose={() => setEditingCollection(null)}
+        />
+      )}
     </div>
   );
 }

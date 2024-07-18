@@ -33,7 +33,17 @@ const productsEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['products'],
     }),
-    
+    updateProduct: builder.mutation<any, { id: string; formData: FormData }>({
+      query: ({ id, formData }) => ({
+        url: `/api/updateProduct/${id}`,
+        method: 'PATCH',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['products'],
+    }),
   }),
 });
 
@@ -41,4 +51,5 @@ export const {
   useGetgetProductsQuery,
   useGetSellerProductsQuery,
   useCreateProductMutation,
+  useUpdateProductMutation,
 } = productsEndpoints;
