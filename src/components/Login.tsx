@@ -4,6 +4,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import { GoogleLogin } from '@react-oauth/google';
 import InputAdornment from '@mui/material/InputAdornment';
+import { BASE_API_URL } from '../utils/constants/config';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -41,16 +42,13 @@ function Login() {
     setError('');
     
     try {
-      const response = await fetch(
-        'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
+      const response = await fetch(`${BASE_API_URL}api/users/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({ email, password }),
+      });
 
       if (!response.ok) {
         const errorResponse = await response.json();
@@ -62,19 +60,22 @@ function Login() {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.data.user.role);
+      localStorage.setItem('user', JSON.stringify(data.data.user));
 
       if (rememberMe) {
         localStorage.setItem('rememberedEmail', email);
       } else {
         localStorage.removeItem('rememberedEmail');
       }
-
-      navigate('/dashboard');
+      if(data.data.user.role === 'seller') {
+        navigate('/');
+        window.location.reload();
+      }
     } catch (error: any) {
       setError(error.message);
     }
   };
-
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
