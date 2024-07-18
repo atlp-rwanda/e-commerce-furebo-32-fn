@@ -13,7 +13,7 @@ import About from './components/About';
 import Signup from './components/Signup';
 import Products from './components/seller/Products';
 import Collection from './components/seller/Collection';
-import Wishlist from './components/seller/Wishlist';
+import Wishlist from './components/Wishlist';
 import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from "./components/updatePassword"
 const App: React.FC = () => {
@@ -30,6 +30,7 @@ const App: React.FC = () => {
               <Route path="product" element={<Product />} />
               <Route path="about" element={<About />} />
               <Route path="signup" element={<Signup />} />
+              <Route path="wishlist" element={<Wishlist />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
             </>
           ) : (
@@ -37,7 +38,6 @@ const App: React.FC = () => {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="products" element={<Products />} />
               <Route path="collection" element={<Collection />} />
-              <Route path="wishlist" element={<Wishlist />} />
             </>
           )}
         </Route>

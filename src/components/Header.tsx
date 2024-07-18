@@ -98,7 +98,7 @@ const Header: React.FC = () => {
           <NavLink to="/notifications" className="text-white">
             <FiBell />
           </NavLink>
-          <NavLink to="/likes" className="text-white">
+          <NavLink to="/wishlist" className="text-white">
             <FiHeart />
           </NavLink>
           <NavLink to="/login" className="text-white">
