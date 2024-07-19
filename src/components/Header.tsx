@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FiSearch, FiShoppingCart, FiBell, FiHeart, FiUser, FiMenu } from 'react-icons/fi';
+import {
+  FiSearch,
+  FiShoppingCart,
+  FiBell,
+  FiHeart,
+  FiUser,
+  FiMenu,
+} from 'react-icons/fi';
 import '../styles/header.scss';
+import { Badge, Spin } from 'antd';
+import { useViewCartQuery } from '../store/actions/cart';
+import Cart from './cart';
 
 const Header: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { data, isLoading, isFetching } = useViewCartQuery({});
+  const cartItemCount = data && data.items ? data.items.length : 0;
 
   return (
     <header className="header bg-eff2fe text-hsl(0,0%,10%) py-4 px-4 flex justify-between items-center relative">
@@ -22,56 +34,84 @@ const Header: React.FC = () => {
         <nav className="nav-links hidden sm:flex flex-col sm:flex-row gap-4">
           <NavLink
             to="/"
-            className={({ isActive }) => (isActive ? 'active text-blue-500 underline' : 'text-white underline')}
+            className={({ isActive }) =>
+              isActive
+                ? 'active text-blue-500 underline'
+                : 'text-white underline'
+            }
           >
             Home
           </NavLink>
           <NavLink
             to="/product"
-            className={({ isActive }) => (isActive ? 'active text-blue-500' : 'text-white')}
+            className={({ isActive }) =>
+              isActive ? 'active text-blue-500' : 'text-white'
+            }
           >
             Products
           </NavLink>
           <NavLink
             to="/about"
-            className={({ isActive }) => (isActive ? 'active text-blue-500' : 'text-white')}
+            className={({ isActive }) =>
+              isActive ? 'active text-blue-500' : 'text-white'
+            }
           >
             About
           </NavLink>
           <NavLink
             to="/contact"
-            className={({ isActive }) => (isActive ? 'active text-blue-500' : 'text-white')}
+            className={({ isActive }) =>
+              isActive ? 'active text-blue-500' : 'text-white'
+            }
           >
             Contact
           </NavLink>
         </nav>
 
         {/* Mobile Navigation Links */}
-        <div className={`mobile-nav-links ${isNavOpen ? 'block' : 'hidden'} sm:hidden absolute top-0 left-0 w-full bg-black  text-white flex flex-col items-center pt-5`}>
+        <div
+          className={`mobile-nav-links ${isNavOpen ? 'block' : 'hidden'} sm:hidden absolute top-0 left-0 w-full bg-black  text-white flex flex-col items-center pt-5`}
+        >
           <NavLink
             to="/"
-            className={({ isActive }) => (isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4')}
+            className={({ isActive }) =>
+              isActive
+                ? 'active text-blue-500 underline mb-4'
+                : 'text-white mb-4'
+            }
             onClick={() => setIsNavOpen(false)}
           >
             Home
           </NavLink>
           <NavLink
             to="/product"
-            className={({ isActive }) => (isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4')}
+            className={({ isActive }) =>
+              isActive
+                ? 'active text-blue-500 underline mb-4'
+                : 'text-white mb-4'
+            }
             onClick={() => setIsNavOpen(false)}
           >
             Products
           </NavLink>
           <NavLink
             to="/about"
-            className={({ isActive }) => (isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4')}
+            className={({ isActive }) =>
+              isActive
+                ? 'active text-blue-500 underline mb-4'
+                : 'text-white mb-4'
+            }
             onClick={() => setIsNavOpen(false)}
           >
             About
           </NavLink>
           <NavLink
             to="/contact"
-            className={({ isActive }) => (isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4')}
+            className={({ isActive }) =>
+              isActive
+                ? 'active text-blue-500 underline mb-4'
+                : 'text-white mb-4'
+            }
             onClick={() => setIsNavOpen(false)}
           >
             Contact
@@ -92,9 +132,7 @@ const Header: React.FC = () => {
 
         {/* Icons */}
         <div className="icons flex gap-4">
-          <NavLink to="/cart" className="text-white">
-            <FiShoppingCart />
-          </NavLink>
+            <Cart />
           <NavLink to="/notifications" className="text-white">
             <FiBell />
           </NavLink>
@@ -106,9 +144,6 @@ const Header: React.FC = () => {
           </NavLink>
         </div>
       </div>
-
-     
-    
     </header>
   );
 };
