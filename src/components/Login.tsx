@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
-import { GoogleLogin } from '@react-oauth/google';
 import InputAdornment from '@mui/material/InputAdornment';
 
 function Login() {
@@ -12,7 +11,6 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -37,9 +35,9 @@ function Login() {
       return;
     }
 
-     setLoading(true);
+    setLoading(true);
     setError('');
-    
+
     try {
       const response = await fetch(
         'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/login',
@@ -87,24 +85,6 @@ function Login() {
 
   const handleRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRememberMe(e.target.checked);
-  };
-
-  const onLoginSuccess = (response: any) => {
-    setAccessToken(response.access_token);
-
-    // Send the access token to your backend for validation and user creation (if necessary)
-    fetch('/api/google/token', {
-      body: JSON.stringify({ accessToken }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // Store the received token (e.g., JWT) in local storage (if applicable)
-        localStorage.setItem('authToken', data.token);
-        // Handle successful authentication (e.g., redirect to protected routes)
-      })
-      .catch((error) => {
-        console.error('Error sending token to backend:', error);
-      });
   };
 
   return (
@@ -166,7 +146,7 @@ function Login() {
         <p className="text-center m-9 font-semi-bold">
           Or Continue with Google
         </p>
-        <GoogleLogin onSuccess={onLoginSuccess} />
+        <button>google</button>
         <p className="text-center m-9 font-semi-bold">
           Don’t have an account?{' '}
           <a href="/signup" className="login-links">
