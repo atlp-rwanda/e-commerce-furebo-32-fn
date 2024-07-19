@@ -18,6 +18,8 @@ import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from "./components/updatePassword"
 import UserManagement from './components/UserManagement';
 
+import { RequestResetPassword } from './components/RequestResetPassword';
+import { ResetPassword } from './components/resetPassword';
 
 const App: React.FC = () => {
   const [role, setRole] = useState(window.localStorage.getItem('role'));
@@ -36,6 +38,8 @@ const App: React.FC = () => {
               <Route path="signup" element={<Signup />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
             
+              <Route path='requestResetPassword' element={<RequestResetPassword/>}/>
+              <Route path='reset-password' element={<ResetPassword/>}/>
             </>
           ) : (
             <>
@@ -70,3 +74,4 @@ const App: React.FC = () => {
 };
 
 export { App };
+ 
