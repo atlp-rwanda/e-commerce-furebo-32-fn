@@ -1,17 +1,16 @@
 import baseAPI from "../api";
-const getAuthToken = () => {
-    return localStorage.getItem('token');
-};
-  
+
+const token = window.localStorage.getItem('token');
+
 const authEndpoints = baseAPI.injectEndpoints({
     endpoints: (builder) => ({
       updatePassword: builder.mutation<any, { id: string; oldPassword: string; newPassword: string}>({
         query: ({ id, oldPassword, newPassword }) => ({
-          url: `users/${id}/updatepassword`,
+          url: `/api/users/${id}/updatepassword`,
           method: "PATCH",
           body: { oldPassword, newPassword },
           headers: {
-            Authorization: `Bearer ${getAuthToken()}`,
+            Authorization: `Bearer ${token}`,
           },
         }),
       }),

@@ -1,4 +1,5 @@
-import { Heart, ScanEye, ShoppingCart, Star } from "lucide-react";
+import { Heart, ScanEye, Star } from "lucide-react";
+import AddCart from "../cart/addCart";
 
 function ProductCard({ popularProducts }: { popularProducts: any }) {
   const productImage =
@@ -42,9 +43,7 @@ function ProductCard({ popularProducts }: { popularProducts: any }) {
             ${popularProducts.price}
           </p>
         </div>
-        <div className="bg-primary-300 p-1 rounded-lg text-white">
-          <ShoppingCart />
-        </div>
+        <AddCart productId={popularProducts.id} />
       </div>
     </div>
   );

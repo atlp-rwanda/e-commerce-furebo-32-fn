@@ -72,6 +72,10 @@ function Login() {
         navigate('/');
         window.location.reload();
       }
+      if(data.data.user.role === 'admin') {
+        navigate('/dashboard');
+        window.location.reload();
+      }
     } catch (error: any) {
       setError(error.message);
     }
@@ -156,7 +160,7 @@ function Login() {
               <span>Remember me</span>
             </label>
             <p className="login-links">
-              <a href="/reset-password">Forgot Password?</a>
+              <a href="/requestResetPassword">Forgot Password?</a>
             </p>
           </div>
           {error && <div className="error-message">{error}</div>}
