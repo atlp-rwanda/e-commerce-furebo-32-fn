@@ -20,6 +20,8 @@ import UserManagement from './components/UserManagement';
 
 import { RequestResetPassword } from './components/RequestResetPassword';
 import { ResetPassword } from './components/resetPassword';
+import SuccessPage from "./components/checkout/sucessPage"
+import CancelledPage from "./components/checkout/cancelledPage"
 
 const App: React.FC = () => {
   const [role, setRole] = useState(window.localStorage.getItem('role'));
@@ -40,7 +42,10 @@ const App: React.FC = () => {
             
               <Route path='requestResetPassword' element={<RequestResetPassword/>}/>
               <Route path='reset-password' element={<ResetPassword/>}/>
-            </>
+
+              <Route path="sucessorder/:id" element={<SuccessPage />} />
+              <Route path="/cancelorder/:id" element={<CancelledPage />} />
+             </>
           ) : (
             <>
               <Route path="dashboard" element={<Dashboard />} />

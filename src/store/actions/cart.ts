@@ -36,7 +36,45 @@ const cartEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['cart'],
     }),
+    checkout: builder.mutation<any, { body: { street: string; city: string; country: string; zipCode: string } }>({
+      query: ({ body }) => ({
+        url: `/api/checkout`,
+        method: 'POST',
+        body,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['cart'],
+    }),
+    completePayment: builder.query<any, { orderId: string }>({
+      query: ({ orderId }) => ({
+        url: `/api/complete/${orderId}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+   cancelledPayment: builder.query<any, { orderId: string }>({
+      query: ({ orderId }) => ({
+        url: `/api/cancel/${orderId}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+    getOrderStatus: builder.query<any, { orderId: string }>({
+      query: ({ orderId }) => ({
+        url: `/api/order/${orderId}/status`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useViewCartQuery, useAddToCartMutation,useResetCartMutation } = cartEndpoints;
+export const { useViewCartQuery, useAddToCartMutation,useResetCartMutation, useCheckoutMutation,useLazyCompletePaymentQuery,useGetOrderStatusQuery,useLazyCancelledPaymentQuery } = cartEndpoints;
