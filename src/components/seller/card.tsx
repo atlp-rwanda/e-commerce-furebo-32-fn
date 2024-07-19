@@ -4,7 +4,7 @@ import { useDeleteProductMutation } from '../../store/actions/products';
 
 const { confirm } = Modal;
 
-const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
+const Card = (item: any) => {
 
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
@@ -71,12 +71,7 @@ const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
             <span className="text-xs">{item.price} rwf</span>
             <div className="flex gap-1 justify-end">
               <div
-                className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white"
-                onClick={() => {
-                  console.log('Edit clicked');
-                  onEdit(item);
-                }}
-              >
+                className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white">
                 <PenLine width={15} height={15} />
               </div>
               <div
