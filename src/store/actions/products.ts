@@ -11,6 +11,16 @@ const productsEndpoints = baseAPI.injectEndpoints({
         params,
       }),
     }),
+    getSingleProduct: builder.query<any, { params?: any; product_id: string }>({
+      query: ({ params, product_id }) => ({
+        url: `/api/viewProduct/${product_id}`,
+        method: 'GET',
+        params,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
     getSellerProducts: builder.query<any, { params?: any }>({
       query: ({ params }) => ({
         url: '/api/sellerViewProducts',
@@ -33,7 +43,6 @@ const productsEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['products'],
     }),
-    
   }),
 });
 
@@ -41,4 +50,5 @@ export const {
   useGetgetProductsQuery,
   useGetSellerProductsQuery,
   useCreateProductMutation,
+  useGetSingleProductQuery,
 } = productsEndpoints;
