@@ -16,12 +16,16 @@ import Collection from './components/seller/Collection';
 import Wishlist from './components/seller/Wishlist';
 import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from "./components/updatePassword"
+import UserManagement from './components/UserManagement';
+
+
 const App: React.FC = () => {
   const [role, setRole] = useState(window.localStorage.getItem('role'));
+
   return (
     <ThemeProvider theme={MuiTheme}>
       <Routes>
-        <Route path="/" element={role=='seller'?<SellerLayout />:<AppLayout />}>
+        <Route path="/" element={role === 'seller' ? <SellerLayout /> : <AppLayout />}>
           {role !== 'seller' ? (
             <>
               <Route index element={<Home />} />
@@ -31,6 +35,7 @@ const App: React.FC = () => {
               <Route path="about" element={<About />} />
               <Route path="signup" element={<Signup />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
+            
             </>
           ) : (
             <>
@@ -41,11 +46,21 @@ const App: React.FC = () => {
             </>
           )}
         </Route>
+        {/* Protected Route for Dashboard */}
         <Route
           path="dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        {/* Protected Route for Admin Users Management */}
+        <Route
+          path="/dashboard/users"
+          element={
+            <ProtectedRoute>
+              <UserManagement />
             </ProtectedRoute>
           }
         />

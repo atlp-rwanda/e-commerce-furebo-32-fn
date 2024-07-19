@@ -72,6 +72,10 @@ function Login() {
         navigate('/');
         window.location.reload();
       }
+      if(data.data.user.role === 'admin') {
+        navigate('/dashboard');
+        window.location.reload();
+      }
     } catch (error: any) {
       setError(error.message);
     }
