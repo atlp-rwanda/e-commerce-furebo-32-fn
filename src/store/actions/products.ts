@@ -1,23 +1,54 @@
-import baseAPI from "../api";
+import baseAPI from '../api';
 
-const getAuthToken = () => {
-  return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYnV5ZXIiLCJlbWFpbCI6Im11Z0BnbWFpbC5jb20iLCJpZCI6IjY4MWI0OGUzLWFkMjItNDVlNS1hZmMxLWVlZmVkZDI0M2U2OCIsImZpcnN0TmFtZSI6Ik11Z2lzaGEiLCJpYXQiOjE3MjA0MzA2NTQsImV4cCI6MTcyMDQzNDI1NH0.fIDaEP69jdb-20BPUEtYMoOK_mXcs7FayJ6VYJqK2xU";
-};
+const token = window.localStorage.getItem('token');
 
 const productsEndpoints = baseAPI.injectEndpoints({
   endpoints: (builder) => ({
     getgetProducts: builder.query<any, { params?: any }>({
       query: ({ params }) => ({
-        url: "/availableItems",
-        method: "GET",
+        url: '/api/availableItems',
+        method: 'GET',
+        params,
+      }),
+    }),
+    getSingleProduct: builder.query<any, { params?: any; product_id: string }>({
+      query: ({ params, product_id }) => ({
+        url: `/api/viewProduct/${product_id}`,
+        method: 'GET',
         params,
         headers: {
-          Authorization: `Bearer ${getAuthToken()}`,
+          Authorization: `Bearer ${token}`,
         },
       }),
     }),
-    
+    getSellerProducts: builder.query<any, { params?: any }>({
+      query: ({ params }) => ({
+        url: '/api/sellerViewProducts',
+        method: 'GET',
+        params,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ['products'],
+    }),
+    createProduct: builder.mutation<any, { formData: FormData }>({
+      query: ({ formData }) => ({
+        url: '/api/createProduct',
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['products'],
+    }),
   }),
 });
 
-export const { useGetgetProductsQuery } = productsEndpoints;
+export const {
+  useGetgetProductsQuery,
+  useGetSellerProductsQuery,
+  useCreateProductMutation,
+  useGetSingleProductQuery,
+} = productsEndpoints;

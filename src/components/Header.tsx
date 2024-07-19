@@ -9,6 +9,9 @@ import {
   FiMenu,
 } from 'react-icons/fi';
 import '../styles/header.scss';
+import { Badge, Spin } from 'antd';
+import { useViewCartQuery } from '../store/actions/cart';
+import Cart from './cart';
 import { useSearchProductsQuery } from '../store/actions/search';
 
 const Header: React.FC = () => {
@@ -29,8 +32,10 @@ const Header: React.FC = () => {
 
   const [showResults, setShowResults] = useState(false);
   const searchResultsRef = useRef<HTMLDivElement>(null);
+  const { data: cartData } = useViewCartQuery({});
+  const cartItemCount = cartData && cartData.items ? cartData.items.length : 0;
 
-  const { data } = useSearchProductsQuery(searchParams);
+  const { data: searchData } = useSearchProductsQuery(searchParams);
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -115,7 +120,7 @@ const Header: React.FC = () => {
         <div
           className={`mobile-nav-links ${
             isNavOpen ? 'block' : 'hidden'
-          } sm:hidden absolute top-0 left-0 w-full bg-black text-white flex flex-col items-center pt-5`}
+          } sm:hidden absolute top-0 left-0 w-full bg-black  text-white flex flex-col items-center pt-5`}
         >
           <NavLink
             to="/"
@@ -206,37 +211,38 @@ const Header: React.FC = () => {
           </button>
 
           {/* Search Results */}
-          {showResults && searchParams.search && data && data.products && (
-            <div
-              ref={searchResultsRef}
-              className="absolute bg-white z-10 top-7 w-full my-1 rounded-lg p-1"
-            >
-              {data.products.map((product: any) => (
-                <div
-                  key={product.id}
-                  className="flex hover:bg-indigo-300 p-1 rounded-lg cursor-pointer w-full flex justify-between"
-                >
-                  <div className="w-10 h-10">
-                    <img
-                      src={product.images[0]}
-                      alt={product.productName}
-                      className="w-10 h-10 rounded-lg"
-                    />
+          {showResults &&
+            searchParams.search &&
+            searchData &&
+            searchData.products && (
+              <div
+                ref={searchResultsRef}
+                className="absolute bg-white z-10 top-7 w-full my-1 rounded-lg p-1"
+              >
+                {searchData.products.map((product: any) => (
+                  <div
+                    key={product.id}
+                    className="flex hover:bg-indigo-300 p-1 rounded-lg cursor-pointer w-full flex justify-between"
+                  >
+                    <div className="w-10 h-10">
+                      <img
+                        src={product.images[0]}
+                        alt={product.productName}
+                        className="w-10 h-10 rounded-lg"
+                      />
+                    </div>
+                    <p className="p-1 m-0 text-center">{product.productName}</p>
+                    <p className="p-1 m-0 text-center">{product.category}</p>
+                    <p className="p-1 m-0 text-center">{product.price}</p>
                   </div>
-                  <p className="p-1 m-0 text-center">{product.productName}</p>
-                  <p className="p-1 m-0 text-center">{product.category}</p>
-                  <p className="p-1 m-0 text-center">{product.price}</p>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
         </div>
 
         {/* Icons */}
         <div className="icons flex gap-4">
-          <NavLink to="/cart" className="text-white">
-            <FiShoppingCart />
-          </NavLink>
+          {cartData && <Cart />}
           <NavLink to="/notifications" className="text-white">
             <FiBell />
           </NavLink>

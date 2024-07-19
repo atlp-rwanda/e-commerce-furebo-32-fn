@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import { BASE_API_URL } from '../utils/constants/config';
+import { FcGoogle } from 'react-icons/fc';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -39,16 +41,13 @@ function Login() {
     setError('');
 
     try {
-      const response = await fetch(
-        'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
+      const response = await fetch(`${BASE_API_URL}api/users/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({ email, password }),
+      });
 
       if (!response.ok) {
         const errorResponse = await response.json();
@@ -60,19 +59,26 @@ function Login() {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.data.user.role);
+      localStorage.setItem('user', JSON.stringify(data.data.user));
 
       if (rememberMe) {
         localStorage.setItem('rememberedEmail', email);
       } else {
         localStorage.removeItem('rememberedEmail');
       }
-
-      navigate('/dashboard');
+      if (data.data.user.role === 'seller') {
+        navigate('/');
+        window.location.reload();
+      }
+      if (data.data.user.role === 'admin') {
+        navigate('/dashboard');
+        window.location.reload();
+      }
     } catch (error: any) {
       setError(error.message);
     }
   };
-
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -85,6 +91,10 @@ function Login() {
 
   const handleRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRememberMe(e.target.checked);
+  };
+
+  const googleLogin = () => {
+    window.location.href = `${BASE_API_URL}api/google/auth`;
   };
 
   return (
@@ -135,7 +145,7 @@ function Login() {
               <span>Remember me</span>
             </label>
             <p className="login-links">
-              <a href="/reset-password">Forgot Password?</a>
+              <a href="/requestResetPassword">Forgot Password?</a>
             </p>
           </div>
           {error && <div className="error-message">{error}</div>}
@@ -146,7 +156,12 @@ function Login() {
         <p className="text-center m-9 font-semi-bold">
           Or Continue with Google
         </p>
-        <button>google</button>
+        <button
+          className="flex border w-full items-center justify-center p-3 rounded-lg hover:bg-blue-100"
+          onClick={() => googleLogin()}
+        >
+          <FcGoogle />
+        </button>
         <p className="text-center m-9 font-semi-bold">
           Don’t have an account?{' '}
           <a href="/signup" className="login-links">

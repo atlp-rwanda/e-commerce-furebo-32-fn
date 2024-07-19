@@ -7,7 +7,7 @@ const searchEndpoints = baseAPI.injectEndpoints({
       { search: string; min: any; max: any; category: string }
     >({
       query: ({ search, min, max, category }) => ({
-        url: '/searchProduct',
+        url: '/api/searchProduct',
         method: 'POST',
         params: {
           search,
