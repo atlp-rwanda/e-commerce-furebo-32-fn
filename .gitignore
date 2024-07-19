@@ -5,3 +5,5 @@ yarn-lock.json
 /coverage
 *storybook.log
 .eslintignore
+.yarnrc.yml
+/.yarn
