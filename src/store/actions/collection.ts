@@ -27,20 +27,6 @@ const collectionEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['collection'],
     }),
-    updateCollection: builder.mutation<
-      any,
-      { id: string; CollectionName: string; description: string }
-    >({
-      query: ({ id, CollectionName, description }) => ({
-        url: `/api/updateCollection/${id}`,
-        method: 'PUT',
-        body: { CollectionName, description },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      invalidatesTags: ['collection'],
-    }),
     deleteCollection: builder.mutation<any, { id: string }>({
       query: ({ id }) => ({
         url: `/api/deleteCollection/${id}`,
@@ -57,6 +43,5 @@ const collectionEndpoints = baseAPI.injectEndpoints({
 export const {
   useCreateCollectionMutation,
   useGetCollectionsQuery,
-  useUpdateCollectionMutation,
   useDeleteCollectionMutation,
 } = collectionEndpoints;
