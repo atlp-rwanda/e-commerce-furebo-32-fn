@@ -41,6 +41,16 @@ const collectionEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['collection'],
     }),
+        deleteCollection: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/api/deleteCollection/${id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['collection'],
+    }),
   }),
 });
 
@@ -48,4 +58,5 @@ export const {
   useCreateCollectionMutation,
   useGetCollectionsQuery,
   useUpdateCollectionMutation,
+  useDeleteCollectionMutation,
 } = collectionEndpoints;
