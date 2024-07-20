@@ -33,7 +33,16 @@ const productsEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['products'],
     }),
-    
+    viewSingleProduct: builder.mutation<any, { productId: any }>({
+      query: ({ productId}) => ({
+        url: `/api/viewProduct/${productId}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['products'],
+    }),
   }),
 });
 
@@ -41,4 +50,5 @@ export const {
   useGetgetProductsQuery,
   useGetSellerProductsQuery,
   useCreateProductMutation,
+  useViewSingleProductMutation
 } = productsEndpoints;

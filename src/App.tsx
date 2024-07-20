@@ -27,7 +27,10 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={MuiTheme}>
       <Routes>
-        <Route path="/" element={role === 'seller' ? <SellerLayout /> : <AppLayout />}>
+        <Route
+          path="/"
+          element={role === 'seller' ? <SellerLayout /> : <AppLayout />}
+        >
           {role !== 'seller' ? (
             <>
               <Route index element={<Home />} />
@@ -38,11 +41,11 @@ const App: React.FC = () => {
               <Route path="about" element={<About />} />
               <Route path="signup" element={<Signup />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
-              <Route path="item/:itemId" element={<ItemView />} /> {/* New addition */}
-              <Route path="seller/collection" element={<SellerCollection />} /> {/* New addition */}
             </>
           ) : (
             <>
+              <Route path="item/:itemId" element={<ItemView />} />
+              <Route path="seller/collection" element={<SellerCollection />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="products" element={<Products />} />
               <Route path="collection" element={<Collection />} />

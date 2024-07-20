@@ -2,12 +2,15 @@ import Card from './card';
 import { useGetSellerProductsQuery } from '../../store/actions/products';
 import AddProduct from './addProduct';
 import { Empty, Spin } from 'antd';
+import { Link } from 'react-router-dom';
+
 
 function Products() {
   const { data, isLoading, isFetching } = useGetSellerProductsQuery({});
   console.log(data, isLoading, isFetching);
 
   return (
+    
     <div className="flex flex-col">
       <div className="w-full flex justify-between items-center px-2 rounded-md border border-primary-300 ">
         <span className="text-black text-xl">Product</span>
@@ -21,12 +24,16 @@ function Products() {
             <Empty />
           ) : (
             data?.items.map((item: any, index: any) => (
+              <Link to={`/item/${item.id}`}>
               <Card key={index} item={item} />
+              
+               </Link>
             ))
           )}
         </div>
       )}
     </div>
+  
   );
 }
 
