@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { PenLine, Trash2 } from 'lucide-react';
 import AddCollection from './addCollection';
+import EditCollection from './EditCollection';
 import { Space, Spin, Table, Modal, notification } from 'antd';
 import {
   useGetCollectionsQuery,
@@ -13,6 +15,7 @@ function Collection() {
   const { data, isLoading, isFetching } = useGetCollectionsQuery({});
   const [deleteCollection, { isLoading: isDeleting }] =
     useDeleteCollectionMutation();
+  const [editingCollection, setEditingCollection] = useState(null);
 
 const showDeleteConfirm = (record: any) => {
   confirm({
@@ -69,7 +72,10 @@ const showDeleteConfirm = (record: any) => {
               render={(_: any, record: any) => (
                 <Space size="middle">
                   <div className="flex gap-1 justify-end">
-                    <div className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white">
+                    <div
+                      className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white"
+                      onClick={() => setEditingCollection(record)}
+                    >
                       <PenLine width={15} height={15} />
                     </div>
                     <div
@@ -85,6 +91,12 @@ const showDeleteConfirm = (record: any) => {
           </Table>
         )}
       </div>
+      {editingCollection && (
+        <EditCollection
+          collection={editingCollection}
+          onClose={() => setEditingCollection(null)}
+        />
+      )}
     </div>
   );
 }
