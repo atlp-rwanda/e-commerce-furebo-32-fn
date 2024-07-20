@@ -4,7 +4,7 @@ import { useDeleteProductMutation } from '../../store/actions/products';
 
 const { confirm } = Modal;
 
-const Card = (item: any) => {
+const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
 
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
@@ -35,8 +35,8 @@ const Card = (item: any) => {
   console.log(item);
 
   const productImage =
-    item.item.images && item.item.images.length > 0
-      ? item.item.images[0]
+    item.images && item.images.length > 0
+      ? item.images[0]
       : 'https://via.placeholder.com/200';
 
   console.log(productImage);
@@ -71,7 +71,12 @@ const Card = (item: any) => {
             <span className="text-xs">{item.price} rwf</span>
             <div className="flex gap-1 justify-end">
               <div
-                className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white">
+                className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white"
+                onClick={() => {
+                  console.log('Edit clicked');
+                  onEdit(item);
+                }}
+              >
                 <PenLine width={15} height={15} />
               </div>
               <div
