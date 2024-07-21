@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BASE_API_URL } from '../../utils/constants/config';
 
 interface User {
   id: string;
@@ -27,7 +28,7 @@ const initialState: UserState = {
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAPI) => {
   try {
-    const response = await axios.get('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/users');
+    const response = await axios.get(`${BASE_API_URL}api/users/users`);
     return response.data.data.users;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -44,7 +45,7 @@ export const updateUserRole = createAsyncThunk(
     try {
       const token = localStorage.getItem('token');
       const response = await axios.patch(
-        `https://e-commerce-furebo-32-bn-1.onrender.com/api/users/${userId}/role`,
+        `${BASE_API_URL}api/users/${userId}/role`,
         { role },
         {
           headers: {
@@ -69,8 +70,8 @@ export const updateUserRole = createAsyncThunk(
 export const signupUser = createAsyncThunk('user/signupUser', async (formData: any, { rejectWithValue }) => {
   try {
     const { rePassword, ...formDataToSend } = formData;
-    const response = await axios.post(`https://e-commerce-furebo-32-bn-1.onrender.com/api/users/signup`, formDataToSend);
-    await axios.get(`https://e-commerce-furebo-32-bn-1.onrender.com/api/users/verify-email?token=${response.data.token}`);
+    const response = await axios.post(`${BASE_API_URL}api/users/signup`, formDataToSend);
+    await axios.get(`${BASE_API_URL}api/users/verify-email?token=${response.data.token}`);
     return { email: formDataToSend.email, data: response.data };
   } catch (error: any) {
     return rejectWithValue(error.response.data.message);

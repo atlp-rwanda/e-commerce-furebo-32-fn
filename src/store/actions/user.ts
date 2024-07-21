@@ -15,9 +15,19 @@ const authEndpoints = baseAPI.injectEndpoints({
           },
         }),
       }),
+      verify2FA: builder.mutation<any, {code: string}>({
+        query: ({ code }) => ({
+          url: `api/users/verify-otp`,
+          method: "GET",
+          body: { code },
+          headers: {
+            Authorization: `Bearer ${getAuthToken()}`,
+          },
+        }),
+      }),
     }),
   });
 
 
-  export const { useUpdatePasswordMutation } = authEndpoints;
+  export const { useUpdatePasswordMutation, useVerify2FAMutation } = authEndpoints;
   

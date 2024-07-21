@@ -69,11 +69,15 @@ function Login() {
         localStorage.removeItem('rememberedEmail');
       }
       if(data.data.user.role === 'seller') {
-        navigate('/');
+        navigate('/2fa');
         window.location.reload();
       }
-      if(data.data.user.role === 'admin') {
+      else if(data.data.user.role === 'admin') {
         navigate('/dashboard');
+        window.location.reload();
+      }
+      else{
+        navigate('/');
         window.location.reload();
       }
     } catch (error: any) {
