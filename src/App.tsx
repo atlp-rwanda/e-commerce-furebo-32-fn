@@ -4,10 +4,13 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Contact from './components/Contact';
 import AppLayout from './layout/appLayout';
+import AdminLayout from './layout/adminLayout';
 import { ThemeProvider } from '@mui/material';
 import { MuiTheme } from './utils/config/muiTheme';
 import Dashboard from './components/Dashboard'; // Assuming you have Dashboard component
 import ProtectedRoute from './components/ProtectedRoute'; // Assuming you have ProtectedRoute component
+import ProtectedAdmin from './components/ProtectedAdmin'; 
+import {AdminDashboardPage} from './components/AdminDashboard'
 import Product from './components/Product';
 import About from './components/About';
 import Signup from './components/Signup';
@@ -55,24 +58,26 @@ const App: React.FC = () => {
             </>
           )}
         </Route>
-        {/* Protected Route for Dashboard */}
-        <Route
-          path="dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+       
         {/* Protected Route for Admin Users Management */}
+
+        <Route path="/dashboard" element={ 
+          <ProtectedAdmin>
+          <AdminLayout/>
+          </ProtectedAdmin>}>
         <Route
-          path="/dashboard/users"
+          path="users"
           element={
-            <ProtectedRoute>
+            <ProtectedAdmin>
               <UserManagement />
-            </ProtectedRoute>
+            </ProtectedAdmin>
           }
         />
+        <Route path="contacts" />
+        <Route path="products" />
+        <Route path="" element={<AdminDashboardPage />} />
+                   
+        </Route>
       </Routes>
     </ThemeProvider>
   );
