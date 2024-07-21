@@ -15,13 +15,13 @@ import Products from './components/seller/Products';
 import Collection from './components/seller/Collection';
 import Wishlist from './components/seller/Wishlist';
 import SellerLayout from './layout/sellerLayout';
-import UpdatePasswordForm from "./components/updatePassword"
+import UpdatePasswordForm from './components/updatePassword';
 import UserManagement from './components/UserManagement';
 
 import { RequestResetPassword } from './components/RequestResetPassword';
 import { ResetPassword } from './components/resetPassword';
-import SuccessPage from "./components/checkout/sucessPage"
-import CancelledPage from "./components/checkout/cancelledPage"
+import SuccessPage from './components/checkout/sucessPage';
+import CancelledPage from './components/checkout/cancelledPage';
 
 const App: React.FC = () => {
   const [role, setRole] = useState(window.localStorage.getItem('role'));
@@ -29,7 +29,10 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={MuiTheme}>
       <Routes>
-        <Route path="/" element={role === 'seller' ? <SellerLayout /> : <AppLayout />}>
+        <Route
+          path="/"
+          element={role === 'seller' ? <SellerLayout /> : <AppLayout />}
+        >
           {role !== 'seller' ? (
             <>
               <Route index element={<Home />} />
@@ -39,13 +42,16 @@ const App: React.FC = () => {
               <Route path="about" element={<About />} />
               <Route path="signup" element={<Signup />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
-            
-              <Route path='requestResetPassword' element={<RequestResetPassword/>}/>
-              <Route path='reset-password' element={<ResetPassword/>}/>
+
+              <Route
+                path="requestResetPassword"
+                element={<RequestResetPassword />}
+              />
+              <Route path="reset-password" element={<ResetPassword />} />
 
               <Route path="sucessorder/:id" element={<SuccessPage />} />
               <Route path="/cancelorder/:id" element={<CancelledPage />} />
-             </>
+            </>
           ) : (
             <>
               <Route path="dashboard" element={<Dashboard />} />
@@ -79,4 +85,3 @@ const App: React.FC = () => {
 };
 
 export { App };
- 

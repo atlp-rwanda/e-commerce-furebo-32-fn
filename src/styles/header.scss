@@ -1,7 +1,6 @@
 .header {
   background-color: #eff2fe;
   color: hsl(0, 0%, 10%);
-  padding: 10px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,7 +9,7 @@
   width: 100vw;
   left: 0;
   right: 0;
-  margin-left: 10px;
+
   @media (min-width: 542px) and (max-width: 912px) {
     padding: 5px 0;
     margin-left: 0px;
@@ -23,7 +22,6 @@
     bottom: 0;
     width: 100vw;
     height: 1.5px;
-    background-color: #444444;
     opacity: 0.2;
   }
 
@@ -31,26 +29,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: 1200px;
+    width: 100vw;
     padding: 0 10px;
   }
 
   .logo {
     width: 122px;
     height: 97px;
-   
 
     @media (max-width: 541px) {
       position: absolute;
-      right:0px;
+      right: 0px;
       bottom: 50px;
       width: 70px;
       height: 50px;
     }
     @media (min-width: 542px) and (max-width: 912px) {
       position: absolute;
-    margin-left: 0px;
+      margin-left: 0px;
       bottom: 30px;
       width: 70px;
       height: 50px;
@@ -61,11 +57,10 @@
     background-color: #eff2fe;
     box-shadow: none;
     display: flex;
-    gap: 3rem;
+    gap: 1rem;
 
     @media (max-width: 541px) {
       display: none;
-      
     }
 
     @media (min-width: 542px) and (max-width: 912px) {
@@ -100,17 +95,16 @@
       &.active {
         color: #5a7bfa;
         text-decoration: underline;
-        background-color: transparent; 
+        background-color: transparent;
       }
     }
   }
 
   .search-box {
     position: relative;
-    margin-left: auto;
-    margin-right: 1rem;
+    display: flex;
     flex: 1;
- 
+    gap: 5px;
 
     @media (max-width: 541px) {
       position: absolute;
@@ -118,10 +112,8 @@
       margin-right: 20px;
     }
     @media (min-width: 542px) and (max-width: 912px) {
-      margin-top:10px;
+      margin-top: 10px;
       margin-right: 20px;
-      
-    
     }
 
     input[type='text'] {
@@ -130,30 +122,51 @@
       border: 1.5px solid #5a7bfa;
       background-color: #eff2fe;
       height: 30px;
-      width: 221px;
+      width: 150px;
       font-size: 14px;
       padding-left: 10px;
 
       @media (max-width: 541px) {
         height: 4px;
-        width: 250px;
+        width: 100px;
         padding: 0.8rem;
-        margin-left: 30px;
       }
       @media (min-width: 542px) and (max-width: 912px) {
         height: 10px;
-        width: 150px;
+        width: 100px;
         padding: 0.8rem;
-        
-      
+      }
+    }
+
+    input[type='number'] {
+      padding: 0.1rem;
+      border-radius: 0.25rem;
+      border: 1.5px solid #5a7bfa;
+      background-color: #eff2fe;
+      height: 30px;
+      width: 55px;
+      font-size: 14px;
+      padding-left: 10px;
+
+      @media (max-width: 541px) {
+        height: 4px;
+        width: 50px;
+        padding: 0.8rem;
+        overflow: hidden;
+      }
+      @media (min-width: 542px) and (max-width: 912px) {
+        height: 10px;
+        width: 50px;
+        padding: 0.8rem;
       }
     }
 
     button {
       background-color: #5a7bfa;
       color: #ffffff;
-      margin-top: 2.3px;
-      margin-right: 2.3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border: none;
       cursor: pointer;
       height: 30px;
@@ -176,13 +189,12 @@
       position: absolute;
       margin-top: 1px;
       gap: 3rem;
-      margin-right:0px;
+      margin-right: 0px;
     }
 
     @media (min-width: 542px) and (max-width: 912px) {
-     gap:1rem;
-     margin-right: 50px;
-     
+      gap: 1rem;
+      margin-right: 50px;
     }
 
     svg {
@@ -209,26 +221,26 @@
       stroke: #5a7bfa;
     }
   }
-  .menu{
-    position:absolute;
-    top:23px;
-    left:20px;
+  .menu {
+    position: absolute;
+    top: 23px;
+    left: 20px;
   }
 
   .mobile-nav-links {
     position: absolute;
-    top:45px;
-    left:0;
+    top: 45px;
+    left: 0;
     width: 100%;
     height: auto;
-    background-color:black;
+    background-color: black;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 10;
     transition: transform 0.3s ease-in-out;
-    
+
     &.hidden {
       display: none;
     }
@@ -247,12 +259,7 @@
       &.active {
         color: #5a7bfa;
         text-decoration: underline;
-      
-    }
+      }
     }
   }
-
-  
- 
-  }
-
+}
