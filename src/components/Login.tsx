@@ -77,11 +77,12 @@ function Login() {
         window.location.reload();
       }
       else if(data.data.user.role === 'seller') {
-        navigate('/');
-        window.location.reload();
+        navigate('/2fa');
+        localStorage.removeItem('role');
+        localStorage.setItem('tempRole', data.data.user.role);
       }
-      if (data.data.user.role === 'admin') {
-        navigate('/dashboard');
+      else{
+        navigate('/');
         window.location.reload();
       }
     } catch (error: any) {

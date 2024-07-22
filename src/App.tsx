@@ -20,6 +20,7 @@ import Wishlist from './components/seller/Wishlist';
 import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from './components/updatePassword';
 import UserManagement from './components/UserManagement';
+import TwoFA from './components/TwoFA';
 
 import { RequestResetPassword } from './components/RequestResetPassword';
 import { ResetPassword } from './components/resetPassword';
@@ -64,7 +65,16 @@ const App: React.FC = () => {
             </>
           )}
         </Route>
-       
+        <Route path='2fa' element={<TwoFA/>}/>
+        {/* Protected Route for Dashboard */}
+        <Route
+          path="dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         {/* Protected Route for Admin Users Management */}
 
         <Route path="/dashboard" element={ 
