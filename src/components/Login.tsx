@@ -5,6 +5,8 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { BASE_API_URL } from '../utils/constants/config';
 import { FcGoogle } from 'react-icons/fc';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -67,7 +69,14 @@ function Login() {
       } else {
         localStorage.removeItem('rememberedEmail');
       }
-      if (data.data.user.role === 'seller') {
+
+      toast.success('Login successful!');
+
+      if (data.data.user.role === 'buyer') {
+        navigate('');
+        window.location.reload();
+      }
+      else if(data.data.user.role === 'seller') {
         navigate('/');
         window.location.reload();
       }
@@ -77,6 +86,9 @@ function Login() {
       }
     } catch (error: any) {
       setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
   const handleClickShowPassword = () => {
@@ -99,6 +111,7 @@ function Login() {
 
   return (
     <div className="login-container">
+      <ToastContainer />
       <div className="login-leftPart">
         <div className="login-intro">
           <img src="/images/logo.png" alt="Login illustration" />
@@ -148,7 +161,6 @@ function Login() {
               <a href="/requestResetPassword">Forgot Password?</a>
             </p>
           </div>
-          {error && <div className="error-message">{error}</div>}
           <button type="submit" className="btn" disabled={loading}>
             {loading ? 'LOGIN...' : 'LOGIN'}
           </button>

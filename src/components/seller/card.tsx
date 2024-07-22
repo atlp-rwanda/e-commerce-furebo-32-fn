@@ -1,6 +1,37 @@
 import { PenLine, Trash2 } from 'lucide-react';
+import { Modal, notification, Spin } from 'antd';
+import { useDeleteProductMutation } from '../../store/actions/products';
+
+const { confirm } = Modal;
 
 const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
+
+    const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
+  
+   const showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure you want to delete this product?',
+      content: 'This action cannot be undone.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        try {
+          await deleteProduct({ id: item.id }).unwrap();
+          notification.success({ message: 'Product deleted successfully' });
+        } catch (error: any) {
+          notification.error({
+            message: error.data.message || 'Something went wrong',
+          });
+          console.error('Failed to delete product:', error);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+   };
+  
   console.log(item);
 
   const productImage =
@@ -11,6 +42,7 @@ const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
   console.log(productImage);
 
   return (
+    <Spin spinning={isDeleting}>
     <div className="flex flex-col md:flex-row justify-between w-full md:w-fit gap-3 bg-white p-2 rounded-xl">
       <div className="w-24 h-24">
         <img
@@ -44,13 +76,16 @@ const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
             >
               <PenLine width={15} height={15} />
             </div>
-            <div className="flex justify-center items-center cursor-pointer hover:bg-red-100 hover:text-red-600 hover:border hover:border-red-600 border border-red-600 w-fit p-1 rounded-md bg-red-600 text-white">
+              <div className="flex justify-center items-center cursor-pointer hover:bg-red-100 hover:text-red-600 hover:border hover:border-red-600 border border-red-600 w-fit p-1 rounded-md bg-red-600 text-white"
+              onClick={showDeleteConfirm}
+              >
               <Trash2 width={15} height={15} />
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+      </Spin>
   );
 };
 
