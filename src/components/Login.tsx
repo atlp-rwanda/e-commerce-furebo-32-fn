@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
-import { GoogleLogin } from '@react-oauth/google';
 import InputAdornment from '@mui/material/InputAdornment';
 import { BASE_API_URL } from '../utils/constants/config';
+import { FcGoogle } from 'react-icons/fc';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -13,7 +15,6 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -38,9 +39,9 @@ function Login() {
       return;
     }
 
-     setLoading(true);
+    setLoading(true);
     setError('');
-    
+
     try {
       const response = await fetch(`${BASE_API_URL}api/users/login`, {
         method: 'POST',
@@ -68,13 +69,17 @@ function Login() {
       } else {
         localStorage.removeItem('rememberedEmail');
       }
-      if(data.data.user.role === 'seller') {
-        navigate('/2fa');
+
+      toast.success('Login successful!');
+
+      if (data.data.user.role === 'buyer') {
+        navigate('');
         window.location.reload();
       }
-      else if(data.data.user.role === 'admin') {
-        navigate('/dashboard');
-        window.location.reload();
+      else if(data.data.user.role === 'seller') {
+        navigate('/2fa');
+        localStorage.removeItem('role');
+        localStorage.setItem('tempRole', data.data.user.role);
       }
       else{
         navigate('/');
@@ -82,6 +87,9 @@ function Login() {
       }
     } catch (error: any) {
       setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
   const handleClickShowPassword = () => {
@@ -98,26 +106,13 @@ function Login() {
     setRememberMe(e.target.checked);
   };
 
-  const onLoginSuccess = (response: any) => {
-    setAccessToken(response.access_token);
-
-    // Send the access token to your backend for validation and user creation (if necessary)
-    fetch('/api/google/token', {
-      body: JSON.stringify({ accessToken }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // Store the received token (e.g., JWT) in local storage (if applicable)
-        localStorage.setItem('authToken', data.token);
-        // Handle successful authentication (e.g., redirect to protected routes)
-      })
-      .catch((error) => {
-        console.error('Error sending token to backend:', error);
-      });
+  const googleLogin = () => {
+    window.location.href = `${BASE_API_URL}api/google/auth`;
   };
 
   return (
     <div className="login-container">
+      <ToastContainer />
       <div className="login-leftPart">
         <div className="login-intro">
           <img src="/images/logo.png" alt="Login illustration" />
@@ -167,7 +162,6 @@ function Login() {
               <a href="/requestResetPassword">Forgot Password?</a>
             </p>
           </div>
-          {error && <div className="error-message">{error}</div>}
           <button type="submit" className="btn" disabled={loading}>
             {loading ? 'LOGIN...' : 'LOGIN'}
           </button>
@@ -175,7 +169,12 @@ function Login() {
         <p className="text-center m-9 font-semi-bold">
           Or Continue with Google
         </p>
-        <GoogleLogin onSuccess={onLoginSuccess} />
+        <button
+          className="flex border w-full items-center justify-center p-3 rounded-lg hover:bg-blue-100"
+          onClick={() => googleLogin()}
+        >
+          <FcGoogle />
+        </button>
         <p className="text-center m-9 font-semi-bold">
           Don’t have an account?{' '}
           <a href="/signup" className="login-links">

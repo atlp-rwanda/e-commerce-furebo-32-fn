@@ -6,12 +6,14 @@ import {
   useViewCartQuery,
 } from '../../store/actions/cart';
 import { ArrowDownToLine, Edit } from 'lucide-react';
+import CheckoutModal from '../checkout/checkoutForm';
 
 const Cart: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState<{ [key: number]: boolean }>({});
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [resetCart, { isLoading: isResetting }] = useResetCartMutation();
+  const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
 
   const handleResetCart = async () => {
     try {
@@ -47,6 +49,10 @@ const Cart: React.FC = () => {
     setQuantities((prev) => ({ ...prev, [index]: newQuantity }));
   };
 
+  const handleCheckout = () => {
+    setCheckoutModalVisible(true);
+  };
+
   return (
     <>
       <Space>
@@ -72,7 +78,7 @@ const Cart: React.FC = () => {
             <Button loading={isResetting} onClick={handleResetCart}>
               Reset
             </Button>
-            <Button type="primary" onClick={onClose}>
+            <Button type="primary" onClick={handleCheckout}>
               Checkout
             </Button>
           </Space>
@@ -142,6 +148,10 @@ const Cart: React.FC = () => {
           </div>
         )}
       </Drawer>
+      <CheckoutModal
+        visible={checkoutModalVisible}
+        onClose={() => setCheckoutModalVisible(false)}
+      />
     </>
   );
 };

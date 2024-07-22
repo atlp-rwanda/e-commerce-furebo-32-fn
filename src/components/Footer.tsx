@@ -1,4 +1,4 @@
-import { Facebook, Github, Instagram, Twitter } from "lucide-react";
+import { Facebook, Github, Instagram, Twitter } from 'lucide-react';
 
 function Footer() {
   return (
@@ -61,4 +61,4 @@ function Footer() {
   );
 }
 
-export default Footer
+export default Footer;
