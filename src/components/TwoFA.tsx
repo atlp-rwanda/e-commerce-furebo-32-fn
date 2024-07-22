@@ -40,7 +40,7 @@ const TwoFA: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <ToastContainer /> 
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Two-Factor Authentication</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Two-Factor Authentication.</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="code" className="block text-sm font-medium text-gray-700">Enter 2FA Code sent to {email}</label>
