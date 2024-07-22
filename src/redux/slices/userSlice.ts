@@ -6,6 +6,7 @@ interface User {
   id: string;
   email: string;
   role: string;
+  permissions: string[];
   [key: string]: any;
 }
 
@@ -25,6 +26,7 @@ const initialState: UserState = {
   submittedEmail: '',
 };
 
+// Fetch Users
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAPI) => {
   try {
     const response = await axios.get('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/users');
@@ -38,6 +40,7 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAP
   }
 });
 
+// Update User Role
 export const updateUserRole = createAsyncThunk(
   'users/updateUserRole',
   async ({ userId, role }: { userId: string, role: string }, thunkAPI) => {
@@ -66,6 +69,16 @@ export const updateUserRole = createAsyncThunk(
   }
 );
 
+// Update User Permissions (Frontend Only)
+export const updateUserPermissions = createAsyncThunk(
+  'users/updateUserPermissions',
+  async ({ userId, permissions }: { userId: string, permissions: string[] }, thunkAPI) => {
+    // Simply return the payload; no actual API call
+    return { userId, permissions };
+  }
+);
+
+// Signup User
 export const signupUser = createAsyncThunk('user/signupUser', async (formData: any, { rejectWithValue }) => {
   try {
     const { rePassword, ...formDataToSend } = formData;
@@ -83,7 +96,7 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      
+      // Fetch Users
       .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
       })
@@ -95,13 +108,19 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-   
+      // Update User Role
       .addCase(updateUserRole.fulfilled, (state, action) => {
         state.users = state.users.map(user =>
           user.id === action.payload.userId ? { ...user, role: action.payload.role } : user
         );
       })
-     
+      // Update User Permissions
+      .addCase(updateUserPermissions.fulfilled, (state, action) => {
+        state.users = state.users.map(user =>
+          user.id === action.payload.userId ? { ...user, permissions: action.payload.permissions } : user
+        );
+      })
+      // Signup User
       .addCase(signupUser.pending, (state) => {
         state.loading = true;
         state.error = null;
