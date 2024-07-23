@@ -81,7 +81,7 @@ function Login() {
         localStorage.removeItem('role');
         localStorage.setItem('tempRole', data.data.user.role);
       }
-      else{
+      else if (data.data.user.role === 'admin') {
         navigate('/');
         window.location.reload();
       }
