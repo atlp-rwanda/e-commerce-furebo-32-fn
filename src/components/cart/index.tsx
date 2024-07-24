@@ -4,6 +4,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import {
   useResetCartMutation,
   useViewCartQuery,
+  useRemoveFromCartMutation
 } from '../../store/actions/cart';
 import { ArrowDownToLine, Edit } from 'lucide-react';
 import CheckoutModal from '../checkout/checkoutForm';
@@ -14,6 +15,7 @@ const Cart: React.FC = () => {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [resetCart, { isLoading: isResetting }] = useResetCartMutation();
   const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
+  const [removeFromCart] = useRemoveFromCartMutation();
 
   const handleResetCart = async () => {
     try {
@@ -32,7 +34,7 @@ const Cart: React.FC = () => {
     setOpen(false);
   };
 
-  const { data, isLoading, isFetching } = useViewCartQuery<any>({});
+  const { data, isLoading, isFetching, refetch } = useViewCartQuery<any>({});
 
   const cartItemCount = data && data.items ? data.items.length : 0;
 
@@ -52,6 +54,18 @@ const Cart: React.FC = () => {
   const handleCheckout = () => {
     setCheckoutModalVisible(true);
   };
+
+  const handleRemoveItem = async (productId: string) => {
+    try {
+      await removeFromCart({ productId }).unwrap();
+      notification.success({ message: 'Item removed successfully' });
+      refetch(); 
+    } catch (error) {
+      console.error('Failed to remove item', error);
+      notification.error({ message: 'Failed to remove item' });
+    }
+  };
+
 
   return (
     <>
@@ -140,6 +154,12 @@ const Cart: React.FC = () => {
                             Edit
                           </div>
                         )}
+                      </Button>
+                      <Button
+                        className="rounded bg-red-500 text-white"
+                        onClick={() => handleRemoveItem(item.productId)}
+                      >
+                        Delete
                       </Button>
                     </div>
                   </div>
