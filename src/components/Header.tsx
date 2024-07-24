@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FiSearch, FiShoppingCart, FiBell, FiHeart, FiUser, FiMenu, FiPackage, FiMessageCircle } from 'react-icons/fi';
+import { FiSearch, FiShoppingCart, FiBell, FiHeart, FiUser, FiMenu, FiPackage, FiMessageCircle,  FiLogIn } from 'react-icons/fi';
 import { Badge, Tooltip } from 'antd';
+import '../styles/header.scss';
 import Cart from './cart';
 import { useViewCartQuery } from '../store/actions/cart';
 import { useSearchProductsQuery } from '../store/actions/search';
@@ -25,6 +26,9 @@ const Header: React.FC = () => {
   const searchResultsRef = useRef<HTMLDivElement>(null);
   const { data: cartData } = useViewCartQuery({});
  
+  const cartItemCount = cartData && cartData.items ? cartData.items.length : 0;
+  const token=window.localStorage.getItem('token')
+
   const { data: searchData } = useSearchProductsQuery(searchParams);
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,13 +146,20 @@ const Header: React.FC = () => {
         </div>
 
         <div className="icons flex gap-4">
+        {/* Icons */}
+        <div className="icons flex">
           {cartData && <Cart />}
 
           <NavLink to="/likes" className="text-white">
             <FiHeart />
           </NavLink>
+          {token && (
+            <NavLink to="/viewprofile" className="text-white">
+              <FiUser />
+            </NavLink>
+          )}
           <NavLink to="/login" className="text-white">
-            <FiUser />
+            < FiLogIn/>
           </NavLink>
           {user?.role === 'buyer' && (
             <NavLink to="/orders" className="text-[#000]">
@@ -166,6 +177,7 @@ const Header: React.FC = () => {
             </NavLink>
           </Tooltip>
         </div>
+      </div>
       </div>
     </header>
   );

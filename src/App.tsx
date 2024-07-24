@@ -29,9 +29,11 @@ import SuccessPage from './components/checkout/sucessPage';
 import CancelledPage from './components/checkout/cancelledPage';
 import UserOrders from './components/orders/buyerOrders';
 import { Chat } from './components/Chat';
-import { ToastContainer } from 'react-toastify';
+
+
+import { ViewProfile } from './components/profile';
 const App: React.FC = () => {
-  const [role, setRole] = useState(window.localStorage.getItem('role'));
+  const [role] = useState(window.localStorage.getItem('role'));
 
   return (
     <ThemeProvider theme={MuiTheme}>
@@ -60,7 +62,8 @@ const App: React.FC = () => {
 
               <Route path="sucessorder/:id" element={<SuccessPage />} />
               <Route path="/cancelorder/:id" element={<CancelledPage />} />
-            </>
+              <Route path="viewprofile" element={<ViewProfile/>} />
+             </>
           ) : (
             <>
               <Route path="dashboard" element={<Dashboard />} />
