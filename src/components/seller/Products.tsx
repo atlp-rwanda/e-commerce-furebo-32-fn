@@ -4,36 +4,37 @@ import AddProduct from './addProduct';
 import { Empty, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 
-
 function Products() {
-  const { data, isLoading, isFetching } = useGetSellerProductsQuery({});
-  console.log(data, isLoading, isFetching);
+  const { data, isLoading } = useGetSellerProductsQuery({});
 
   return (
-    
-    <div className="flex flex-col">
-      <div className="w-full flex justify-between items-center px-2 rounded-md border border-primary-300 ">
-        <span className="text-black text-xl">Product</span>
+    <div className="flex flex-col space-y-4 p-4 bg-gray-50 rounded-lg shadow-lg">
+      <div className="flex justify-between items-center p-4 bg-white rounded-md border border-gray-300">
+        <span className="text-black text-2xl font-semibold">Products</span>
         <AddProduct />
       </div>
       {isLoading ? (
-        <Spin size="large" />
+        <div className="flex justify-center items-center h-64">
+          <Spin size="large" />
+        </div>
       ) : (
-        <div className="py-2 flex flex-wrap gap-2">
-          {data?.items.length == 0 ? (
-            <Empty />
+        <div className="py-4 flex flex-wrap gap-4">
+          {data?.items.length === 0 ? (
+            <Empty description="No Products Available" />
           ) : (
-            data?.items.map((item: any, index: any) => (
-              <Link to={`/item/${item.id}`}>
-              <Card key={index} item={item} />
-              
-               </Link>
+            data.items.map((item: any, index: any) => (
+              <Link
+                to={`/item/${item.id}`}
+                key={index}
+                className="w-full md:w-1/3 lg:w-1/4"
+              >
+                <Card item={item} />
+              </Link>
             ))
           )}
         </div>
       )}
     </div>
-  
   );
 }
 
