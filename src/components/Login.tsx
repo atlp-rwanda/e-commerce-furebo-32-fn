@@ -73,7 +73,7 @@ function Login() {
       toast.success('Login successful!');
 
       if (data.data.user.role === 'buyer') {
-        navigate('');
+        navigate('/Product');
         window.location.reload();
       }
       else if(data.data.user.role === 'seller') {
@@ -81,7 +81,7 @@ function Login() {
         localStorage.removeItem('role');
         localStorage.setItem('tempRole', data.data.user.role);
       }
-      else{
+      else if (data.data.user.role === 'admin') {
         navigate('/');
         window.location.reload();
       }

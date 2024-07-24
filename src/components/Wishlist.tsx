@@ -16,7 +16,13 @@ const Wishlist: React.FC = () => {
   if (isLoading) return <p>Loading...</p>;
   if (error) {
     toast.error('Failed to load the wishlist.');
-    return <p>Failed to load the wishlist.</p>;
+    return <div className="pt-6 flex-col gap-5">
+      <p className="p-5 justify-center align-middle font-sans font-bold">Failed to load the wishlist. Login to add items to your wishlist</p>
+      <button
+        className="px-4 py-2 bg-blue-500 text-white rounded-md ml-52 mb-10"
+        onClick={() => navigate('/login')}
+      >Login</button>
+    </div>;
   }
 
   const handleDeleteFromWishlist = async (productId: string) => {
