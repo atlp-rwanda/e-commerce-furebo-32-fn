@@ -243,9 +243,7 @@ const Header: React.FC = () => {
         {/* Icons */}
         <div className="icons flex gap-4">
           {cartData && <Cart />}
-          <NavLink to="/notifications" className="text-white">
-            <FiBell />
-          </NavLink>
+
           <NavLink to="/likes" className="text-white">
             <FiHeart />
           </NavLink>

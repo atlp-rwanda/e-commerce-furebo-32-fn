@@ -17,6 +17,7 @@ import Wishlist from './components/seller/Wishlist';
 import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from './components/updatePassword';
 import UserManagement from './components/UserManagement';
+import Notifications from './components/seller/notifications';
 
 import { RequestResetPassword } from './components/RequestResetPassword';
 import { ResetPassword } from './components/resetPassword';
@@ -58,6 +59,7 @@ const App: React.FC = () => {
               <Route path="products" element={<Products />} />
               <Route path="collection" element={<Collection />} />
               <Route path="wishlist" element={<Wishlist />} />
+              <Route path="notifications" element={<Notifications />} />
             </>
           )}
         </Route>
