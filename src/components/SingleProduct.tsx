@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_API_URL } from '../utils/constants/config';
+import AddCart from './cart/addCart';
 
 type Product = {
   id: string;
@@ -74,12 +75,17 @@ const SingleProduct = () => {
           </div>
         </div>
         <div className="mt-4">
-          <h1 className="text-2xl font-bold text-primary-300">{product.productName}</h1>
+          <h1 className="text-2xl font-bold text-primary-300">
+            {product.productName}
+          </h1>
           <p className="text-gray-600 mt-2">{product.description}</p>
-          <p className="text-xl font-semibold mt-2 text-black">${product.price}</p>
+          <p className="text-xl font-semibold mt-2 text-black">
+            ${product.price}
+          </p>
           <p className="text-green-500 mt-2">
             {product.availability ? 'Available' : 'Sold out'}
           </p>
+          <AddCart productId={product.id} />
         </div>
       </div>
     </div>
