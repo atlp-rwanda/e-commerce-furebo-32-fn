@@ -17,7 +17,7 @@ interface User {
   role: string;
   phone: string;
   isActive: boolean;
-  permissions?: string[];  // Add permissions property
+  permissions?: string[];  
   [key: string]: any;
 }
 
@@ -25,10 +25,10 @@ const UserManagement = () => {
   const dispatch: AppDispatch = useDispatch();
   const { users, loading, error } = useSelector((state: RootState) => state.user);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [permissionModalVisible, setPermissionModalVisible] = useState(false);  // Manage permissions modal visibility
+  const [permissionModalVisible, setPermissionModalVisible] = useState(false);  
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [deactivationReason, setDeactivationReason] = useState('');
-  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);  // Permissions state
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);  
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -52,7 +52,7 @@ const UserManagement = () => {
   const handleModalOk = async () => {
     if (selectedUserId) {
       try {
-        // Assuming an API call to update user status is made here
+        
         message.success('User Status Updated successfully');
       } catch (error) {
         message.error('Failed to deactivate user');
