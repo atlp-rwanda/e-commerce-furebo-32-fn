@@ -8,7 +8,7 @@ const store = configureStore({
   reducer: {
     ...rootReducer,
     [baseAPI.reducerPath]: baseAPI.reducer,
-    user: userReducer,git 
+    user: userReducer,
     singleProduct: singleProductReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -18,3 +18,4 @@ const store = configureStore({
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export default store;
+
