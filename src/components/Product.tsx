@@ -55,9 +55,10 @@ function Product() {
   if (isLoading || isFetching) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Spin size="small" className="text-6xl" />
-      </div>
-    );
+      <Spin size="large" className="text-6xl" />
+    </div>
+  
+    )
   }
 
   return (

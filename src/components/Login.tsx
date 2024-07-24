@@ -82,7 +82,7 @@ function Login() {
         localStorage.setItem('tempRole', data.data.user.role);
       }
       else if (data.data.user.role === 'admin') {
-        navigate('/');
+        navigate('/dashboard');
         window.location.reload();
       }
     } catch (error: any) {
