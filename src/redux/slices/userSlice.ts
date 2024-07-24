@@ -12,6 +12,8 @@ interface User {
 }
 
 interface UserState {
+  token: any;
+  id: number;
   users: User[];
   loading: boolean;
   error: string | null;

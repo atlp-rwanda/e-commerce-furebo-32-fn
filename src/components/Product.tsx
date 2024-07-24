@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import TablePagination from '@mui/material/TablePagination';
 import ProductCard from './product/ProductCard';
-import { useGetProductsQuery } from '../store/actions/products';
+import { useGetProductsQuery } from '../store/actions/products'; // Use the correct import for the query
+import { Spin } from 'antd';
 
 interface Product {
   id: string;
@@ -37,7 +38,7 @@ function Product() {
   ).map((id) => combinedProducts.find((p) => p.id === id)!);
 
   const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
   ) => {
     setCurrentPage(newPage);
@@ -50,19 +51,18 @@ function Product() {
     setCurrentPage(0);
   };
 
-  const itemsPerPage = rowsPerPage;
-  const offset = currentPage * itemsPerPage;
-  const paginatedItems = products.slice(offset, offset + itemsPerPage);
 
   if (isLoading || isFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="small" className="text-6xl" />
+      </div>
+    );
   }
 
   return (
     <div>
       <div className="container mx-auto py-8">
-        <h1 className="text-3xl font-bold text-center">Products</h1>
-        <div className="flex w-full justify-between items-center py-4"></div>
         <div className="flex justify-between items-center py-2"></div>
         {recommendedProducts.length > 0 && (
           <div className="mt-8">
@@ -86,7 +86,7 @@ function Product() {
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           rowsPerPageOptions={[4, 8, 12, 16]}
-          className="bg-primary-50 border  border-secondary-300 rounded-full"
+          className="bg-primary-50 border border-secondary-300 rounded-full"
         />
       </div>
     </div>
