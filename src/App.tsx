@@ -28,6 +28,8 @@ import { ResetPassword } from './components/resetPassword';
 import SuccessPage from './components/checkout/sucessPage';
 import CancelledPage from './components/checkout/cancelledPage';
 import UserOrders from './components/orders/buyerOrders';
+
+import { ViewProfile } from './components/profile';
 const App: React.FC = () => {
   const [role, setRole] = useState(window.localStorage.getItem('role'));
 
@@ -56,7 +58,8 @@ const App: React.FC = () => {
 
               <Route path="sucessorder/:id" element={<SuccessPage />} />
               <Route path="/cancelorder/:id" element={<CancelledPage />} />
-            </>
+              <Route path="viewprofile" element={<ViewProfile/>} />
+             </>
           ) : (
             <>
               <Route path="dashboard" element={<Dashboard />} />

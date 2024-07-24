@@ -8,6 +8,7 @@ import {
   FiUser,
   FiMenu,
   FiPackage,
+  FiLogIn
 } from 'react-icons/fi';
 
 import '../styles/header.scss';
@@ -38,6 +39,7 @@ const Header: React.FC = () => {
   const searchResultsRef = useRef<HTMLDivElement>(null);
   const { data: cartData } = useViewCartQuery({});
   const cartItemCount = cartData && cartData.items ? cartData.items.length : 0;
+  const token=window.localStorage.getItem('token')
 
   const { data: searchData } = useSearchProductsQuery(searchParams);
 
@@ -245,14 +247,19 @@ const Header: React.FC = () => {
         </div>
 
         {/* Icons */}
-        <div className="icons flex gap-4">
+        <div className="icons flex">
           {cartData && <Cart />}
 
           <NavLink to="/likes" className="text-white">
             <FiHeart />
           </NavLink>
+          {token && (
+            <NavLink to="/viewprofile" className="text-white">
+              <FiUser />
+            </NavLink>
+          )}
           <NavLink to="/login" className="text-white">
-            <FiUser />
+            < FiLogIn/>
           </NavLink>
          {role === 'buyer'&&(
           <NavLink to="/orders" className="text-[#000]">
