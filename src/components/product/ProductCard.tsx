@@ -1,13 +1,12 @@
 import { Heart, ScanEye, Star } from "lucide-react";
 import AddCart from "../cart/addCart";
+import { Link } from "react-router-dom";
 
 function ProductCard({ popularProducts }: { popularProducts: any }) {
   const productImage =
     popularProducts.images && popularProducts.images.length > 0
       ? popularProducts.images[0]
       : "https://via.placeholder.com/200";
-
-
   return (
     <div className="min-w-64 sm:w-72 w-full h-[21rem] bg-white p-2 rounded-2xl shadow-md">
       <div
@@ -21,7 +20,7 @@ function ProductCard({ popularProducts }: { popularProducts: any }) {
       >
         <div className="flex flex-col gap-2">
           <div className="bg-primary-300 p-1 rounded-lg text-white">
-            <ScanEye />
+            <Link to={`${popularProducts.id}`}><ScanEye /></Link>
           </div>
           <div className="bg-white p-1 rounded-lg text-primary-300">
             <Heart />

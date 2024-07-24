@@ -27,6 +27,7 @@ import { ResetPassword } from './components/resetPassword';
 import SuccessPage from './components/checkout/sucessPage';
 import CancelledPage from './components/checkout/cancelledPage';
 import UserOrders from './components/orders/buyerOrders';
+import SingleProduct from './components/SingleProduct';
 const App: React.FC = () => {
   const [role, setRole] = useState(window.localStorage.getItem('role'));
 
@@ -45,6 +46,7 @@ const App: React.FC = () => {
               <Route path="login" element={<Login />} />
               <Route path="contact" element={<Contact />} />
               <Route path="product" element={<Product />} />
+              <Route path="product/:id" element={<SingleProduct />} />
               <Route path="about" element={<About />} />
               <Route path="signup" element={<Signup />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
@@ -67,7 +69,7 @@ const App: React.FC = () => {
             </>
           )}
         </Route>
-        <Route path='2fa' element={<TwoFA/>}/>
+        <Route path="2fa" element={<TwoFA />} />
         {/* Protected Route for Dashboard */}
         <Route
           path="dashboard"
@@ -79,22 +81,25 @@ const App: React.FC = () => {
         />
         {/* Protected Route for Admin Users Management */}
 
-        <Route path="/dashboard" element={ 
-          <ProtectedAdmin>
-          <AdminLayout/>
-          </ProtectedAdmin>}>
         <Route
-          path="users"
+          path="/dashboard"
           element={
             <ProtectedAdmin>
-              <UserManagement />
+              <AdminLayout />
             </ProtectedAdmin>
           }
-        />
-        <Route path="contacts" />
-        <Route path="products" />
-        <Route path="" element={<AdminDashboardPage />} />
-                   
+        >
+          <Route
+            path="users"
+            element={
+              <ProtectedAdmin>
+                <UserManagement />
+              </ProtectedAdmin>
+            }
+          />
+          <Route path="contacts" />
+          <Route path="products" />
+          <Route path="" element={<AdminDashboardPage />} />
         </Route>
       </Routes>
     </ThemeProvider>
