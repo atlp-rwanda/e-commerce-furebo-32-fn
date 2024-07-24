@@ -1,7 +1,7 @@
 // src/store/types.ts
 export interface Item {
-  id: number;
   name: string;
+  id: number;
 }
 
 export interface ItemState {
@@ -11,5 +11,6 @@ export interface ItemState {
 }
 
 export interface RootState {
+  user: any;
   items: ItemState;
 }

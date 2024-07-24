@@ -7,3 +7,46 @@ h2{
     text-align: center;
     font-size: large;
 }
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #ffff;
+    width: 450px;
+   
+    border-radius: 20px;
+  }
+  
+  .chat-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+
+  }
+  .chat-container h1{
+    padding: 10px;
+  }
+  
+  .chat-input {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+  .message-button{
+    width: 100%;
+    margin-top: 20px;
+   
+  }
+  .time-text {
+    color: blue;
+    margin-left: 8px;
+  }
+  .mention {
+    color: blue;
+    cursor: pointer;
+    text-decoration:none;
+  }
+  .mention:hover {
+    color: darkblue;
+  }
+  

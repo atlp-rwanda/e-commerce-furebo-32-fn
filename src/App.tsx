@@ -29,8 +29,12 @@ import SuccessPage from './components/checkout/sucessPage';
 import CancelledPage from './components/checkout/cancelledPage';
 import UserOrders from './components/orders/buyerOrders';
 import SingleProduct from './components/SingleProduct';
+import { Chat } from './components/Chat';
+
+
+import { ViewProfile } from './components/profile';
 const App: React.FC = () => {
-  const [role, setRole] = useState(window.localStorage.getItem('role'));
+  const [role] = useState(window.localStorage.getItem('role'));
 
   return (
     <ThemeProvider theme={MuiTheme}>
@@ -51,6 +55,8 @@ const App: React.FC = () => {
               <Route path="signup" element={<Signup />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
               <Route path="orders" element={<UserOrders />} />
+
+              <Route path="/chat" element={<Chat />} />
               <Route
                 path="requestResetPassword"
                 element={<RequestResetPassword />}
@@ -58,11 +64,13 @@ const App: React.FC = () => {
               <Route path="reset-password" element={<ResetPassword />} />
               <Route path="sucessorder/:id" element={<SuccessPage />} />
               <Route path="/cancelorder/:id" element={<CancelledPage />} />
+              <Route path="viewprofile" element={<ViewProfile />} />
             </>
           ) : (
             <>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="products" element={<Products />} />
+              <Route path="products/:id" element={<SingleProduct />} />
               <Route path="collection" element={<Collection />} />
               <Route path="wishlist" element={<Wishlist />} />
               <Route path="notifications" element={<Notifications />} />
@@ -97,6 +105,10 @@ const App: React.FC = () => {
               </ProtectedAdmin>
             }
           />
+          <Route path="contacts" />
+          <Route path="products" />
+          <Route path="" element={<AdminDashboardPage />} />
+
           <Route path="contacts" />
           <Route path="products" />
           <Route path="" element={<AdminDashboardPage />} />

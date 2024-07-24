@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FiCheckCircle } from 'react-icons/fi';
 import { useLazyCompletePaymentQuery } from '../../store/actions/cart'; // Adjust the import path as needed
+import { Spin } from 'antd';
 
 const SuccessPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -46,11 +47,15 @@ const SuccessPage: React.FC = () => {
             </div>
             <div className="mb-4">
               <h4 className="font-medium text-gray-600"><b>Expected Delivery Date:</b></h4>
-              <p className="text-gray-500">{orderDetails.expectedDeliveryDate || 'Not available'}</p>
+              <p className="text-gray-500">{orderDetails.expectedDeliveryDate || 'The Delivery is being processed'}</p>
             </div>
           </div>
         ) : (
-          <div>No order details available</div>
+         
+            <div className="flex justify-center items-center h-screen">
+              <Spin size="small" className="text-6xl" />
+            </div>
+          
         )}
       </div>
     </div>

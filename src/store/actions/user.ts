@@ -45,8 +45,27 @@ const authEndpoints = baseAPI.injectEndpoints({
         },
       }),
     }),
+    fetchUserProfile: builder.query<any, void>({
+      query: () => ({
+        url: 'https://e-commerce-furebo-32-bn-1.onrender.com/api/users/profile',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+    }),
+    updateProfile: builder.mutation<any, { profileData: FormData }>({
+      query: ({profileData}) => ({
+        url: `/api/users/update-profile`,
+        method: "PATCH",
+        body: profileData,
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useUpdatePasswordMutation, useUpdateUserStatusMutation,useFetchUsersQuery, useVerify2FAMutation } = authEndpoints;
+export const { useUpdatePasswordMutation, useUpdateUserStatusMutation,useFetchUsersQuery, useVerify2FAMutation,useUpdateProfileMutation,useFetchUserProfileQuery} = authEndpoints;
   
