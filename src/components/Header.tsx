@@ -2,17 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   FiSearch,
-  FiShoppingCart,
   FiBell,
   FiHeart,
   FiUser,
   FiMenu,
 } from 'react-icons/fi';
 import '../styles/header.scss';
-import { Badge, Spin } from 'antd';
+import { Badge } from 'antd';
 import { useViewCartQuery } from '../store/actions/cart';
 import Cart from './cart';
 import { useSearchProductsQuery } from '../store/actions/search';
+import { useGetWishlistQuery } from '../store/actions/wishlist';
 
 const Header: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -34,6 +34,10 @@ const Header: React.FC = () => {
   const searchResultsRef = useRef<HTMLDivElement>(null);
   const { data: cartData } = useViewCartQuery({});
   const cartItemCount = cartData && cartData.items ? cartData.items.length : 0;
+
+  const { data: wishlistData } = useGetWishlistQuery();  
+  const wishlist = wishlistData?.data || [];
+  const wishlistItemCount = wishlist.length;
 
   const { data: searchData } = useSearchProductsQuery(searchParams);
 
@@ -147,9 +151,7 @@ const Header: React.FC = () => {
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              isActive
-                ? 'active text-blue-500 underline mb-4'
-                : 'text-white mb-4'
+              isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4'
             }
             onClick={() => setIsNavOpen(false)}
           >
@@ -158,9 +160,7 @@ const Header: React.FC = () => {
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              isActive
-                ? 'active text-blue-500 underline mb-4'
-                : 'text-white mb-4'
+              isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4'
             }
             onClick={() => setIsNavOpen(false)}
           >
@@ -178,7 +178,6 @@ const Header: React.FC = () => {
             onChange={handleSearchInput}
             onFocus={() => setShowResults(true)}
           />
-
           <input
             type="text"
             placeholder="Search category"
@@ -186,7 +185,6 @@ const Header: React.FC = () => {
             onChange={handleSearchInput}
             onFocus={() => setShowResults(true)}
           />
-
           <input
             type="number"
             placeholder="min"
@@ -194,7 +192,6 @@ const Header: React.FC = () => {
             onChange={handleSearchInput}
             onFocus={() => setShowResults(true)}
           />
-
           <input
             type="number"
             placeholder="max"
@@ -202,7 +199,6 @@ const Header: React.FC = () => {
             onChange={handleSearchInput}
             onFocus={() => setShowResults(true)}
           />
-
           <button
             onClick={handleSearch}
             className="bg-blue-500 text-white p-2 rounded-r-full"
@@ -211,33 +207,30 @@ const Header: React.FC = () => {
           </button>
 
           {/* Search Results */}
-          {showResults &&
-            searchParams.search &&
-            searchData &&
-            searchData.products && (
-              <div
-                ref={searchResultsRef}
-                className="absolute bg-white z-10 top-7 w-full my-1 rounded-lg p-1"
-              >
-                {searchData.products.map((product: any) => (
-                  <div
-                    key={product.id}
-                    className="flex hover:bg-indigo-300 p-1 rounded-lg cursor-pointer w-full flex justify-between"
-                  >
-                    <div className="w-10 h-10">
-                      <img
-                        src={product.images[0]}
-                        alt={product.productName}
-                        className="w-10 h-10 rounded-lg"
-                      />
-                    </div>
-                    <p className="p-1 m-0 text-center">{product.productName}</p>
-                    <p className="p-1 m-0 text-center">{product.category}</p>
-                    <p className="p-1 m-0 text-center">{product.price}</p>
+          {showResults && searchParams.search && searchData && searchData.products && (
+            <div
+              ref={searchResultsRef}
+              className="absolute bg-white z-10 top-7 w-full my-1 rounded-lg p-1"
+            >
+              {searchData.products.map((product: any) => (
+                <div
+                  key={product.id}
+                  className="flex hover:bg-indigo-300 p-1 rounded-lg cursor-pointer w-full flex justify-between"
+                >
+                  <div className="w-10 h-10">
+                    <img
+                      src={product.images[0]}
+                      alt={product.productName}
+                      className="w-10 h-10 rounded-lg"
+                    />
                   </div>
-                ))}
-              </div>
-            )}
+                  <p className="p-1 m-0 text-center">{product.productName}</p>
+                  <p className="p-1 m-0 text-center">{product.category}</p>
+                  <p className="p-1 m-0 text-center">{product.price}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Icons */}
@@ -247,7 +240,9 @@ const Header: React.FC = () => {
             <FiBell />
           </NavLink>
           <NavLink to="/wishlist" className="text-white">
-            <FiHeart />
+            <Badge count={wishlistItemCount}>
+              <FiHeart className="text-2xl" />
+            </Badge>
           </NavLink>
           <NavLink to="/login" className="text-white">
             <FiUser />

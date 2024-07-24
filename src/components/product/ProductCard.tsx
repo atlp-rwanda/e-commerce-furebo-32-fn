@@ -1,12 +1,28 @@
-import { Heart, ScanEye, Star } from "lucide-react";
-import AddCart from "../cart/addCart";
+import { Heart, ScanEye, Star } from 'lucide-react';
+import AddCart from '../cart/addCart';
+import { useAddToWishlistMutation } from '../../store/actions/wishlist'; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Button, message, notification } from 'antd';
+import { data } from 'autoprefixer';
 
 function ProductCard({ popularProducts }: { popularProducts: any }) {
+  const [addToWishlist] = useAddToWishlistMutation();
+
   const productImage =
     popularProducts.images && popularProducts.images.length > 0
       ? popularProducts.images[0]
-      : "https://via.placeholder.com/200";
+      : 'https://via.placeholder.com/200';
 
+  const handleAddToWishlist = async () => {
+    try {
+      await addToWishlist({ productId: popularProducts.id }).unwrap();
+      notification.success({message:'Product added to wishlist successfully'});
+    } catch (err) {
+      console.error('Failed to add to wishlist:', err);
+      notification.error({message: 'Failed to add to wishlist'});
+    }
+  };
 
   return (
     <div className="min-w-64 sm:w-72 w-full h-[21rem] bg-white p-2 rounded-2xl shadow-md">
@@ -23,8 +39,13 @@ function ProductCard({ popularProducts }: { popularProducts: any }) {
           <div className="bg-primary-300 p-1 rounded-lg text-white">
             <ScanEye />
           </div>
-          <div className="bg-white p-1 rounded-lg text-primary-300">
-            <Heart />
+          <div>
+            <Button
+              className="bg-primary-300 p-1 rounded-lg text-white"
+              onClick={handleAddToWishlist}
+            >
+              <Heart />
+            </Button>
           </div>
         </div>
       </div>
