@@ -1,11 +1,23 @@
+import { useState } from 'react';
 import Card from './card';
+import EditProduct from './EditProduct';
 import { useGetSellerProductsQuery } from '../../store/actions/products';
 import AddProduct from './addProduct';
 import { Empty, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 
 function Products() {
-  const { data, isLoading } = useGetSellerProductsQuery({});
+  const { data, isLoading, isFetching } = useGetSellerProductsQuery({});
+  console.log(data, isLoading, isFetching);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const handleEditProduct = (product: any) => {
+    console.log('Product to edit:', product);
+    setEditingProduct(product);
+  };
+
+  const handleCloseEditProduct = () => {
+    setEditingProduct(null);
+  };
 
   return (
     <div className="flex flex-col space-y-4 p-4 bg-gray-50 rounded-lg shadow-lg">
@@ -28,11 +40,17 @@ function Products() {
                 key={index}
                 className="w-full md:w-1/3 lg:w-1/4"
               >
-                <Card item={item} />
+                <Card key={index} item={item} onEdit={handleEditProduct} />
               </Link>
             ))
           )}
         </div>
+      )}
+      {editingProduct && (
+        <EditProduct
+          product={editingProduct}
+          onClose={handleCloseEditProduct}
+        />
       )}
     </div>
   );

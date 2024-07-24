@@ -12,7 +12,6 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ConfigProvider } from 'antd';
 import antdTheme from './utils/config/antdConfig';
 import './tailwind.css'; // Import Tailwind CSS
@@ -23,15 +22,13 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(
-  <GoogleOAuthProvider clientId={clientId}>
-    <ConfigProvider theme={antdTheme}>
-      <React.StrictMode>
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
-      </React.StrictMode>
-    </ConfigProvider>
-  </GoogleOAuthProvider>
+  <ConfigProvider theme={antdTheme}>
+    <React.StrictMode>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </React.StrictMode>
+  </ConfigProvider>,
 );
