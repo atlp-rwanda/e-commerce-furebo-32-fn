@@ -38,7 +38,7 @@ const SuccessPage: React.FC = () => {
               <h4 className="font-medium text-gray-600"><b>Payment Deails:</b></h4>
               <p className="text-gray-500">{orderDetails.paymentMethod?.method}</p>
               <p className="text-gray-500">Card Number: {orderDetails.paymentMethod?.cardNumber}</p>
-              <p className="text-gray-500">Total Ammount Paid: {orderDetails.totalAmount} RWF</p>
+              <p className="text-gray-500">Total Ammount Paid: ${orderDetails.totalAmount}</p>
             </div>
             <div className="mb-4">
               <h4 className="font-medium text-gray-600"><b>Order Status:</b></h4>

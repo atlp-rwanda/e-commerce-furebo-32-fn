@@ -43,7 +43,6 @@
   font-size: 14px;
   font-weight: bold;
   color: #444444;
-margin-right: 8em
 }
 
 .input-field {
@@ -212,7 +211,8 @@ margin-right: 8em
   width: 584px;
   height: 571px;
   border-radius: 5px;
-  padding-top: 60px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   animation: zoomIn 1s ease-in-out;
 }
 
@@ -225,7 +225,6 @@ margin-right: 8em
   font-weight: bold;
   color: #ffffff;
 clear: both;
-margin-right: 80px;
 animation: fadeInUp 1.5s ease-in-out;
 }
 .login-rightPart p:hover {

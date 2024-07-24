@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'antd';
 import { TableColumnsType, TableProps, Spin } from 'antd';
 import { useGetNotificationsQuery } from '../../store/actions/notifications';
@@ -28,8 +28,11 @@ const columns: TableColumnsType<NotificationType> = [
 const Notifications: React.FC = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(false);
-  const { data, isLoading, isError } = useGetNotificationsQuery({});
+  const { data, isLoading, isError, refetch } = useGetNotificationsQuery({});
 
+  useEffect(() => {
+    refetch();
+  }, []);
   const start = () => {
     setLoading(true);
     // Simulate an ajax request

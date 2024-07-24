@@ -7,7 +7,9 @@ import {
   FiHeart,
   FiUser,
   FiMenu,
+  FiPackage,
 } from 'react-icons/fi';
+
 import '../styles/header.scss';
 import { Badge, Spin } from 'antd';
 import { useViewCartQuery } from '../store/actions/cart';
@@ -16,6 +18,8 @@ import { useSearchProductsQuery } from '../store/actions/search';
 
 const Header: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [role, setRole] = useState(window.localStorage.getItem('role'));
+
   const [searchParams, setSearchParams] = useState({
     search: '',
     min: '',
@@ -250,6 +254,11 @@ const Header: React.FC = () => {
           <NavLink to="/login" className="text-white">
             <FiUser />
           </NavLink>
+         {role === 'buyer'&&(
+          <NavLink to="/orders" className="text-[#000]">
+          < FiPackage />
+          </NavLink>
+          )}
         </div>
       </div>
     </header>
