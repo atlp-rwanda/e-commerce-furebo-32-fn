@@ -28,10 +28,12 @@ import { ResetPassword } from './components/resetPassword';
 import SuccessPage from './components/checkout/sucessPage';
 import CancelledPage from './components/checkout/cancelledPage';
 import UserOrders from './components/orders/buyerOrders';
+import { Chat } from './components/Chat';
+
 
 import { ViewProfile } from './components/profile';
 const App: React.FC = () => {
-  const [role, setRole] = useState(window.localStorage.getItem('role'));
+  const [role] = useState(window.localStorage.getItem('role'));
 
   return (
     <ThemeProvider theme={MuiTheme}>
@@ -50,6 +52,8 @@ const App: React.FC = () => {
               <Route path="signup" element={<Signup />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
               <Route path="orders" element={<UserOrders />} />
+              
+              <Route path="/chat" element={<Chat />} />
               <Route
                 path="requestResetPassword"
                 element={<RequestResetPassword />}
@@ -101,6 +105,12 @@ const App: React.FC = () => {
           <Route path="contacts" />
           <Route path="products" />
           <Route path="" element={<AdminDashboardPage />} />
+        
+        <Route path="contacts" />
+        <Route path="products" />
+        <Route path="" element={<AdminDashboardPage />} />
+        
+                   
         </Route>
       </Routes>
     </ThemeProvider>

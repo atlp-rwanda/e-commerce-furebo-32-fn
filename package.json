@@ -32,6 +32,8 @@
     "autoprefixer": "^10.4.19",
     "bootstrap": "^5.3.3",
     "css-loader": "^7.1.2",
+    "date-fns": "^3.6.0",
+    "dayjs": "^1.11.12",
     "formik": "^2.4.6",
     "identity-obj-proxy": "^3.0.0",
     "jest-fetch-mock": "^3.0.3",
