@@ -42,11 +42,13 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
       </div>
       <div className="mb-4">
       <strong>Status:</strong>
-      <span className={status === 'Cancelled' ? 'text-white bg-red-500 px-2 py-1 rounded' : 'text-green-500'}><b>{status}</b></span>
+      <span className={status === 'Canceled' ? 'text-white bg-red-500 px-2 py-1 rounded' : 'text-white bg-green-500 px-2 py-1 rounded'}><b>{status}</b></span>
       </div>
+      {status !== 'Canceled' &&(
       <div className="mb-4">
       <p className="text-gray-600"><strong>Total Amount:</strong> <span className="text-blue-500">${totalAmount.toFixed(2)}</span></p>
       </div>
+      )}
       <div className="mb-4">
       {expectedDeliveryDate && (
         <p className="text-gray-600"><strong>Expected Delivery Date:</strong> {new Date(expectedDeliveryDate).toLocaleDateString()}</p>
