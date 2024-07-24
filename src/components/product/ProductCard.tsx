@@ -20,7 +20,7 @@ function ProductCard({ popularProducts }: { popularProducts: any }) {
       >
         <div className="flex flex-col gap-2">
           <div className="bg-primary-300 p-1 rounded-lg text-white">
-            <Link to={`${popularProducts.id}`}><ScanEye /></Link>
+            <Link to={`product/${popularProducts.id}`}><ScanEye /></Link>
           </div>
           <div className="bg-white p-1 rounded-lg text-primary-300">
             <Heart />
