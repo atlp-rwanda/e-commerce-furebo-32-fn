@@ -15,9 +15,38 @@ const authEndpoints = baseAPI.injectEndpoints({
           },
         }),
       }),
+      verify2FA: builder.mutation<any, {code: string, email: string}>({
+        query: ({ code, email }) => ({
+          url: `api/users/verify-otp`,
+          method: "POST",
+          body: JSON.stringify({ otp: code, email }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getAuthToken()}`,
+          },
+        }),
+      }),
+    fetchUsers: builder.query<any, void>({
+      query: () => ({
+        url: '/api/users/users',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
     }),
-  });
+    updateUserStatus: builder.mutation<any, { id: string; activationReason: string }>({
+      query: ({ id, activationReason }) => ({
+        url: `/api/users/change-account-status/${id}`,
+        method: "PATCH",
+        body: { activationReason },
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+    }),
+  }),
+});
 
-
-  export const { useUpdatePasswordMutation } = authEndpoints;
+export const { useUpdatePasswordMutation, useUpdateUserStatusMutation,useFetchUsersQuery, useVerify2FAMutation } = authEndpoints;
   
