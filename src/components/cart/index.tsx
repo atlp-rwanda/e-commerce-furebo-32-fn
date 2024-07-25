@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
-import { Badge, Button, Drawer, Empty, Input, notification, Space, Spin } from 'antd';
-import { FiShoppingCart } from 'react-icons/fi';
+import React, { useState, useEffect } from 'react';
+import {
+  Badge,
+  Button,
+  Drawer,
+  Empty,
+  Input,
+  notification,
+  Space,
+  Spin,
+} from 'antd';
+import { FiShoppingCart, FiTrash2 } from 'react-icons/fi';
 import {
   useResetCartMutation,
   useViewCartQuery,
-  useRemoveFromCartMutation
+  useRemoveCartItemMutation,
 } from '../../store/actions/cart';
 import { ArrowDownToLine, Edit } from 'lucide-react';
 import CheckoutModal from '../checkout/checkoutForm';
@@ -15,7 +24,14 @@ const Cart: React.FC = () => {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [resetCart, { isLoading: isResetting }] = useResetCartMutation();
   const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
-  const [removeFromCart] = useRemoveFromCartMutation();
+  const [removeFromCart] = useRemoveCartItemMutation();
+  const { data, isLoading, isFetching, refetch } = useViewCartQuery<any>(
+    {},
+    {
+      refetchOnMountOrArgChange: true, 
+    },
+  );
+  const [updateKey, setUpdateKey] = useState(0);
 
   const handleResetCart = async () => {
     try {
@@ -28,13 +44,12 @@ const Cart: React.FC = () => {
 
   const showDrawer = () => {
     setOpen(true);
+    refetch();
   };
 
   const onClose = () => {
     setOpen(false);
   };
-
-  const { data, isLoading, isFetching, refetch } = useViewCartQuery<any>({});
 
   const cartItemCount = data && data.items ? data.items.length : 0;
 
@@ -55,17 +70,29 @@ const Cart: React.FC = () => {
     setCheckoutModalVisible(true);
   };
 
-  const handleRemoveItem = async (productId: string) => {
-    try {
-      await removeFromCart({ productId }).unwrap();
+const handleRemoveItem = async (productId: string) => {
+  try {
+    const result = await removeFromCart({ productId }).unwrap();
+
+    if (result.message === 'Item removed from cart successfully') {
       notification.success({ message: 'Item removed successfully' });
-      refetch(); 
-    } catch (error) {
-      console.error('Failed to remove item', error);
+      await refetch();
+      setUpdateKey((prev) => prev + 1);
+    } else {
       notification.error({ message: 'Failed to remove item' });
     }
-  };
+  } catch (error) {
+    notification.error({ message: 'Failed to remove item' });
+  }
+};
 
+
+
+  useEffect(() => {
+    if (data) {
+      console.log('Current cart data:', data);
+    }
+  }, [data, updateKey]);
 
   return (
     <>
@@ -159,7 +186,7 @@ const Cart: React.FC = () => {
                         className="rounded bg-red-500 text-white"
                         onClick={() => handleRemoveItem(item.productId)}
                       >
-                        Delete
+                        <FiTrash2 size={16} />
                       </Button>
                     </div>
                   </div>

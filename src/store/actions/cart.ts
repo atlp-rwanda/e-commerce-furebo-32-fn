@@ -36,7 +36,7 @@ const cartEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['cart'],
     }),
-    removeFromCart: builder.mutation<any, { productId: string }>({
+    removeCartItem: builder.mutation<any, { productId: string }>({
       query: ({ productId }) => ({
         url: `/api/cart/remove/${productId}`,
         method: 'DELETE',
@@ -97,5 +97,13 @@ const cartEndpoints = baseAPI.injectEndpoints({
   }),
 });
 
-export const { useViewCartQuery, useAddToCartMutation, useResetCartMutation, useCheckoutMutation,
-  useRemoveFromCartMutation,useLazyCompletePaymentQuery, useGetOrderStatusQuery, useLazyCancelledPaymentQuery } = cartEndpoints;
+export const {
+  useViewCartQuery,
+  useAddToCartMutation,
+  useResetCartMutation,
+  useCheckoutMutation,
+  useRemoveCartItemMutation,
+  useLazyCompletePaymentQuery,
+  useGetOrderStatusQuery,
+  useLazyCancelledPaymentQuery,
+} = cartEndpoints;
