@@ -3,9 +3,8 @@ import { Modal, notification, Spin } from 'antd';
 import { useDeleteProductMutation } from '../../store/actions/products';
 import { Link } from 'react-router-dom';
 
-const { confirm } = Modal;
-
-const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
+export const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
+  const { confirm } = Modal;
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
   const showDeleteConfirm = () => {
@@ -34,12 +33,7 @@ const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
 
   console.log(item);
 
-  const productImage =
-    item.images && item.images.length > 0
-      ? item.images[0]
-      : 'https://via.placeholder.com/200';
-
-  console.log(productImage);
+  const productImage = item.images && item.images.length > 0 ? item.images[0] : 'https://via.placeholder.com/200';
 
   return (
     <Spin spinning={isDeleting}>
@@ -55,7 +49,6 @@ const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
           <div className="flex flex-col justify-between w-full md:w-32">
             <div className="w-full rounded-full h-1 bg-gray"></div>
             <div className="flex flex-col">
-              {' '}
               <span className="text-sm text-black font-semibold">
                 {item.productName}
               </span>
@@ -66,7 +59,7 @@ const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void }) => {
             <span
               className={`bg-orange-50 border ${item.availability ? 'border-orange-600 text-orange-600' : 'border-gray text-gray'} text-xs w-fit px-2 rounded-full`}
             >
-              {item.availability ? 'Available' : 'navailable'}
+              {item.availability ? 'Available' : 'Unavailable'}
             </span>
             <div className="flex justify-between items-center">
               <span className="text-xs">{item.price} rwf</span>

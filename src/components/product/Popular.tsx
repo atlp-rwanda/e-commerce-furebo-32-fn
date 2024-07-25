@@ -2,10 +2,10 @@ import { useState } from "react";
 import ProductCard from "./ProductCard";
 import ReactPaginate from "react-paginate";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useGetgetProductsQuery } from "../../store/actions/products";
+import { useGetProductsQuery } from "../../store/actions/products";
 
 function Popular() {
-  const { data, isLoading, isFetching } = useGetgetProductsQuery({});
+  const { data, isLoading, isFetching } = useGetProductsQuery({});
   console.log(data, isLoading, isFetching);
 
   const [currentPage, setCurrentPage] = useState(0);

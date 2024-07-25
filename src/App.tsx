@@ -19,6 +19,8 @@ import Collection from './components/seller/Collection';
 import Wishlist from './components/seller/Wishlist';
 import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from './components/updatePassword';
+import ItemView from './components/ItemView'; 
+import SellerCollection from './components/SellerCollection'; 
 import UserManagement from './components/UserManagement';
 import Notifications from './components/seller/notifications';
 import TwoFA from './components/TwoFA';
@@ -46,6 +48,7 @@ const App: React.FC = () => {
           {role !== 'seller' ? (
             <>
               <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="contact" element={<Contact />} />
               <Route path="product" element={<Product />} />
@@ -68,6 +71,8 @@ const App: React.FC = () => {
             </>
           ) : (
             <>
+              <Route path="item/:itemId" element={<ItemView />} />
+              <Route path="seller/collection" element={<SellerCollection />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="products" element={<Products />} />
               <Route path="products/:id" element={<SingleProduct />} />
