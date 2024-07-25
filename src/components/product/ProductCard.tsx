@@ -1,10 +1,9 @@
 import { Heart, ScanEye, Star } from 'lucide-react';
 import AddCart from '../cart/addCart';
 import { useAddToWishlistMutation } from '../../store/actions/wishlist'; 
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button, message, notification } from 'antd';
-import { data } from 'autoprefixer';
+import { Button, notification } from 'antd';
+import { Link } from "react-router-dom";
 
 function ProductCard({ popularProducts }: { popularProducts: any }) {
   const [addToWishlist] = useAddToWishlistMutation();
@@ -37,7 +36,7 @@ function ProductCard({ popularProducts }: { popularProducts: any }) {
       >
         <div className="flex flex-col gap-2">
           <div className="bg-primary-300 p-1 rounded-lg text-white">
-            <ScanEye />
+            <Link to={`product/${popularProducts.id}`}><ScanEye /></Link>
           </div>
           <div>
             <Button

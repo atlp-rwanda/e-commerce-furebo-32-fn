@@ -71,7 +71,7 @@ const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({
 const AddProduct: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
-  const { data, isLoading, isFetching } = useGetCollectionsQuery({});
+  const { data } = useGetCollectionsQuery({});
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {
