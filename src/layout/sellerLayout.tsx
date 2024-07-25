@@ -58,9 +58,6 @@ const SellerLayout: React.FC = () => {
           <Menu.Item key="3" icon={<ShoppingBasket />}>
             <Link to="/products">Products</Link>
           </Menu.Item>
-          <Menu.Item key="4" icon={<Heart />}>
-            <Link to="/wishlist">Wishlist</Link>
-          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>

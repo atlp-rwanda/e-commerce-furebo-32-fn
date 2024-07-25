@@ -16,7 +16,7 @@ import About from './components/About';
 import Signup from './components/Signup';
 import Products from './components/seller/Products';
 import Collection from './components/seller/Collection';
-import Wishlist from './components/seller/Wishlist';
+import Wishlist from './components/Wishlist';
 import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from './components/updatePassword';
 import ItemView from './components/ItemView'; 
@@ -56,6 +56,7 @@ const App: React.FC = () => {
               <Route path="product/product/:id" element={<SingleProduct />} />
               <Route path="about" element={<About />} />
               <Route path="signup" element={<Signup />} />
+              <Route path="wishlist" element={<Wishlist />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
               <Route path="orders" element={<UserOrders />} />
 
@@ -77,7 +78,6 @@ const App: React.FC = () => {
               <Route path="products" element={<Products />} />
               <Route path="products/:id" element={<SingleProduct />} />
               <Route path="collection" element={<Collection />} />
-              <Route path="wishlist" element={<Wishlist />} />
               <Route path="notifications" element={<Notifications />} />
             </>
           )}

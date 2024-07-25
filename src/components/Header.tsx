@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { FiSearch, FiShoppingCart, FiBell, FiHeart, FiUser, FiMenu, FiPackage, FiMessageCircle,  FiLogIn } from 'react-icons/fi';
+import { NavLink } from 'react-router-dom';
+import '../styles/header.scss';
+import { FiSearch, FiBell, FiHeart, FiUser, FiMenu, FiPackage, FiMessageCircle,  FiLogIn } from 'react-icons/fi';
 import { Badge, Tooltip } from 'antd';
 import '../styles/header.scss';
 import Cart from './cart';
 import { useViewCartQuery } from '../store/actions/cart';
 import { useSearchProductsQuery } from '../store/actions/search';
+import { useGetWishlistQuery } from '../store/actions/wishlist';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/types';
 
@@ -29,6 +31,10 @@ const Header: React.FC = () => {
  
   const cartItemCount = cartData && cartData.items ? cartData.items.length : 0;
   const token=window.localStorage.getItem('token')
+
+  const { data: wishlistData } = useGetWishlistQuery();  
+  const wishlist = wishlistData?.data || [];
+  const wishlistItemCount = wishlist.length;
 
   const { data: searchData } = useSearchProductsQuery(searchParams);
 
@@ -133,7 +139,7 @@ const Header: React.FC = () => {
           {showResults && searchParams.search && searchData?.products && (
             <div ref={searchResultsRef} className="absolute bg-white z-10 top-7 w-full my-1 rounded-lg p-1">
               {searchData.products.map((product: any) => (
-                <div key={product.id} className="flex hover:bg-indigo-300 p-1 rounded-lg cursor-pointer w-full flex justify-between">
+                <div key={product.id} className="flex hover:bg-indigo-300 p-1 rounded-lg cursor-pointer w-full justify-between">
                   <div className="w-10 h-10">
                     <img src={product.images[0]} alt={product.productName} className="w-10 h-10 rounded-lg" />
                   </div>
@@ -150,9 +156,13 @@ const Header: React.FC = () => {
         {/* Icons */}
         <div className="icons flex">
           {cartData && <Cart />}
-
-          <NavLink to="/likes" className="text-white">
-            <FiHeart />
+          <NavLink to="/notifications" className="text-white">
+            <FiBell />
+          </NavLink>
+          <NavLink to="/wishlist" className="text-white">
+            <Badge count={wishlistItemCount}>
+              <FiHeart className="text-2xl" />
+            </Badge>
           </NavLink>
           {token && (
             <NavLink to="/viewprofile" className="text-white">
