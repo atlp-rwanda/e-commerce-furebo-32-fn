@@ -19,6 +19,7 @@ const Header: React.FC = () => {
   });
 
   const [tempSearchParams, setTempSearchParams] = useState(searchParams);
+  const [role, setRole] = useState(window.localStorage.getItem('role'));
 
   const user = useSelector((state: RootState) => state.user);
  
@@ -161,7 +162,7 @@ const Header: React.FC = () => {
           <NavLink to="/login" className="text-white">
             < FiLogIn/>
           </NavLink>
-          {user?.role === 'buyer' && (
+          {role === 'buyer' && (
             <NavLink to="/orders" className="text-[#000]">
               <FiPackage />
             </NavLink>
