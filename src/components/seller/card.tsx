@@ -45,44 +45,44 @@ export const Card = ({ item, onEdit }: { item: any; onEdit: (item: any) => void 
             alt={item.productName}
           />
         </div>
-        <Link to={`${item.id}`}>
-          <div className="flex flex-col justify-between w-full md:w-32">
-            <div className="w-full rounded-full h-1 bg-gray"></div>
-            <div className="flex flex-col">
-              <span className="text-sm text-black font-semibold">
+        <div className="flex flex-col justify-between w-full md:w-32">
+          <div className="w-full rounded-full h-1 bg-gray"></div>
+          <div className="flex flex-col">
+            <Link to={`${item.id}`} className="flex flex-col">
+              <span className="text-sm text-black font-semibold hover:text-primary-300">
                 {item.productName}
               </span>
-              <span className="text-xs text-gray font-semibold">
+              <span className="text-xs text-gray font-semibold hover:text-primary-300">
                 {item.category}
               </span>
-            </div>
-            <span
-              className={`bg-orange-50 border ${item.availability ? 'border-orange-600 text-orange-600' : 'border-gray text-gray'} text-xs w-fit px-2 rounded-full`}
-            >
-              {item.availability ? 'Available' : 'Unavailable'}
-            </span>
-            <div className="flex justify-between items-center">
-              <span className="text-xs">{item.price} rwf</span>
-              <div className="flex gap-1 justify-end">
-                <div
-                  className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white"
-                  onClick={() => {
-                    console.log('Edit clicked');
-                    onEdit(item);
-                  }}
-                >
-                  <PenLine width={15} height={15} />
-                </div>
-                <div
-                  className="flex justify-center items-center cursor-pointer hover:bg-red-100 hover:text-red-600 hover:border hover:border-red-600 border border-red-600 w-fit p-1 rounded-md bg-red-600 text-white"
-                  onClick={showDeleteConfirm}
-                >
-                  <Trash2 width={15} height={15} />
-                </div>
+            </Link>
+          </div>
+          <span
+            className={`bg-orange-50 border ${item.availability ? 'border-orange-600 text-orange-600' : 'border-gray text-gray'} text-xs w-fit px-2 rounded-full`}
+          >
+            {item.availability ? 'Available' : 'Unavailable'}
+          </span>
+          <div className="flex justify-between items-center">
+            <span className="text-xs">{item.price} rwf</span>
+            <div className="flex gap-1 justify-end">
+              <div
+                className="flex justify-center items-center cursor-pointer hover:bg-primary-50 hover:text-primary-300 hover:border hover:border-primary-300 border border-primary-300 bg-primary-300 w-fit p-1 rounded-md text-white"
+                onClick={() => {
+                  console.log('Edit clicked');
+                  onEdit(item);
+                }}
+              >
+                <PenLine width={15} height={15} />
+              </div>
+              <div
+                className="flex justify-center items-center cursor-pointer hover:bg-red-100 hover:text-red-600 hover:border hover:border-red-600 border border-red-600 w-fit p-1 rounded-md bg-red-600 text-white"
+                onClick={showDeleteConfirm}
+              >
+                <Trash2 width={15} height={15} />
               </div>
             </div>
           </div>
-        </Link>
+        </div>
       </div>
     </Spin>
   );

@@ -35,13 +35,7 @@ function Products() {
             <Empty description="No Products Available" />
           ) : (
             data.items.map((item: any, index: any) => (
-              <Link
-                to={`/item/${item.id}`}
-                key={index}
-                className="w-full md:w-1/3 lg:w-1/4"
-              >
                 <Card key={index} item={item} onEdit={handleEditProduct} />
-              </Link>
             ))
           )}
         </div>
