@@ -14,6 +14,9 @@ import '@fontsource/roboto/700.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ConfigProvider } from 'antd';
 import antdTheme from './utils/config/antdConfig';
+import './tailwind.css'; // Import Tailwind CSS
+
+const clientId = '702830308593-fnn05bka4scjq5gpria8qv33elohft62.apps.googleusercontent.com';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);

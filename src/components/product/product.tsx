@@ -1,10 +1,10 @@
 import TablePagination from "@mui/material/TablePagination";
 import React, { useState } from "react";
 import ProductCard from "./ProductCard";  
-import { useGetgetProductsQuery } from "../../store/actions/products";
+import { useGetProductsQuery } from "../../store/actions/products";
 
 function Product() {
-  const { data, isLoading, isFetching } = useGetgetProductsQuery({});
+  const { data, isLoading, isFetching } = useGetProductsQuery({});
   console.log(data, isLoading, isFetching);
  const popularProducts = data?.items || [];
   const [rowsPerPage, setRowsPerPage] = React.useState(4);

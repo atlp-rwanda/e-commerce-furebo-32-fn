@@ -1,15 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BASE_API_URL } from '../../utils/constants/config';
 
 interface User {
   id: string;
   email: string;
   role: string;
+  permissions: string[];
   [key: string]: any;
 }
 
 interface UserState {
+  token: any;
+  id: number;
   users: User[];
   loading: boolean;
   error: string | null;
@@ -25,9 +29,10 @@ const initialState: UserState = {
   submittedEmail: '',
 };
 
+// Fetch Users
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAPI) => {
   try {
-    const response = await axios.get('https://e-commerce-furebo-32-bn-1.onrender.com/api/users/users');
+    const response = await axios.get(`${BASE_API_URL}api/users/users`);
     return response.data.data.users;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -38,13 +43,14 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAP
   }
 });
 
+// Update User Role
 export const updateUserRole = createAsyncThunk(
   'users/updateUserRole',
   async ({ userId, role }: { userId: string, role: string }, thunkAPI) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.patch(
-        `https://e-commerce-furebo-32-bn-1.onrender.com/api/users/${userId}/role`,
+        `${BASE_API_URL}api/users/${userId}/role`,
         { role },
         {
           headers: {
@@ -66,11 +72,21 @@ export const updateUserRole = createAsyncThunk(
   }
 );
 
+// Update User Permissions (Frontend Only)
+export const updateUserPermissions = createAsyncThunk(
+  'users/updateUserPermissions',
+  async ({ userId, permissions }: { userId: string, permissions: string[] }, thunkAPI) => {
+    // Simply return the payload; no actual API call
+    return { userId, permissions };
+  }
+);
+
+// Signup User
 export const signupUser = createAsyncThunk('user/signupUser', async (formData: any, { rejectWithValue }) => {
   try {
     const { rePassword, ...formDataToSend } = formData;
-    const response = await axios.post(`https://e-commerce-furebo-32-bn-1.onrender.com/api/users/signup`, formDataToSend);
-    await axios.get(`https://e-commerce-furebo-32-bn-1.onrender.com/api/users/verify-email?token=${response.data.token}`);
+    const response = await axios.post(`${BASE_API_URL}api/users/signup`, formDataToSend);
+    await axios.get(`${BASE_API_URL}api/users/verify-email?token=${response.data.token}`);
     return { email: formDataToSend.email, data: response.data };
   } catch (error: any) {
     return rejectWithValue(error.response.data.message);
@@ -83,7 +99,7 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      
+      // Fetch Users
       .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
       })
@@ -95,13 +111,19 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-   
+      // Update User Role
       .addCase(updateUserRole.fulfilled, (state, action) => {
         state.users = state.users.map(user =>
           user.id === action.payload.userId ? { ...user, role: action.payload.role } : user
         );
       })
-     
+      // Update User Permissions
+      .addCase(updateUserPermissions.fulfilled, (state, action) => {
+        state.users = state.users.map(user =>
+          user.id === action.payload.userId ? { ...user, permissions: action.payload.permissions } : user
+        );
+      })
+      // Signup User
       .addCase(signupUser.pending, (state) => {
         state.loading = true;
         state.error = null;

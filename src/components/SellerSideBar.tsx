@@ -15,7 +15,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import CategoryIcon from '@mui/icons-material/Category';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -83,7 +82,6 @@ export default function SellerSideBar(props: any) {
     { text: 'Dashboard', icon: <DashboardIcon />, link: '/dashboard' },
     { text: 'Products', icon: <Inventory2Icon />, link: '/products' },
     { text: 'Collection', icon: <CategoryIcon />, link: '/collection' },
-    { text: 'Wishlist', icon: <FavoriteIcon />, link: '/wishlist' },
   ];
 
   const [isActive,setIsActive] = React.useState(0)

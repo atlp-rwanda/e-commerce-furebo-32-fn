@@ -4,7 +4,7 @@ const token = window.localStorage.getItem('token');
 
 const productsEndpoints = baseAPI.injectEndpoints({
   endpoints: (builder) => ({
-    getgetProducts: builder.query<any, { params?: any }>({
+    getProducts: builder.query<any, { params?: any }>({
       query: ({ params }) => ({
         url: '/api/availableItems',
         method: 'GET',
@@ -54,13 +54,24 @@ const productsEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['products'],
     }),
+    deleteProduct: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/api/deleteProduct/${id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['products'],
+    }),
   }),
 });
 
 export const {
-  useGetgetProductsQuery,
+  useGetProductsQuery,
+  useGetSingleProductQuery,
   useGetSellerProductsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
-  useGetSingleProductQuery,
+  useDeleteProductMutation,
 } = productsEndpoints;

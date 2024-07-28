@@ -1,7 +1,10 @@
 const { colors } = require("@mui/material");
 
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html"
+  ],
   theme: {
     extend: {
       colors: {
@@ -36,4 +39,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}
