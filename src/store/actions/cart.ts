@@ -46,6 +46,20 @@ const cartEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['cart'],
     }),
+    updateCartItem: builder.mutation<
+      any,
+      { productId: string; quantity: number }
+    >({
+      query: ({ productId, quantity }) => ({
+        url: `/api/cart/update/${productId}`,
+        method: 'PATCH',
+        body: { quantity },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['cart'],
+    }),
     checkout: builder.mutation<
       any,
       {
@@ -103,6 +117,7 @@ export const {
   useResetCartMutation,
   useCheckoutMutation,
   useRemoveCartItemMutation,
+  useUpdateCartItemMutation,
   useLazyCompletePaymentQuery,
   useGetOrderStatusQuery,
   useLazyCancelledPaymentQuery,

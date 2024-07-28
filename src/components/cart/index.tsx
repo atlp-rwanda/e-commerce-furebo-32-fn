@@ -14,6 +14,7 @@ import {
   useResetCartMutation,
   useViewCartQuery,
   useRemoveCartItemMutation,
+  useUpdateCartItemMutation,
 } from '../../store/actions/cart';
 import { ArrowDownToLine, Edit } from 'lucide-react';
 import CheckoutModal from '../checkout/checkoutForm';
@@ -25,6 +26,7 @@ const Cart: React.FC = () => {
   const [resetCart, { isLoading: isResetting }] = useResetCartMutation();
   const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
   const [removeFromCart] = useRemoveCartItemMutation();
+  const [updateCartItem] = useUpdateCartItemMutation();
   const { data, isLoading, isFetching, refetch } = useViewCartQuery<any>(
     {},
     {
@@ -53,7 +55,20 @@ const Cart: React.FC = () => {
 
   const cartItemCount = data && data.items ? data.items.length : 0;
 
-  const toggleEditMode = (index: number) => {
+  const toggleEditMode = async (index: number, productId: string) => {
+    if (editMode[index]) {
+      try {
+        const quantity =
+          quantities[index] !== undefined
+            ? quantities[index]
+            : data.items[index].quantity;
+        await updateCartItem({ productId, quantity }).unwrap();
+        notification.success({ message: 'Quantity updated successfully' });
+        refetch();
+      } catch (error) {
+        notification.error({ message: 'Failed to update quantity' });
+      }
+    }
     setEditMode((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
@@ -169,7 +184,7 @@ const handleRemoveItem = async (productId: string) => {
                     <div className="h-full flex items-end justify-end">
                       <Button
                         className="rounded bg-primary-300 text-white"
-                        onClick={() => toggleEditMode(index)}
+                        onClick={() => toggleEditMode(index, item.productId)}
                       >
                         {editMode[index] ? (
                           <div className="flex gap-2">
