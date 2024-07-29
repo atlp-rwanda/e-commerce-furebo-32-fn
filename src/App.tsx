@@ -19,8 +19,8 @@ import Collection from './components/seller/Collection';
 import Wishlist from './components/Wishlist';
 import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from './components/updatePassword';
-import ItemView from './components/ItemView'; 
-import SellerCollection from './components/SellerCollection'; 
+import ItemView from './components/ItemView';
+import SellerCollection from './components/SellerCollection';
 import UserManagement from './components/UserManagement';
 import Notifications from './components/seller/notifications';
 import TwoFA from './components/TwoFA';
@@ -32,7 +32,6 @@ import CancelledPage from './components/checkout/cancelledPage';
 import UserOrders from './components/orders/buyerOrders';
 import SingleProduct from './components/SingleProduct';
 import { Chat } from './components/Chat';
-
 
 import { ViewProfile } from './components/profile';
 const App: React.FC = () => {
