@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
-import { Badge, Button, Drawer, Empty, Input, notification, Space, Spin } from 'antd';
-import { FiShoppingCart } from 'react-icons/fi';
+import React, { useState, useEffect } from 'react';
+import {
+  Badge,
+  Button,
+  Drawer,
+  Empty,
+  Input,
+  notification,
+  Space,
+  Spin,
+} from 'antd';
+import { FiShoppingCart, FiTrash2 } from 'react-icons/fi';
 import {
   useResetCartMutation,
   useViewCartQuery,
+  useRemoveCartItemMutation,
+  useUpdateCartItemMutation,
 } from '../../store/actions/cart';
 import { ArrowDownToLine, Edit } from 'lucide-react';
 import CheckoutModal from '../checkout/checkoutForm';
@@ -14,6 +25,15 @@ const Cart: React.FC = () => {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [resetCart, { isLoading: isResetting }] = useResetCartMutation();
   const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
+  const [removeFromCart] = useRemoveCartItemMutation();
+  const [updateCartItem] = useUpdateCartItemMutation();
+  const { data, isLoading, isFetching, refetch } = useViewCartQuery<any>(
+    {},
+    {
+      refetchOnMountOrArgChange: true, 
+    },
+  );
+  const [updateKey, setUpdateKey] = useState(0);
 
   const handleResetCart = async () => {
     try {
@@ -26,17 +46,29 @@ const Cart: React.FC = () => {
 
   const showDrawer = () => {
     setOpen(true);
+    refetch();
   };
 
   const onClose = () => {
     setOpen(false);
   };
 
-  const { data, isLoading, isFetching } = useViewCartQuery<any>({});
-
   const cartItemCount = data && data.items ? data.items.length : 0;
 
-  const toggleEditMode = (index: number) => {
+  const toggleEditMode = async (index: number, productId: string) => {
+    if (editMode[index]) {
+      try {
+        const quantity =
+          quantities[index] !== undefined
+            ? quantities[index]
+            : data.items[index].quantity;
+        await updateCartItem({ productId, quantity }).unwrap();
+        notification.success({ message: 'Quantity updated successfully' });
+        refetch();
+      } catch (error) {
+        notification.error({ message: 'Failed to update quantity' });
+      }
+    }
     setEditMode((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
@@ -52,6 +84,30 @@ const Cart: React.FC = () => {
   const handleCheckout = () => {
     setCheckoutModalVisible(true);
   };
+
+const handleRemoveItem = async (productId: string) => {
+  try {
+    const result = await removeFromCart({ productId }).unwrap();
+
+    if (result.message === 'Item removed from cart successfully') {
+      notification.success({ message: 'Item removed successfully' });
+      await refetch();
+      setUpdateKey((prev) => prev + 1);
+    } else {
+      notification.error({ message: 'Failed to remove item' });
+    }
+  } catch (error) {
+    notification.error({ message: 'Failed to remove item' });
+  }
+};
+
+
+
+  useEffect(() => {
+    if (data) {
+      console.log('Current cart data:', data);
+    }
+  }, [data, updateKey]);
 
   return (
     <>
@@ -128,7 +184,7 @@ const Cart: React.FC = () => {
                     <div className="h-full flex items-end justify-end">
                       <Button
                         className="rounded bg-primary-300 text-white"
-                        onClick={() => toggleEditMode(index)}
+                        onClick={() => toggleEditMode(index, item.productId)}
                       >
                         {editMode[index] ? (
                           <div className="flex gap-2">
@@ -140,6 +196,12 @@ const Cart: React.FC = () => {
                             Edit
                           </div>
                         )}
+                      </Button>
+                      <Button
+                        className="rounded bg-red-500 text-white"
+                        onClick={() => handleRemoveItem(item.productId)}
+                      >
+                        <FiTrash2 size={16} />
                       </Button>
                     </div>
                   </div>

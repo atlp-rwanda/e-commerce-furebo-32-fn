@@ -5,7 +5,7 @@ const baseAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_API_URL,
   }),
-  tagTypes: ['collection', 'products', 'cart'],
+  tagTypes: ['collection', 'products', 'cart', 'wishlist'],
   endpoints: () => ({}),
 });
 

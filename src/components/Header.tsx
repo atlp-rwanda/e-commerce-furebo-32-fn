@@ -1,25 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  FiSearch,
-  FiShoppingCart,
-  FiBell,
-  FiHeart,
-  FiUser,
-  FiMenu,
-  FiPackage,
-} from 'react-icons/fi';
-
 import '../styles/header.scss';
-import { Badge, Spin } from 'antd';
-import { useViewCartQuery } from '../store/actions/cart';
+import { FiSearch, FiBell, FiHeart, FiUser, FiMenu, FiPackage, FiMessageCircle,  FiLogIn } from 'react-icons/fi';
+import { Badge, Tooltip } from 'antd';
+import '../styles/header.scss';
 import Cart from './cart';
+import { useViewCartQuery } from '../store/actions/cart';
 import { useSearchProductsQuery } from '../store/actions/search';
+import { useGetWishlistQuery } from '../store/actions/wishlist';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/types';
 
 const Header: React.FC = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-  const [role, setRole] = useState(window.localStorage.getItem('role'));
-
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState({
     search: '',
     min: '',
@@ -27,17 +20,21 @@ const Header: React.FC = () => {
     category: '',
   });
 
-  const [tempSearchParams, setTempSearchParams] = useState({
-    search: '',
-    min: '',
-    max: '',
-    category: '',
-  });
+  const [tempSearchParams, setTempSearchParams] = useState(searchParams);
+  const [role, setRole] = useState(window.localStorage.getItem('role'));
 
-  const [showResults, setShowResults] = useState(false);
+  const user = useSelector((state: RootState) => state.user);
+ 
+  const [showResults, setShowResults] = useState<boolean>(false);
   const searchResultsRef = useRef<HTMLDivElement>(null);
   const { data: cartData } = useViewCartQuery({});
+ 
   const cartItemCount = cartData && cartData.items ? cartData.items.length : 0;
+  const token=window.localStorage.getItem('token')
+
+  const { data: wishlistData } = useGetWishlistQuery();  
+  const wishlist = wishlistData?.data || [];
+  const wishlistItemCount = wishlist.length;
 
   const { data: searchData } = useSearchProductsQuery(searchParams);
 
@@ -56,18 +53,13 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchResultsRef.current &&
-        !searchResultsRef.current.contains(event.target as Node)
-      ) {
+      if (searchResultsRef.current && !searchResultsRef.current.contains(event.target as Node)) {
         setShowResults(false);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
@@ -77,102 +69,40 @@ const Header: React.FC = () => {
           <img src="/images/logo.png" alt="Logo" className="logo ml-auto" />
         </div>
 
-        {/* Hamburger Menu Icon for Mobile */}
         <div className="sm:hidden" onClick={() => setIsNavOpen(!isNavOpen)}>
           <FiMenu className="menu text-black text-2xl" />
         </div>
 
-        {/* Desktop Navigation Links */}
         <nav className="nav-links hidden sm:flex flex-col sm:flex-row gap-4">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive
-                ? 'active text-blue-500 underline'
-                : 'text-white underline'
-            }
-          >
+          <NavLink to="/" className={({ isActive }) => isActive ? 'active text-blue-500 underline' : 'text-white underline'}>
             Home
           </NavLink>
-          <NavLink
-            to="/product"
-            className={({ isActive }) =>
-              isActive ? 'active text-blue-500' : 'text-white'
-            }
-          >
+          <NavLink to="/product" className={({ isActive }) => isActive ? 'active text-blue-500' : 'text-white'}>
             Products
           </NavLink>
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              isActive ? 'active text-blue-500' : 'text-white'
-            }
-          >
+          <NavLink to="/about" className={({ isActive }) => isActive ? 'active text-blue-500' : 'text-white'}>
             About
           </NavLink>
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              isActive ? 'active text-blue-500' : 'text-white'
-            }
-          >
+          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active text-blue-500' : 'text-white'}>
             Contact
           </NavLink>
         </nav>
 
-        {/* Mobile Navigation Links */}
-        <div
-          className={`mobile-nav-links ${
-            isNavOpen ? 'block' : 'hidden'
-          } sm:hidden absolute top-0 left-0 w-full bg-black  text-white flex flex-col items-center pt-5`}
-        >
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive
-                ? 'active text-blue-500 underline mb-4'
-                : 'text-white mb-4'
-            }
-            onClick={() => setIsNavOpen(false)}
-          >
+        <div className={`mobile-nav-links ${isNavOpen ? 'block' : 'hidden'} sm:hidden absolute top-0 left-0 w-full bg-black text-white flex flex-col items-center pt-5`}>
+          <NavLink to="/" className={({ isActive }) => isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4'} onClick={() => setIsNavOpen(false)}>
             Home
           </NavLink>
-          <NavLink
-            to="/product"
-            className={({ isActive }) =>
-              isActive
-                ? 'active text-blue-500 underline mb-4'
-                : 'text-white mb-4'
-            }
-            onClick={() => setIsNavOpen(false)}
-          >
+          <NavLink to="/product" className={({ isActive }) => isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4'} onClick={() => setIsNavOpen(false)}>
             Products
           </NavLink>
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              isActive
-                ? 'active text-blue-500 underline mb-4'
-                : 'text-white mb-4'
-            }
-            onClick={() => setIsNavOpen(false)}
-          >
+          <NavLink to="/about" className={({ isActive }) => isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4'} onClick={() => setIsNavOpen(false)}>
             About
           </NavLink>
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              isActive
-                ? 'active text-blue-500 underline mb-4'
-                : 'text-white mb-4'
-            }
-            onClick={() => setIsNavOpen(false)}
-          >
+          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active text-blue-500 underline mb-4' : 'text-white mb-4'} onClick={() => setIsNavOpen(false)}>
             Contact
           </NavLink>
         </div>
 
-        {/* Search Box */}
         <div className="search-box relative">
           <input
             type="text"
@@ -182,7 +112,6 @@ const Header: React.FC = () => {
             onChange={handleSearchInput}
             onFocus={() => setShowResults(true)}
           />
-
           <input
             type="text"
             placeholder="Search category"
@@ -190,7 +119,6 @@ const Header: React.FC = () => {
             onChange={handleSearchInput}
             onFocus={() => setShowResults(true)}
           />
-
           <input
             type="number"
             placeholder="min"
@@ -198,7 +126,6 @@ const Header: React.FC = () => {
             onChange={handleSearchInput}
             onFocus={() => setShowResults(true)}
           />
-
           <input
             type="number"
             placeholder="max"
@@ -206,60 +133,62 @@ const Header: React.FC = () => {
             onChange={handleSearchInput}
             onFocus={() => setShowResults(true)}
           />
-
-          <button
-            onClick={handleSearch}
-            className="bg-blue-500 text-white p-2 rounded-r-full"
-          >
+          <button onClick={handleSearch} className="bg-blue-500 text-white p-2 rounded-r-full">
             <FiSearch />
           </button>
-
-          {/* Search Results */}
-          {showResults &&
-            searchParams.search &&
-            searchData &&
-            searchData.products && (
-              <div
-                ref={searchResultsRef}
-                className="absolute bg-white z-10 top-7 w-full my-1 rounded-lg p-1"
-              >
-                {searchData.products.map((product: any) => (
-                  <div
-                    key={product.id}
-                    className="flex hover:bg-indigo-300 p-1 rounded-lg cursor-pointer w-full flex justify-between"
-                  >
-                    <div className="w-10 h-10">
-                      <img
-                        src={product.images[0]}
-                        alt={product.productName}
-                        className="w-10 h-10 rounded-lg"
-                      />
-                    </div>
-                    <p className="p-1 m-0 text-center">{product.productName}</p>
-                    <p className="p-1 m-0 text-center">{product.category}</p>
-                    <p className="p-1 m-0 text-center">{product.price}</p>
+          {showResults && searchParams.search && searchData?.products && (
+            <div ref={searchResultsRef} className="absolute bg-white z-10 top-7 w-full my-1 rounded-lg p-1">
+              {searchData.products.map((product: any) => (
+                <div key={product.id} className="flex hover:bg-indigo-300 p-1 rounded-lg cursor-pointer w-full justify-between">
+                  <div className="w-10 h-10">
+                    <img src={product.images[0]} alt={product.productName} className="w-10 h-10 rounded-lg" />
                   </div>
-                ))}
-              </div>
-            )}
-        </div>
-
-        {/* Icons */}
-        <div className="icons flex gap-4">
-          {cartData && <Cart />}
-
-          <NavLink to="/likes" className="text-white">
-            <FiHeart />
-          </NavLink>
-          <NavLink to="/login" className="text-white">
-            <FiUser />
-          </NavLink>
-         {role === 'buyer'&&(
-          <NavLink to="/orders" className="text-[#000]">
-          < FiPackage />
-          </NavLink>
+                  <p className="p-1 m-0 text-center">{product.productName}</p>
+                  <p className="p-1 m-0 text-center">{product.category}</p>
+                  <p className="p-1 m-0 text-center">{product.price}</p>
+                </div>
+              ))}
+            </div>
           )}
         </div>
+
+        <div className="icons flex gap-4">
+        {/* Icons */}
+        <div className="icons flex">
+          {cartData && <Cart />}
+          <NavLink to="/notifications" className="text-white">
+            <FiBell />
+          </NavLink>
+          <NavLink to="/wishlist" className="text-white">
+            <Badge count={wishlistItemCount}>
+              <FiHeart className="text-2xl" />
+            </Badge>
+          </NavLink>
+          {token && (
+            <NavLink to="/viewprofile" className="text-white">
+              <FiUser />
+            </NavLink>
+          )}
+          <NavLink to="/login" className="text-white">
+            < FiLogIn/>
+          </NavLink>
+          {role === 'buyer' && (
+            <NavLink to="/orders" className="text-[#000]">
+              <FiPackage />
+            </NavLink>
+          )}
+          <Tooltip title={user ? '' : 'Please login to chat'}>
+            <NavLink to={user ? '/chat' : '/login'} className="text-white">
+            
+                <Badge >
+                  <FiMessageCircle />
+                </Badge>
+              
+              
+            </NavLink>
+          </Tooltip>
+        </div>
+      </div>
       </div>
     </header>
   );

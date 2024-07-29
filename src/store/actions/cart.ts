@@ -26,7 +26,7 @@ const cartEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['cart'],
     }),
-    resetCart: builder.mutation<any, {  }>({
+    resetCart: builder.mutation<any, {}>({
       query: () => ({
         url: `/api/cart/clear`,
         method: 'POST',
@@ -36,7 +36,41 @@ const cartEndpoints = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['cart'],
     }),
-    checkout: builder.mutation<any, { body: { street: string; city: string; country: string; zipCode: string } }>({
+    removeCartItem: builder.mutation<any, { productId: string }>({
+      query: ({ productId }) => ({
+        url: `/api/cart/remove/${productId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['cart'],
+    }),
+    updateCartItem: builder.mutation<
+      any,
+      { productId: string; quantity: number }
+    >({
+      query: ({ productId, quantity }) => ({
+        url: `/api/cart/update/${productId}`,
+        method: 'PATCH',
+        body: { quantity },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['cart'],
+    }),
+    checkout: builder.mutation<
+      any,
+      {
+        body: {
+          street: string;
+          city: string;
+          country: string;
+          zipCode: string;
+        };
+      }
+    >({
       query: ({ body }) => ({
         url: `/api/checkout`,
         method: 'POST',
@@ -56,7 +90,7 @@ const cartEndpoints = baseAPI.injectEndpoints({
         },
       }),
     }),
-   cancelledPayment: builder.query<any, { orderId: string }>({
+    cancelledPayment: builder.query<any, { orderId: string }>({
       query: ({ orderId }) => ({
         url: `/api/cancel/${orderId}`,
         method: 'GET',
@@ -77,4 +111,14 @@ const cartEndpoints = baseAPI.injectEndpoints({
   }),
 });
 
-export const { useViewCartQuery, useAddToCartMutation,useResetCartMutation, useCheckoutMutation,useLazyCompletePaymentQuery,useGetOrderStatusQuery,useLazyCancelledPaymentQuery } = cartEndpoints;
+export const {
+  useViewCartQuery,
+  useAddToCartMutation,
+  useResetCartMutation,
+  useCheckoutMutation,
+  useRemoveCartItemMutation,
+  useUpdateCartItemMutation,
+  useLazyCompletePaymentQuery,
+  useGetOrderStatusQuery,
+  useLazyCancelledPaymentQuery,
+} = cartEndpoints;

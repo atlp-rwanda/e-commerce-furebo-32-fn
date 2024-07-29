@@ -16,9 +16,11 @@ import About from './components/About';
 import Signup from './components/Signup';
 import Products from './components/seller/Products';
 import Collection from './components/seller/Collection';
-import Wishlist from './components/seller/Wishlist';
+import Wishlist from './components/Wishlist';
 import SellerLayout from './layout/sellerLayout';
 import UpdatePasswordForm from './components/updatePassword';
+import ItemView from './components/ItemView';
+import SellerCollection from './components/SellerCollection';
 import UserManagement from './components/UserManagement';
 import Notifications from './components/seller/notifications';
 import TwoFA from './components/TwoFA';
@@ -28,8 +30,12 @@ import { ResetPassword } from './components/resetPassword';
 import SuccessPage from './components/checkout/sucessPage';
 import CancelledPage from './components/checkout/cancelledPage';
 import UserOrders from './components/orders/buyerOrders';
+import SingleProduct from './components/SingleProduct';
+import { Chat } from './components/Chat';
+
+import { ViewProfile } from './components/profile';
 const App: React.FC = () => {
-  const [role, setRole] = useState(window.localStorage.getItem('role'));
+  const [role] = useState(window.localStorage.getItem('role'));
 
   return (
     <ThemeProvider theme={MuiTheme}>
@@ -41,28 +47,36 @@ const App: React.FC = () => {
           {role !== 'seller' ? (
             <>
               <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="contact" element={<Contact />} />
               <Route path="product" element={<Product />} />
+              <Route path="product/:id" element={<SingleProduct />} />
+              <Route path="product/product/:id" element={<SingleProduct />} />
               <Route path="about" element={<About />} />
               <Route path="signup" element={<Signup />} />
+              <Route path="wishlist" element={<Wishlist />} />
               <Route path="updatepassword" element={<UpdatePasswordForm />} />
               <Route path="orders" element={<UserOrders />} />
+
+              <Route path="/chat" element={<Chat />} />
               <Route
                 path="requestResetPassword"
                 element={<RequestResetPassword />}
               />
               <Route path="reset-password" element={<ResetPassword />} />
-
               <Route path="sucessorder/:id" element={<SuccessPage />} />
               <Route path="/cancelorder/:id" element={<CancelledPage />} />
+              <Route path="viewprofile" element={<ViewProfile />} />
             </>
           ) : (
             <>
+              <Route path="item/:itemId" element={<ItemView />} />
+              <Route path="seller/collection" element={<SellerCollection />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="products" element={<Products />} />
+              <Route path="products/:id" element={<SingleProduct />} />
               <Route path="collection" element={<Collection />} />
-              <Route path="wishlist" element={<Wishlist />} />
               <Route path="notifications" element={<Notifications />} />
             </>
           )}
@@ -95,6 +109,10 @@ const App: React.FC = () => {
               </ProtectedAdmin>
             }
           />
+          <Route path="contacts" />
+          <Route path="products" />
+          <Route path="" element={<AdminDashboardPage />} />
+
           <Route path="contacts" />
           <Route path="products" />
           <Route path="" element={<AdminDashboardPage />} />
