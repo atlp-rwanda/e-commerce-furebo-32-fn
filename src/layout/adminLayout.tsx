@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import Header from '../components/adminHeader';
 import '../styles/AdminLayout.css'; 
+import { MessageOutlined } from '@mui/icons-material';
 
 const { Sider, Content } = Layout;
 
@@ -40,6 +41,9 @@ function AdminLayout() {
             </Menu.Item>
             <Menu.Item key="5" icon={<UserOutlined />} className="menu-item">
               <Link to="/dashboard/users">Users/Accounts</Link>
+            </Menu.Item>
+            <Menu.Item key="6" icon={<MessageOutlined />} className="menu-item">
+              <Link to="/dashboard/chat">Chats</Link>
             </Menu.Item>
           </Menu>
         </Sider>

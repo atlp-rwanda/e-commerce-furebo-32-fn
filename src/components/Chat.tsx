@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { List, Avatar, Button } from 'antd';
+import { List, Avatar, Button, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
-import { fetchMessages, sendMessage } from '../redux/chatSlice';
+import { fetchMessages, sendMessage, deleteMessage } from '../redux/chatSlice';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import TextArea from 'antd/es/input/TextArea';
+import { DeleteOutlined } from '@mui/icons-material';
 
 dayjs.extend(relativeTime);
+
+const { TextArea } = Input;
 
 // Function to format time
 const formatTime = (time: string) => {
@@ -20,28 +22,12 @@ const formatTime = (time: string) => {
       return 'Invalid time'; 
     }
 
-    if (diffInMinutes < 1) {
-      return 'Just now';
-    } 
-    else if (diffInMinutes < 60) {
-      return `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`;
-    } 
-    else if (diffInMinutes < 1440) { 
-      const diffInHours = now.diff(parsedDate, 'hour');
-      return `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`;
-    }
-    else if (diffInMinutes < 43200) { 
-      const diffInDays = now.diff(parsedDate, 'day');
-      return `${diffInDays} day${diffInDays === 1 ? '' : 's'} ago`;
-    }
-    else if (diffInMinutes < 525600) { 
-      const diffInMonths = now.diff(parsedDate, 'month');
-      return `${diffInMonths} month${diffInMonths === 1 ? '' : 's'} ago`;
-    } 
-    else {
-      const diffInYears = now.diff(parsedDate, 'year');
-      return `${diffInYears} year${diffInYears === 1 ? '' : 's'} ago`;
-    }
+    if (diffInMinutes < 1) return 'Just now';
+    if (diffInMinutes < 60) return `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`;
+    if (diffInMinutes < 1440) return `${now.diff(parsedDate, 'hour')} hour${now.diff(parsedDate, 'hour') === 1 ? '' : 's'} ago`;
+    if (diffInMinutes < 43200) return `${now.diff(parsedDate, 'day')} day${now.diff(parsedDate, 'day') === 1 ? '' : 's'} ago`;
+    if (diffInMinutes < 525600) return `${now.diff(parsedDate, 'month')} month${now.diff(parsedDate, 'month') === 1 ? '' : 's'} ago`;
+    return `${now.diff(parsedDate, 'year')} year${now.diff(parsedDate, 'year') === 1 ? '' : 's'} ago`;
   } catch (error) {
     console.error('Error formatting time:', error);
     return 'Invalid time'; 
@@ -66,6 +52,10 @@ export const Chat: React.FC = () => {
     }
   };
 
+  const handleDeleteMessage = (messageId: string) => {
+      dispatch(deleteMessage(messageId) as any);
+  };
+
   const handleMentionClick = (mention: string) => {
     setMessageContent(prevContent => `${prevContent}@${mention} `); 
   };
@@ -73,60 +63,60 @@ export const Chat: React.FC = () => {
   const renderMessage = (content: string) => {
     const mentionPattern = /@(\w+)/g;
     const parts = content.split(mentionPattern);
-    const elements = [];
-
-    for (let i = 0; i < parts.length; i++) {
-      const part = parts[i];
-      if (i % 2 === 1) {
-        
-        elements.push(
-          <span key={i} className="mention" onClick={() => handleMentionClick(part)}>
-            @{part}
-          </span>
-        );
-      } else {
-        elements.push(part);
-      }
-    }
-
-    return elements;
+    
+    return parts.map((part, index) => 
+      index % 2 === 1 ? (
+        <span key={index} className="mention" onClick={() => handleMentionClick(part)}>
+          @{part}
+        </span>
+      ) : part
+    );
   };
 
+  const role = window.localStorage.getItem('role');
+
   return (
-    <div className="chat-container">
-      <h1>You can chat with The Buyers and Sellers Here!</h1>
-      <List
-        className="chat-list"
-        itemLayout="horizontal"
-        dataSource={messages}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar>{item.name[0]}</Avatar>}
-              title={
-                <>
-                  {item.name} 
-                  <span className="time-text">
-                    ({formatTime(item.createdAt)}) 
-                  </span>
-                </>
-              }
-              description={<div>{renderMessage(item.content)}</div>}
-            />
-           
-          </List.Item>
-        )}
-      />
-      <div className="chat-input">
-        <TextArea
-          rows={4}
-          value={messageContent}
-          onChange={(e) => setMessageContent(e.target.value)}
-          placeholder="Type your message here!"
+    <div className='flex justify-center'>
+        <div className="chat-container">
+        <h1>You can chat with The Buyers and Sellers Here!</h1>
+        <List
+          className="chat-list"
+          itemLayout="horizontal"
+          dataSource={messages}
+          renderItem={item => (
+            <List.Item key={item.id}>
+              <List.Item.Meta
+                avatar={<Avatar>{item.name[0]}</Avatar>}
+                title={
+                  <>
+                    {item.name} 
+                    <span className="time-text">
+                      ({formatTime(item.createdAt)}) 
+                    </span>
+                  </>
+                }
+                description={<div>{renderMessage(item.content)}</div>}
+              />
+              {role === 'admin' && (
+                <DeleteOutlined 
+                  style={{ color: 'red', cursor: 'pointer' }} 
+                  onClick={() => handleDeleteMessage(item.id)}
+                />
+              )}
+            </List.Item>
+          )}
         />
-        <Button className="message-button" type="primary" onClick={handleSendMessage}>
-          Send
-        </Button>
+        <div className="chat-input">
+          <TextArea
+            rows={4}
+            value={messageContent}
+            onChange={(e:any) => setMessageContent(e.target.value)}
+            placeholder="Type your message here!"
+          />
+          <Button className="message-button" type="primary" onClick={handleSendMessage}>
+            Send
+          </Button>
+        </div>
       </div>
     </div>
   );
