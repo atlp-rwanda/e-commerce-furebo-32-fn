@@ -34,6 +34,7 @@ import SingleProduct from './components/SingleProduct';
 import { Chat } from './components/Chat';
 
 import { ViewProfile } from './components/profile';
+import SalesChart from './components/seller/seller_stats';
 const App: React.FC = () => {
   const [role] = useState(window.localStorage.getItem('role'));
 
@@ -78,6 +79,7 @@ const App: React.FC = () => {
               <Route path="products/:id" element={<SingleProduct />} />
               <Route path="collection" element={<Collection />} />
               <Route path="notifications" element={<Notifications />} />
+              <Route path="sellerStats" element={< SalesChart/>}/>
             </>
           )}
         </Route>
@@ -114,6 +116,7 @@ const App: React.FC = () => {
           <Route path="" element={<AdminDashboardPage />} />
 
           <Route path="contacts" />
+          <Route path="chat" element={<Chat />} />
           <Route path="products" />
           <Route path="" element={<AdminDashboardPage />} />
         </Route>

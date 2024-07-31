@@ -9,7 +9,7 @@ interface User {
 }
 
 interface Message {
-  id: number;
+  id: string;
   userId: number;
   name: string;
   email: string;
@@ -76,6 +76,32 @@ export const sendMessage = createAsyncThunk('chat/sendMessage', async (message: 
   }
 });
 
+export const deleteMessage = createAsyncThunk(
+  'chat/deleteMessage',
+  async (messageId: string, { getState, rejectWithValue }) => {
+    const state = getState() as RootState;
+    const token = state.user.token || localStorage.getItem('token');
+
+    if (!token) {
+      antdMessage.error('Please login to delete a message.');
+      return rejectWithValue('No token found');
+    }
+
+    try {
+      await axios.delete(`https://e-commerce-furebo-32-bn-1.onrender.com/api/chats/messages/${messageId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+      antdMessage.success('Message deleted successfully');
+      return messageId;
+    } catch (error: any) {
+      antdMessage.error('Failed to delete message. Please try again later.');
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
@@ -98,6 +124,12 @@ const chatSlice = createSlice({
         state.messages.push(action.payload);
       })
       .addCase(sendMessage.rejected, (state, action) => {
+        state.error = action.payload as string;
+      })
+      .addCase(deleteMessage.fulfilled, (state, action) => {
+        state.messages = state.messages.filter(message => message.id !== action.payload);
+      })
+      .addCase(deleteMessage.rejected, (state, action) => {
         state.error = action.payload as string;
       });
   },
