@@ -28,7 +28,7 @@ const TwoFA: React.FC = () => {
       await verify2FA({ code, email }).unwrap();
       localStorage.setItem('role', tempRole!);
       localStorage.removeItem('tempRole');
-      navigate('/');
+      navigate('/sellerStats');
       window.location.reload();
     } catch (err: any) {
       toast.error(err.data.message);

@@ -14,6 +14,7 @@ import {
 import { useGetNotificationsQuery } from '../store/actions/notifications';
 import { UserOutlined } from '@ant-design/icons';
 
+
 const { Header, Sider, Content } = Layout;
 
 const SellerLayout: React.FC = () => {
@@ -50,7 +51,7 @@ const SellerLayout: React.FC = () => {
         </div>
         <Menu mode="inline" defaultSelectedKeys={['1']} className="h-[87vh]">
           <Menu.Item key="1" icon={<LayoutDashboard />}>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/sellerStats">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<Store />}>
             <Link to="/collection">Collections</Link>
