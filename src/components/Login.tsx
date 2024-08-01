@@ -75,13 +75,11 @@ function Login() {
       if (data.data.user.role === 'buyer') {
         navigate('/Product');
         window.location.reload();
-      }
-      else if(data.data.user.role === 'seller') {
+      } else if (data.data.user.role === 'seller') {
         navigate('/2fa');
         localStorage.removeItem('role');
         localStorage.setItem('tempRole', data.data.user.role);
-      }
-      else if (data.data.user.role === 'admin') {
+      } else if (data.data.user.role === 'admin') {
         navigate('/dashboard');
         window.location.reload();
       }
@@ -107,7 +105,7 @@ function Login() {
   };
 
   const googleLogin = () => {
-    window.location.href = `${BASE_API_URL}api/google/auth`;
+    window.location.href = `https://e-commerce-furebo-32-bn-1.onrender.com/api/google/auth`;
   };
 
   return (
